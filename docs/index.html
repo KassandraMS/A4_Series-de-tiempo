@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</title>
+  <meta name="description" content="Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  
+  
+  
+
+<meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
+
+
+<meta name="date" content="2025-10-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="propuesta-de-información-a-pronosticar.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">📊 Series de Tiempo - Kaggle Retail Turnover</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="propuesta-de-información-a-pronosticar.html"><a href="propuesta-de-información-a-pronosticar.html"><i class="fa fa-check"></i><b>2</b> Propuesta de información a pronosticar</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="propuesta-de-información-a-pronosticar.html"><a href="propuesta-de-información-a-pronosticar.html#tema-y-base-de-datos"><i class="fa fa-check"></i><b>2.1</b> <strong>Tema y base de datos</strong></a></li>
+<li class="chapter" data-level="2.2" data-path="propuesta-de-información-a-pronosticar.html"><a href="propuesta-de-información-a-pronosticar.html#importancia-y-valor-agregado"><i class="fa fa-check"></i><b>2.2</b> <strong>Importancia y valor agregado</strong></a></li>
+<li class="chapter" data-level="2.3" data-path="propuesta-de-información-a-pronosticar.html"><a href="propuesta-de-información-a-pronosticar.html#alcance-propuesto"><i class="fa fa-check"></i><b>2.3</b> <strong>Alcance propuesto</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="conclusiones.html"><a href="conclusiones.html"><i class="fa fa-check"></i><b>3</b> Conclusiones</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</h1>
+<p class="author"><em>Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos</em></p>
+<p class="date"><em>2025-10-13</em></p>
+</div>
+<div id="introducción" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Introducción<a href="index.html#introducción" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>La presente propuesta corresponde a la Actividad 1 del curso Análisis de Series de Tiempo,en este actividad se aplica el uso de herramientas TIC, específicamente Bookdown en RStudio y GitHub Pages, para elaborar un documento reproducible que describe el enfoque del proyecto y la base de datos seleccionada para el análisis.</p>
+<p>El propósito central es definir el contexto y la relevancia del estudio, identificando la información a pronosticar, su valor agregado y los alcances del análisis de series de tiempo propuesto. La propuesta utiliza el dataset público “Australia Monthly Retail Turnover” disponible en Kaggle, lo que permite explorar comportamientos económicos mensuales y sentar las bases para futuros modelos de predicción orientados a la toma de decisiones basadas en datos.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="propuesta-de-información-a-pronosticar.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
