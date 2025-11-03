@@ -1,4 +1,6 @@
-book_filename: "index"
-rmd_files: ["index.Rmd"]
+book_filename: "serie-retail-au"
 output_dir: "docs"
 delete_merged_file: true
+rmd_files:
+  - index.Rmd
+
