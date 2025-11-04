@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</title>
-  <meta name="description" content="Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <title>2 Unidad 1. Propuesta de información a pronosticar | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</title>
+  <meta name="description" content="2 Unidad 1. Propuesta de información a pronosticar | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta property="og:title" content="2 Unidad 1. Propuesta de información a pronosticar | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta name="twitter:title" content="2 Unidad 1. Propuesta de información a pronosticar | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="unidad-1.-propuesta-de-información-a-pronosticar.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="unidad-2.-análisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -207,23 +207,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</h1>
-<p class="author"><em>Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos</em></p>
-<p class="date"><em>2025-11-03</em></p>
+<div id="unidad-1.-propuesta-de-información-a-pronosticar" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Unidad 1. Propuesta de información a pronosticar<a href="#unidad-1.-propuesta-de-informaci%C3%B3n-a-pronosticar" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="tema-y-base-de-datos" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> <strong>Tema y base de datos</strong><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#tema-y-base-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Se trabajará con la serie <strong>Retail Turnover mensual de Australia</strong> (ventas minoristas agregadas por mes). Esta información proviene del dataset público “Australia Monthly Retail Turnover” disponible en Kaggle y recoge el gasto mensual del comercio al por menor a nivel nacional.</p>
 </div>
-<div id="introducción" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">1</span> Introducción<a href="#introducci%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>La presente propuesta corresponde a la Actividad 1 del curso Análisis de Series de Tiempo,en este actividad se aplica el uso de herramientas TIC, específicamente Bookdown en RStudio y GitHub Pages, para elaborar un documento reproducible que describe el enfoque del proyecto y la base de datos seleccionada para el análisis.</p>
-<p>El propósito central es definir el contexto y la relevancia del estudio, identificando la información a pronosticar, su valor agregado y los alcances del análisis de series de tiempo propuesto. La propuesta utiliza el dataset público “Australia Monthly Retail Turnover” disponible en Kaggle, lo que permite explorar comportamientos económicos mensuales y sentar las bases para futuros modelos de predicción orientados a la toma de decisiones basadas en datos.</p>
+<div id="importancia-y-valor-agregado" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> <strong>Importancia y valor agregado</strong><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#importancia-y-valor-agregado" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Pronosticar el <em>retail turnover</em> es útil para:</p>
+<ul>
+<li><p><strong>Planeación comercial e inventarios:</strong> anticipar meses de alta y baja demanda reduce quiebres y sobrestock, y guía compras y logística.</p></li>
+<li><p><strong>Gestión financiera:</strong> mejora la elaboración de presupuestos y flujo de caja al prever ingresos mensuales esperados.</p></li>
+<li><p><strong>Toma de decisiones tácticas:</strong> permite calendarizar campañas y recursos (personal, distribución) según la estacionalidad identificada.</p></li>
+<li><p><strong>Evaluación de choques:</strong> ayuda a dimensionar el impacto de eventos excepcionales (feriados extendidos, crisis) sobre el consumo.</p></li>
+</ul>
+<p>Por tanto, este análisis permitirá identificar patrones temporales que apoyen la toma de decisiones estratégicas en el comercio minorista australiano.</p>
+</div>
+<div id="alcance-propuesto" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> <strong>Alcance propuesto</strong><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#alcance-propuesto" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Se realizará una exploración de la serie mensual, identificación de tendencia y estacionalidad, y un pronóstico base a 12 meses con intervalos, suficiente para soportar decisiones de planeación y seguimiento.</p>
+<p><strong>Preguntas guía</strong></p>
+<ol style="list-style-type: decimal">
+<li>¿Existen tendencias y estacionalidades por Estado/Industria?<br />
+</li>
+<li>¿Qué modelo (ETS vs ARIMA) ofrece mejor precisión por horizonte (3–6–12 meses)?<br />
+</li>
+<li>¿Cómo cambian los pronósticos agregando por Estado vs por Industria?</li>
+</ol>
+<p><strong>Fuentes y permisos</strong></p>
+<ul>
+<li><p><strong>Fuente:</strong> Kaggle (2024). Australia Monthly Retail Turnover Dataset, autor: <strong>kanyaweechomming101</strong>. URL: <a href="https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data" class="uri">https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data</a>.</p></li>
+<li><p><strong>ABS (Australian Bureau of Statistics)</strong> como fuente estadística original (referenciada en la descripción del dataset).</p></li>
+<li><p><strong>Uso</strong>: datos públicos para fines académicos;según los términos publicados en la página del dataset; se citará la fuente en el documento. No contiene información personal.</p></li>
+</ul>
+</div>
+<div id="conclusiones-unidad-1" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> <strong>Conclusiones Unidad 1</strong><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#conclusiones-unidad-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Esta propuesta demuestra el uso efectivo de herramientas TIC avanzadas, integrando <strong>RStudio, Bookdown y GitHub Pages</strong> como entornos para la gestión reproducible de documentos científicos. A través del análisis de la serie de tiempo “Australia Monthly Retail Turnover”, se pretende identificar patrones y tendencias que permitan comprender la dinámica del consumo minorista australiano y su evolución en el tiempo.</p>
+<p>Este trabajo constituye la base para la aplicación de modelos predictivos que fortalezcan la toma de decisiones en entornos comerciales y académicos, promoviendo la innovación y la analítica como pilares de la gestión de datos.</p>
+<hr />
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="unidad-1.-propuesta-de-información-a-pronosticar.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unidad-2.-análisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

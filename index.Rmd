@@ -1316,11 +1316,38 @@ Finalmente, los resultados obtenidos en el checklist de preprocesamiento (Tabla 
 - Hyndman, R. J, & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice*. Generado de [https://otexts.com/fpp3/](https://otexts.com/fpp3/)
 
 
-# Unidad 4: Metodología Holter-Winter y suavizamiento a la variable tiempo.
-
+# Unidad 4: Metodología Holter-Winter y suavizamiento a la variable tiempo
 
 En esta sección aplicamos el método de **Holt–Winters** a la serie, se compara aditivo vs. multiplicativo y se valida con una partición temporal (train/test), 
 reportando métricas y pronósticos a 12 meses.
+
+
+**Holt-Winters (suavizamiento exponencial estacional)**  
+ 
+Para frecuencia \(m = 12\).
+
+**Aditivo:**
+$$
+\begin{aligned}
+\ell_t &= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1}+b_{t-1}) \\
+b_t    &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \\
+s_t    &= \gamma(y_t - \ell_t) + (1-\gamma)s_{t-m} \\
+\hat{y}_{t+h} &= \ell_t + hb_t + s_{t-m+h_m}
+\end{aligned}
+$$
+
+**Multiplicativo:**
+$$
+\begin{aligned}
+\ell_t &= \alpha\frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1}+b_{t-1}) \\
+b_t    &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \\
+s_t    &= \gamma\frac{y_t}{\ell_t} + (1-\gamma)s_{t-m} \\
+\hat{y}_{t+h} &= (\ell_t + hb_t)s_{t-m+h_m}
+\end{aligned}
+$$
+
+donde \( \alpha, \beta, \gamma \in (0,1) \) son parámetros de suavizamiento;  
+\(\ell_t\) es el **nivel**, \(b_t\) la **tendencia**, y \(s_t\) la **estacionalidad**.
 
 
 ```{r, message=FALSE, warning=FALSE}
@@ -1430,7 +1457,7 @@ Estas características confirman que la serie presenta tanto tendencia como esta
 checkresiduals(fit_add)  # ACF de residuales + prueba de Ljung-Box
 ```
 
-os residuales presentan media cercana a cero y distribución aproximadamente normal.
+Los residuales presentan media cercana a cero y distribución aproximadamente normal.
 No obstante, la prueba de Ljung–Box (p < 0.05) indica presencia de autocorrelación remanente, lo que sugiere posibles mejoras mediante modelos ARIMA estacionales.
 
 ## Conclusiones

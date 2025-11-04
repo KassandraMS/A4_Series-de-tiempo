@@ -44,3 +44,4 @@ doble-diferenciación-regular-y-estacional
 prueba-adf-antesdespués
 validación-visual-acf-y-pacf
 referencias
+unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo
