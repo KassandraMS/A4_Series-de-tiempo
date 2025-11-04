@@ -1512,7 +1512,7 @@ Se evaluó el error de pronóstico con las métricas MAPE, RMSE y MAE, comparand
 
 El modelo aditivo presenta los menores valores en todas las métricas, por lo cual se selecciona como el modelo final.
 
-### Conclusiones finales del modelo 
+**Conclusiones finales del modelo** 
 
 - El modelo Holt–Winters aditivo describe adecuadamente el comportamiento de la serie, capturando tanto la tendencia creciente como la estacionalidad anual.
 
