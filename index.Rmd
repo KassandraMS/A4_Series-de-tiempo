@@ -1506,7 +1506,7 @@ x = "Tiempo", y = "Turnover (millones de AUD)"
 ggplot2::theme_bw()
 ```
 
-### 4. Comparación de desempeño 
+### Comparación de desempeño 
 
 Se evaluó el error de pronóstico con las métricas MAPE, RMSE y MAE, comparando las versiones aditiva y multiplicativa.
 
