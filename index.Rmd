@@ -1472,7 +1472,7 @@ El objetivo fue determinar el modelo que mejor describe la estructura temporal y
 
 ---
 
-### Preparación y división del conjunto de datos
+**Preparación y división del conjunto de datos**
 
 Se utilizó la serie consolidada del total mensual de ventas minoristas (frecuencia = 12).  
 Se reservaron los **últimos 12 meses** (2018) como conjunto de prueba para validar los resultados del modelo.
@@ -1483,7 +1483,7 @@ train <- window(ts_y, end = c(2017, 12))
 test  <- window(ts_y, start = c(2018, 1))
 ```
 
-### Ajuste de los modelos Holt–Winters
+**Ajuste de los modelos Holt–Winters**
 
 Se estimaron dos versiones del modelo:
 
@@ -1491,7 +1491,7 @@ Se estimaron dos versiones del modelo:
 
 - Multiplicativo: para estacionalidad proporcional al nivel.
 
-### Pronóstico a 12 meses
+**Pronóstico a 12 meses**
 
 Se observa un patrón de crecimiento sostenido acompañado de estacionalidad estable.
 El modelo proyecta incrementos hacia los meses finales del año (noviembre–diciembre), coherentes con los ciclos de consumo estacional australianos.
@@ -1506,7 +1506,7 @@ x = "Tiempo", y = "Turnover (millones de AUD)"
 ggplot2::theme_bw()
 ```
 
-### Comparación de desempeño 
+**Comparación de desempeño** 
 
 Se evaluó el error de pronóstico con las métricas MAPE, RMSE y MAE, comparando las versiones aditiva y multiplicativa.
 
