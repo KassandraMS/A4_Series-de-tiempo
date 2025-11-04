@@ -178,14 +178,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><i class="fa fa-check"></i><b>5.1</b> Ajuste de modelos Holt–Winters</a></li>
 <li class="chapter" data-level="5.2" data-path="index.html"><a href="#gr%C3%A1ficas-de-pron%C3%B3stico-y-bandas"><i class="fa fa-check"></i><b>5.2</b> Gráficas de pronóstico y bandas</a></li>
 <li class="chapter" data-level="5.3" data-path="index.html"><a href="#diagn%C3%B3sticos-de-residuales"><i class="fa fa-check"></i><b>5.3</b> Diagnósticos de residuales</a></li>
-<li class="chapter" data-level="5.4" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#conclusiones"><i class="fa fa-check"></i><b>5.4</b> Conclusiones</a>
-<ul>
-<li class="chapter" data-level="5.4.1" data-path="index.html"><a href="#preparaci%C3%B3n-y-divisi%C3%B3n-del-conjunto-de-datos"><i class="fa fa-check"></i><b>5.4.1</b> Preparación y división del conjunto de datos</a></li>
-<li class="chapter" data-level="5.4.2" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#ajuste-de-los-modelos-holtwinters"><i class="fa fa-check"></i><b>5.4.2</b> Ajuste de los modelos Holt–Winters</a></li>
-<li class="chapter" data-level="5.4.3" data-path="index.html"><a href="#pron%C3%B3stico-a-12-meses"><i class="fa fa-check"></i><b>5.4.3</b> Pronóstico a 12 meses</a></li>
-<li class="chapter" data-level="5.4.4" data-path="index.html"><a href="#comparaci%C3%B3n-de-desempe%C3%B1o"><i class="fa fa-check"></i><b>5.4.4</b> Comparación de desempeño</a></li>
-<li class="chapter" data-level="5.4.5" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#conclusiones-finales-del-modelo"><i class="fa fa-check"></i><b>5.4.5</b> Conclusiones finales del modelo</a></li>
-</ul></li>
+<li class="chapter" data-level="5.4" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#conclusiones"><i class="fa fa-check"></i><b>5.4</b> Conclusiones</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
@@ -390,24 +383,19 @@ No obstante, la prueba de Ljung–Box (p &lt; 0.05) indica presencia de autocorr
 </ul>
 <p>El objetivo fue determinar el modelo que mejor describe la estructura temporal y que ofrezca el menor error de pronóstico.</p>
 <hr />
-<div id="preparación-y-división-del-conjunto-de-datos" class="section level3 hasAnchor" number="5.4.1">
-<h3><span class="header-section-number">5.4.1</span> Preparación y división del conjunto de datos<a href="#preparaci%C3%B3n-y-divisi%C3%B3n-del-conjunto-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Preparación y división del conjunto de datos</strong></p>
 <p>Se utilizó la serie consolidada del total mensual de ventas minoristas (frecuencia = 12).<br />
 Se reservaron los <strong>últimos 12 meses</strong> (2018) como conjunto de prueba para validar los resultados del modelo.</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#cb58-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(ts_y)</span>
 <span id="cb58-2"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#cb58-2" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">window</span>(ts_y, <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">2017</span>, <span class="dv">12</span>))</span>
 <span id="cb58-3"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#cb58-3" tabindex="-1"></a>test  <span class="ot">&lt;-</span> <span class="fu">window</span>(ts_y, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2018</span>, <span class="dv">1</span>))</span></code></pre></div>
-</div>
-<div id="ajuste-de-los-modelos-holtwinters" class="section level3 hasAnchor" number="5.4.2">
-<h3><span class="header-section-number">5.4.2</span> Ajuste de los modelos Holt–Winters<a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#ajuste-de-los-modelos-holtwinters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Ajuste de los modelos Holt–Winters</strong></p>
 <p>Se estimaron dos versiones del modelo:</p>
 <ul>
 <li><p>Aditivo: para estacionalidad de magnitud constante.</p></li>
 <li><p>Multiplicativo: para estacionalidad proporcional al nivel.</p></li>
 </ul>
-</div>
-<div id="pronóstico-a-12-meses" class="section level3 hasAnchor" number="5.4.3">
-<h3><span class="header-section-number">5.4.3</span> Pronóstico a 12 meses<a href="#pron%C3%B3stico-a-12-meses" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Pronóstico a 12 meses</strong></p>
 <p>Se observa un patrón de crecimiento sostenido acompañado de estacionalidad estable.
 El modelo proyecta incrementos hacia los meses finales del año (noviembre–diciembre), coherentes con los ciclos de consumo estacional australianos.</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#cb59-1" tabindex="-1"></a>fc_add <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit_add, <span class="at">h =</span> <span class="dv">12</span>)</span>
@@ -418,14 +406,10 @@ El modelo proyecta incrementos hacia los meses finales del año (noviembre–dic
 <span id="cb59-6"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#cb59-6" tabindex="-1"></a>) <span class="sc">+</span></span>
 <span id="cb59-7"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#cb59-7" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="serie-retail-au_files/figure-html/unnamed-chunk-20-1.png" width="768" style="display: block; margin: auto;" /></p>
-</div>
-<div id="comparación-de-desempeño" class="section level3 hasAnchor" number="5.4.4">
-<h3><span class="header-section-number">5.4.4</span> Comparación de desempeño<a href="#comparaci%C3%B3n-de-desempe%C3%B1o" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Comparación de desempeño</strong></p>
 <p>Se evaluó el error de pronóstico con las métricas MAPE, RMSE y MAE, comparando las versiones aditiva y multiplicativa.</p>
 <p>El modelo aditivo presenta los menores valores en todas las métricas, por lo cual se selecciona como el modelo final.</p>
-</div>
-<div id="conclusiones-finales-del-modelo" class="section level3 hasAnchor" number="5.4.5">
-<h3><span class="header-section-number">5.4.5</span> Conclusiones finales del modelo<a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#conclusiones-finales-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Conclusiones finales del modelo</strong></p>
 <ul>
 <li><p>El modelo Holt–Winters aditivo describe adecuadamente el comportamiento de la serie, capturando tanto la tendencia creciente como la estacionalidad anual.</p></li>
 <li><p>Las métricas de error (MAPE 0.58 %, RMSE 375.9, MAE 290.5) evidencian una alta precisión del pronóstico.</p></li>
@@ -433,7 +417,6 @@ El modelo proyecta incrementos hacia los meses finales del año (noviembre–dic
 <li><p>El método demuestra la utilidad del suavizamiento exponencial triple para pronósticos económicos, consolidando el uso de herramientas TIC (R + Bookdown) para la elaboración reproducible del informe.</p></li>
 </ul>
 
-</div>
 </div>
 </div>
             </section>
