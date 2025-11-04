@@ -1316,7 +1316,7 @@ Finalmente, los resultados obtenidos en el checklist de preprocesamiento (Tabla 
 - Hyndman, R. J, & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice*. Generado de [https://otexts.com/fpp3/](https://otexts.com/fpp3/)
 
 
-# Metodología Holter-Winter y suavizamiento a la variable tiempo.
+# Unidad 4: Metodología Holter-Winter y suavizamiento a la variable tiempo.
 
 
 En esta sección aplicamos el método de **Holt–Winters** a la serie, se compara aditivo vs. multiplicativo y se valida con una partición temporal (train/test), 
