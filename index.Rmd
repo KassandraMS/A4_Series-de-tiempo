@@ -2,9 +2,11 @@
 title: "Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)"
 author: "Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos"
 date: "`r format(Sys.Date(), '%Y-%m-%d')`"
-output:
+site: bookdown::bookdown_site
+output: bookdown::gitbook
 
 ---
+
 
 # Introducción
 
@@ -13,7 +15,7 @@ La presente propuesta corresponde a la Actividad 1 del curso Análisis de Series
 El propósito central es definir el contexto y la relevancia del estudio, identificando la información a pronosticar, su valor agregado y los alcances del análisis de series de tiempo propuesto. La propuesta utiliza el dataset público “Australia Monthly Retail Turnover” disponible en Kaggle, lo que permite explorar comportamientos económicos mensuales y sentar las bases para futuros modelos de predicción orientados a la toma de decisiones basadas en datos.
 
 
-# Propuesta de información a pronosticar
+# Unidad 1. Propuesta de información a pronosticar
 
 ## **Tema y base de datos**  
 Se trabajará con la serie **Retail Turnover mensual de Australia** (ventas minoristas agregadas por mes). Esta información proviene del dataset público “Australia Monthly Retail Turnover” disponible en Kaggle y recoge el gasto mensual del comercio al por menor a nivel nacional.
@@ -51,7 +53,7 @@ Se realizará una exploración de la serie mensual, identificación de tendencia
 
 - **Uso**: datos públicos para fines académicos;según los términos publicados en la página del dataset; se citará la fuente en el documento. No contiene información personal.  
 
-# Conclusiones Unidad 1
+## **Conclusiones Unidad 1**
 
 Esta propuesta demuestra el uso efectivo de herramientas TIC avanzadas, integrando **RStudio, Bookdown y GitHub Pages** como entornos para la gestión reproducible de documentos científicos. A través del análisis de la serie de tiempo “Australia Monthly Retail Turnover”, se pretende identificar patrones y tendencias que permitan comprender la dinámica del consumo minorista australiano y su evolución en el tiempo.
 
@@ -59,7 +61,12 @@ Este trabajo constituye la base para la aplicación de modelos predictivos que f
 
 ---
 
-# Descripción y justificación del conjunto de datos
+# Unidad 2. Análisis descriptivo y estructural de una serie temporal: tendencia, estacionalidad y estacionariedad
+
+En esta unidad se analizan los componentes fundamentales de una serie temporal nivel, tendencia, estacionalidad y ruido aplicando técnicas gráficas y estadísticas de suavizamiento, descomposición y diferenciación, con el fin de identificar su estructura y preparar la base para el modelamiento predictivo.
+
+
+## **Descripción y justificación del conjunto de datos**
 
 El conjunto de datos utilizado corresponde al registro histórico del Retail Trade, Australia, disponible públicamente en Kaggle bajo el nombre “Australia Monthly Retail Turnover Data”.
 Este dataset recopila información mensual sobre el volumen de ventas minoristas en diferentes estados y sectores de la economía australiana desde 1982 hasta la actualidad.
@@ -149,13 +156,14 @@ peek %>%
 
 La tabla muestra las siguientes variables principales:
 
-Variable	   Descripción
+| **Variable** | **Descripción** |
+|:-------------|:----------------|
+| **State** | Estado o territorio australiano del cual proviene el registro. |
+| **Industry** | Sector económico o grupo de actividades comerciales. |
+| **Series** | Identificador de la serie publicada por la oficina estadística australiana. |
+| **Month** | Fecha del registro mensual (año y mes). |
+| **Turnover** | Valor total de ventas minoristas expresado en millones de dólares australianos. |
 
-State	       Estado o territorio australiano del cual proviene el registro.
-Industry	   Sector económico o grupo de actividades comerciales.
-Series       ID	Identificador de la serie publicada por la oficina estadística australiana.
-Month	       Fecha del registro mensual (año y mes).
-Turnover	   Valor total de ventas minoristas expresado en millones de dólares australianos.
 
 Aunque el dataset contiene múltiples combinaciones de estado e industria, en esta actividad se analizará una serie única y representativa, correspondiente al “Total (industry)”, que refleja el comportamiento global del comercio minorista australiano.
 Esta decisión se tomó porque el objetivo de la Unidad 2 es identificar tendencias, rezagos y estacionalidades en una serie de tiempo de manera clara, sin el ruido ni las fluctuaciones que presentan sectores individuales.
@@ -173,7 +181,7 @@ A partir de la revisión de esta tabla y el entendimiento de su estructura, se c
 La amplitud temporal del dataset (más de 40 años) permitirá analizar la evolución del comercio minorista, identificando cambios estructurales, ciclos económicos y comportamientos estacionales que servirán como base para las siguientes etapas del análisis.
 
 
-# Preparación y filtrado de datos: serie total mensual
+## **Preparación y filtrado de datos: serie total mensual**
 
 ```{r, message=FALSE, warning=FALSE}
 df0 <- readr::read_csv(ruta_csv, show_col_types = FALSE)
@@ -207,7 +215,7 @@ df_parsed <- df0 %>%
   ) %>%
   filter(!is.na(fecha))
 
-# ===== Selección recomendada para la Unidad 2: TOTAL =====
+
 industry_choice <- "Total (industry)"  # preferido
 if (!is.na(col_ind)) {
   inds <- sort(unique(df_parsed[[col_ind]]))
@@ -243,8 +251,7 @@ if (!is.na(col_ind)) {
 }
 
 
-
-cat("\n📊 **Serie agregada: Total mensual de ventas minoristas (Australia)**\n")
+cat("\n **Serie agregada: Total mensual de ventas minoristas (Australia)**\n")
 cat("Cada observación representa el valor total mensual del comercio minorista sumando todas las industrias.\n\n")
 
 df %>%
@@ -267,16 +274,17 @@ De este modo, se obtiene una serie más estable y representativa del comportamie
 
 La Tabla 2 presenta las primeras observaciones de la serie consolidada. En ella se observan las columnas:
 
-Variable	                Descripción
-Fecha	                    Corresponde al primer día del mes registrado (en formato YYYY-MM-DD).
-Valor (millones de AUD)	  Monto total de ventas minoristas acumuladas para todas las industrias en el mes correspondiente.
+| **Variable** | **Descripción** |
+|:-------------|:----------------|
+| **Fecha** | Corresponde al primer día del mes registrado (en formato YYYY-MM-DD). |
+| **Valor (millones de AUD)** | Monto total de ventas minoristas acumuladas para todas las industrias en el mes correspondiente. |
 
 Esta transformación permite trabajar con una sola serie continua en el tiempo, eliminando la variabilidad interna de los diferentes sectores y conservando la estructura mensual necesaria para los análisis posteriores de tendencia, promedio móvil, rezagos y estacionalidad.
 
-# Construcción de la serie temporal
+## **Construcción de la serie temporal**
 
 ```{r, message=FALSE, warning=FALSE}
-# === Construcción de la serie temporal y visualización inicial ===
+# Construcción de la serie temporal y visualización inicial
 library(ggplot2)
 library(knitr)
 library(lubridate)
@@ -355,8 +363,37 @@ Rezagos y diferencias para analizar dependencias temporales, y
 Gráficos de estacionalidad y autocorrelación para estudiar los ciclos repetitivos.
 
 
-# Promedios móviles (SMA/EMA) y análisis de tendencia
+## **Promedios móviles (SMA/EMA) y análisis de tendencia**
 
+El promedio móvil es una técnica de suavizamiento usada para resaltar la tendencia de una serie temporal, reduciendo el ruido de corto plazo.
+Existen dos tipos principales:
+
+SMA (Simple Moving Average): promedio aritmético de los últimos 𝑘 valores.
+
+EMA (Exponential Moving Average): promedio ponderado donde los valores más recientes tienen mayor peso.
+
+
+Fórmulas
+
+**Media móvil simple (SMA):**
+
+$$
+SMA_t = \frac{1}{k} \sum_{i=0}^{k-1} Y_{t-i}
+$$
+
+**Media móvil exponencial (EMA):**
+
+$$
+EMA_t = \alpha Y_t + (1 - \alpha) EMA_{t-1}, \quad \alpha = \frac{2}{k + 1}
+$$
+
+En el dataset Australia Monthly Retail Turnover (1982–2024),se aplicaron dos ventanas:
+
+Ventana corta: 6 meses (EMA) para capturar variaciones rápidas.
+
+Ventana larga: 12 meses (SMA) para suavizar el ciclo anual.
+
+Estas técnicas permiten observar la tendencia subyacente de crecimiento del comercio minorista australiano sin el efecto de los picos mensuales.
 
 
 ```{r, message=FALSE, warning=FALSE}
@@ -367,7 +404,7 @@ library(zoo)
 library(ggplot2)
 library(knitr)
 
-# --- 1. Calcular SMA y EMA ---
+# 1. Calcular SMA y EMA
 EMA_classic <- function(x, n){
   alpha <- 2/(n + 1)
   y <- rep(NA_real_, length(x))
@@ -388,7 +425,7 @@ df <- df %>%
     `EMA (6m)`  = EMA_classic(valor, k_short)
   )
 
-# --- 2. Tabla de parámetros ---
+#2. Tabla de parámetros
 param_tbl <- data.frame(
   check.names = FALSE,
   `Ventana corta (EMA 6m)`  = paste(k_short, "meses"),
@@ -402,7 +439,7 @@ kable(
   align = "c"
 )
 
-# --- 3. Preparar datos largos para ggplot ---
+# 3. Preparar datos largos para ggplot 
 df_long <- df %>%
   select(fecha, `Nivel`, `SMA (12m)`, `EMA (6m)`) %>%
   pivot_longer(-fecha, names_to = "Serie", values_to = "valor")
@@ -413,7 +450,7 @@ df_long$Serie <- factor(df_long$Serie,
 colores   <- c("Nivel" = "#0072B2", "SMA (12m)" = "#009E73", "EMA (6m)" = "#D55E00")
 linetypes <- c("Nivel" = "solid",   "SMA (12m)" = "solid",   "EMA (6m)" = "dashed")
 
-# --- 4. Figura comparativa ---
+# 4. Figura comparativa 
 ggplot(df_long, aes(x = fecha, y = valor, color = Serie, linetype = Serie)) +
   geom_line(linewidth = 0.9, alpha = 0.9, na.rm = TRUE) +
   scale_color_manual(values = colores) +
@@ -456,7 +493,64 @@ Este resultado establece la base para los siguientes análisis, donde se abordar
 
 
 
-# Estacionalidad y rezagos (seasonplot, subseries, ACF y descomposición)
+## **Estacionalidad y rezagos (seasonplot, subseries, ACF y descomposición)**
+
+En una serie temporal, la estacionalidad se refiere a los patrones que se repiten a intervalos regulares, como meses, trimestres o años. Estos ciclos son producto de comportamientos periódicos (por ejemplo, aumentos de ventas en diciembre o caídas en enero).
+
+Fórmulas
+
+**Modelo aditivo:**
+
+$$
+Y_t = T_t + S_t + R_t
+$$
+
+**Modelo multiplicativo:**
+
+$$
+Y_t = T_t \times S_t \times R_t
+$$
+
+**Estimación de la tendencia (promedio móvil centrado):**
+
+$$
+T_t = \frac{1}{m} \sum_{i=-k}^{k} Y_{t+i}
+$$
+
+**Índices estacionales promedio (modelo aditivo):**
+
+$$
+S_m = \frac{1}{n} \sum_{j=1}^{n} (Y_{m,j} - T_{m,j})
+$$
+
+**Índices estacionales promedio (modelo multiplicativo):**
+
+$$
+S_m = \frac{1}{n} \sum_{j=1}^{n} \frac{Y_{m,j}}{T_{m,j}}
+$$
+
+**Recomposición (modelo aditivo):**
+
+$$
+\hat{Y}_t = \hat{T}_t + \hat{S}_t
+$$
+
+**Recomposición (modelo multiplicativo):**
+
+$$
+\hat{Y}_t = \hat{T}_t \times \hat{S}_t
+$$
+
+
+
+En el Retail Turnover Australia, se observa un patrón anual (m = 12), con picos en noviembre–diciembre y descensos en enero–febrero.
+Para analizarlo:
+
+Se genera el Seasonplot (Figura 3) para visualizar la periodicidad.
+
+Se utiliza la ACF (Autocorrelación) para confirmar que los picos se repiten cada 12 rezagos.
+
+Se aplica la descomposición STL para separar tendencia, estacionalidad y residuo.
 
 ```{r, message=FALSE, warning=FALSE}
 # Estacionalidad y rezagos ===
@@ -478,7 +572,7 @@ df_season <- tibble(
                  ordered = TRUE)
 )
 
-# ---------- Figura 3 (versión completa: todas las curvas) ----------
+# Figura 3 (versión completa: todas las curvas)
 # Esta versión es intencionalmente 'cargada' para mostrar el problema de legibilidad.
 p_season_full <- ggplot(df_season, aes(x = mes, y = valor, group = anio)) +
   geom_line(color = "#7f7f7f", alpha = 0.35) +
@@ -490,7 +584,7 @@ p_season_full <- ggplot(df_season, aes(x = mes, y = valor, group = anio)) +
         panel.border = element_rect(color = "#ccc"))
 print(p_season_full)
 
-# ---------- Figura 3A (últimos 10 años) ----------
+# Figura 3A (últimos 10 años) 
 ult10 <- (max(df_season$anio) - 9):max(df_season$anio)
 p_season_10 <- ggplot(filter(df_season, anio %in% ult10),
                       aes(x = mes, y = valor, group = anio, color = factor(anio))) +
@@ -504,7 +598,7 @@ p_season_10 <- ggplot(filter(df_season, anio %in% ult10),
         panel.border = element_rect(color = "#ccc"))
 print(p_season_10)
 
-# ---------- Figura 3B (por década: promedio + último año destacado) ----------
+# Figura 3B (por década: promedio + último año destacado)
 df_dec   <- df_season %>% mutate(decada = paste0(floor(anio/10)*10, "s"))
 mean_dec <- df_dec %>% group_by(decada, mes) %>%
   summarise(prom = mean(valor, na.rm = TRUE), .groups = "drop")
@@ -527,7 +621,7 @@ p_season_dec <- ggplot(df_dec, aes(mes, valor, group = anio)) +
 print(p_season_dec)
 
 
-# ----------Subseries: promedio por mes (facetas) ----------
+# Subseries: promedio por mes (facetas) 
 p_subseries <- ggsubseriesplot(ts_y) +
   labs(
     title    = "Figura 4. Subseries mensuales: patrón promedio por mes",
@@ -543,7 +637,7 @@ p_subseries <- ggsubseriesplot(ts_y) +
   )
 print(p_subseries)
 
-# ---------- ACF: autocorrelación (rezagos) ----------
+# ACF: autocorrelación (rezagos) 
 p_acf <- ggAcf(ts_y) +
   labs(
     title    = "Figura 5. Autocorrelación (ACF) de la serie",
@@ -558,7 +652,7 @@ p_acf <- ggAcf(ts_y) +
   )
 print(p_acf)
 
-# ---------- Descomposición (STL robusta) ----------
+#  Descomposición (STL robusta) 
 ts_df <- tibble(fecha = as.Date(time(ts_y), origin = "1970-01-01"),
                 valor = as.numeric(ts_y))
 
@@ -577,7 +671,7 @@ autoplot(fit_stl) +
     panel.border  = element_rect(color = "#ccc")
   )
 
-# ---------- Tabla: medias por mes y ranking ----------
+# Tabla: medias por mes y ranking 
 mes_tbl <- ts_df |>
   mutate(mes = month(fecha, label = TRUE, abbr = TRUE)) |>
   group_by(mes) |>
@@ -635,14 +729,56 @@ Estos hallazgos orientan las transformaciones para el modelado: diferenciación 
 
 
 
-# Diferencias Δ y Δ₁₂ (rezagos y estabilización) 
+## **Diferencias Δ y Δ₁₂ (rezagos y estabilización)**
+
+El proceso de diferenciación busca eliminar la tendencia y la estacionalidad de una serie temporal, con el fin de obtener estacionariedad (una serie con media y varianza constantes a lo largo del tiempo).
+
+Existen dos tipos de diferencias:
+
+* Diferencia regular (Δ): elimina la tendencia.
+
+* Diferencia estacional (Δ12): elimina la estacionalidad anual (para frecuencia mensual). 
+
+Fórmula 
+
+**Diferencia regular (Δ):**
+
+$$
+\Delta Y_t = Y_t - Y_{t-1}
+$$
+
+**Diferencia estacional (Δ₁₂):**
+
+$$
+\Delta_{12} Y_t = Y_t - Y_{t-12}
+$$
+
+**Doble diferencia combinada (ΔΔ₁₂):**
+
+$$
+\Delta \Delta_{12} Y_t = (Y_t - Y_{t-1}) - (Y_{t-12} - Y_{t-13})
+$$
+
+**Operador de diferencia general:**
+
+$$
+\nabla^d Y_t = (1 - B)^d Y_t
+$$
+
+En el Retail Turnover Australia:
+
+La diferencia regular (Δ) reduce la tendencia.
+
+La diferencia estacional (Δ12) elimina el patrón anual.
+
+La combinación ΔΔ12 produce una serie estacionaria, adecuada para modelar con ARIMA o SARIMA.
 
 Nuestro objetivo es mostrar cómo la primera diferencia (Δ) y la diferencia estacional (Δ₁₂) remueven tendencia y estacionalidad, respectivamente, y comprobarlo visualmente y con ACF.
 
 
 ```{r, message=FALSE, warning=FALSE}
 
-# === Diferencias Δ y Δ₁₂ ===
+#Diferencias Δ y Δ₁₂
 library(ggplot2); library(dplyr); library(forecast); library(knitr)
 
 # 6.1 Construcción de diferencias
@@ -729,21 +865,21 @@ Tabla 6: la varianza disminuye tras diferenciar, lo que apoya la estabilización
 Para modelar esta serie con enfoques ARIMA estacionales, una especificación (d = 1, D = 1, m = 12) es un punto de partida razonable, sujeto a verificación con diagnósticos formales (AICc, pruebas de raíz unitaria y residuales del modelo).
 
 
-# Conclusiones Unidad 3
+## **Conclusiones unidad 2**
 
 El análisis exploratorio de la serie mensual Australia Monthly Retail Turnover (1982–2024) permitió caracterizar su comportamiento histórico mediante técnicas gráficas y estadísticas que revelan su estructura temporal y estacional.
 
-🔹 1. Identificación del patrón general
+1. Identificación del patrón general
 
 A partir de los promedios móviles (SMA(12) y EMA(6)), se observó una tendencia creciente sostenida en el volumen de ventas minoristas, con incrementos marcados desde mediados de los años noventa y aceleraciones notorias a partir de 2010.
-Esta tendencia indica un crecimiento estructural del comercio minorista australiano, vinculado al aumento del consumo y expansión económica.
+Esta tendencia indica un crecimiento estructural del comercio minorista australiano, vinculado al aumento del consumo y la expansión económica.
 
-🔹 2. Estructura estacional
+2. Estructura estacional
 
 El análisis mediante seasonplot, subseries y promedios mensuales mostró un patrón estacional anual fuerte y estable, con picos de ventas en noviembre–diciembre (época de fin de año) y caídas en enero–febrero.
 Este comportamiento fue confirmado estadísticamente mediante la función de autocorrelación (ACF), con picos significativos en múltiplos de 12 rezagos.
 
-🔹 3. Descomposición y componentes
+3. Descomposición y componentes
 
 La descomposición STL robusta separó la serie en sus tres componentes principales:
 
@@ -752,15 +888,432 @@ Tendencia: crecimiento constante en el largo plazo.
 Estacionalidad: patrón mensual repetitivo.
 
 Residuo: fluctuaciones irregulares atribuibles a choques económicos o eventos específicos.
+Los componentes de tendencia y estacionalidad resultaron dominantes, lo cual evidenció la necesidad de aplicar transformaciones previas al modelado.
 
-Los componentes de tendencia y estacionalidad son dominantes, lo cual explica la necesidad de transformaciones previas al modelado.
+4. Preprocesamiento para el modelado
 
-🔹 4. Estabilización de la serie
-
-Al aplicar las diferencias regulares (Δ) y estacionales (Δ₁₂) se evidenció la eliminación progresiva de la tendencia y del patrón repetitivo.
-La combinación Δ·Δ₁₂ produjo una serie con varianza reducida y autocorrelación acotada, candidata a estacionaria y adecuada para la estimación de modelos ARIMA estacionales (SARIMA).
+El proceso de diferenciación regular y estacional (Δ y Δ₁₂) permitió estabilizar la serie al eliminar la tendencia y la estacionalidad, logrando una estructura más adecuada para el ajuste de modelos ARIMA estacionales (SARIMA).
+Este paso constituye la base del preprocesamiento y visualización abordado en la Unidad 3.
 
 
+# Unidad 3: Preprocesamiento y visualización
+
+En esta unidad se continúa el análisis desarrollado en la Unidad 2, profundizando en las etapas de preprocesamiento de datos y visualización aplicadas a la serie mensual Australia Monthly Retail Turnover (1982–2024). El objetivo es garantizar que la serie cumpla con las condiciones necesarias para su posterior modelado, particularmente en la identificación de componentes estructurales y la estabilización de la varianza y la media.
+
+A través de técnicas estadísticas y gráficas, se analizan nuevamente los patrones de tendencia y estacionalidad, la descomposición de la serie y las transformaciones requeridas para alcanzar la estacionariedad, utilizando funciones de diferenciación regular y estacional (Δ y Δ₁₂). Estas operaciones forman parte esencial del preprocesamiento, al eliminar dependencias sistemáticas y preparar la información para la estimación de modelos ARIMA estacionales (SARIMA).
+
+El proceso descrito integra la manipulación de datos, la verificación de supuestos y la interpretación visual como base para la comprensión del comportamiento temporal de las ventas minoristas australianas, asegurando una estructura adecuada y confiable para las fases siguientes de modelado y validación.
+
+
+
+```{r, message=FALSE, warning=FALSE}
+#| message: FALSE
+#| warning: FALSE
+suppressPackageStartupMessages({
+  library(forecast); library(tseries); library(ggplot2)
+  library(knitr);    library(kableExtra)
+})
+
+# Estilos
+gg_std <- theme_minimal(base_size = 11) +
+  theme(
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(color = "grey30"),
+    panel.grid.minor = element_blank()
+  )
+
+kbl_std <- function(df, caption = NULL, digits = 3) {
+  knitr::kable(df, caption = caption, align = "c", digits = digits) |>
+    kableExtra::kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
+}
+
+```
+
+## **Transformación Box-Cox + Descomposición STL**
+
+La transformación Box–Cox se utiliza para estabilizar la varianza y mejorar la normalidad de una serie temporal antes del modelado.
+
+Fórmula:
+
+$$
+Y'_t =
+\begin{cases}
+\frac{Y_t^{\lambda} - 1}{\lambda}, & \text{si } \lambda \neq 0 \\
+\ln(Y_t), & \text{si } \lambda = 0
+\end{cases}
+$$
+𝑌𝑡 es el valor original de la serie,
+
+𝑌𝑡 es la serie transformada,
+
+𝜆 es el parámetro que controla el grado de transformación (estimado con BoxCox.lambda()).
+
+Interpretación práctica:
+
+Si 𝜆≈1, no es necesaria la transformación.
+
+Si 𝜆<1, se recomienda aplicar la transformación (reduce la dispersión).
+
+La descomposición STL permite expresar una serie temporal 𝑌𝑡como la suma de tres componentes:
+
+
+$$Y_t = T_t + S_t + R_t$$
+
+donde:
+
+𝑇𝑡 es la tendencia,
+
+𝑆𝑡 la estacionalidad,
+
+𝑅𝑡 el residuo o componente irregular.
+
+El método STL aplica suavizamiento LOESS para estimar cada componente, permitiendo manejar estacionalidad no constante y valores atípicos.
+
+El propósito es separar los efectos estructurales (tendencia y estacionalidad) de los componentes aleatorios, facilitando el análisis de estacionariedad.
+
+```{r, message=FALSE, warning=FALSE}
+
+stopifnot(exists("ts_y"), is.ts(ts_y), frequency(ts_y) == 12)
+
+lambda_bc <- BoxCox.lambda(ts_y)
+usar_bc   <- abs(lambda_bc - 1) > 0.1
+
+cat("λ (Box-Cox) estimado:", round(lambda_bc, 3), "\n")
+cat("¿Aplicar transformación? ", ifelse(usar_bc, "Sí (|λ−1|>0.1)", "No (λ≈1)"), "\n")
+
+serie_bc <- if (usar_bc) BoxCox(ts_y, lambda_bc) else ts_y
+
+stl_obj <- stl(serie_bc, s.window = "periodic", robust = TRUE)
+
+print(
+  autoplot(stl_obj) +
+    labs(
+      title = "Figura 13. Descomposición STL de la serie mensual",
+      subtitle = if (usar_bc)
+        paste0("Aplicando transformación Box–Cox (λ = ", round(lambda_bc,3), ")")
+      else
+        "Sin transformación Box–Cox",
+      x = "Tiempo", y = NULL
+    ) + gg_std
+)
+
+if (usar_bc) {
+  # Crear tabla de varianzas con formato numérico y sin notación científica
+  var_tbl <- data.frame(
+    Serie = c("Original", paste0("Box-Cox (lambda = ", round(lambda_bc, 3), ")")),
+    Varianza = formatC(
+      c(var(ts_y, na.rm = TRUE), var(serie_bc, na.rm = TRUE)),
+      format = "f", digits = 2, big.mark = ","
+    )
+  )
+
+  knitr::kable(
+    var_tbl,
+    caption = "Tabla 7. Comparación de varianzas: original vs transformada (criterio de estabilización).",
+    align = "c",
+    booktabs = TRUE
+  ) %>%
+    kableExtra::kable_styling(
+      full_width = FALSE,
+      position = "center",
+      bootstrap_options = c("striped", "hover", "condensed")
+    )
+}
+
+```
+
+Figura 13. Descomposición STL de la serie mensual
+
+La descomposición STL (con transformación Box–Cox, λ = 0.196) permite analizar la estructura interna de la serie mensual Australia Monthly Retail Turnover y distinguir sus componentes principales:
+
+Data (serie original transformada): muestra un comportamiento creciente a lo largo del tiempo, lo que confirma la presencia de una tendencia positiva estructural en las ventas minoristas australianas.
+
+Trend (tendencia): evidencia un incremento sostenido, especialmente a partir del año 2000, reflejando el crecimiento económico y la expansión del consumo en el país.
+
+Seasonal (estacionalidad): presenta un patrón cíclico muy regular y estable, con picos pronunciados en los meses de noviembre y diciembre (temporada alta por fin de año) y caídas en enero–febrero.
+
+Remainder (residuo): agrupa las fluctuaciones irregulares no explicadas por los componentes sistemáticos, asociadas a choques económicos o cambios coyunturales del mercado.
+
+Tabla 7. Comparación de varianzas: original vs transformada
+
+La varianza de la serie se redujo drásticamente tras aplicar la transformación Box–Cox, pasando de aproximadamente 1.96×10⁸ a 18.2.
+
+Esto indica que la transformación logró estabilizar la variabilidad de la serie, uno de los requisitos para que el modelo ARIMA (o SARIMA) funcione correctamente.
+
+La estimación del parámetro λ = 0.196 confirma que una transformación de tipo raíz o logarítmica era necesaria para homogeneizar la escala de las observaciones.
+
+La aplicación de la transformación Box–Cox fue justificada y efectiva, ya que permitió controlar la heterocedasticidad (varianza no constante) y dejar la serie en condiciones más adecuadas para el análisis de estacionariedad y la posterior estimación del modelo SARIMA.
+
+
+## **Fuerza estacional + recomendaciones de diferenciación**
+
+
+La fuerza de estacionalidad cuantifica qué tan dominante es el componente estacional frente a la variación total de la serie. Se calcula a partir de la descomposición STL mediante la siguiente fórmula:
+
+$$F_s = 1 - \frac{Var(R_t)}{Var(S_t + R_t)}$$
+
+
+```{r, message=FALSE, warning=FALSE}
+
+suppressPackageStartupMessages({ library(forecast); library(knitr); library(kableExtra) })
+
+# --- Fuerza de estacionalidad (a partir del STL ya calculado) ---
+stopifnot(exists("stl_obj"), exists("serie_bc"))
+
+comp   <- stl_obj$time.series
+var_r  <- var(comp[, "remainder"], na.rm = TRUE)
+var_sr <- var(comp[, "seasonal"] + comp[, "remainder"], na.rm = TRUE)
+fuerza_est <- max(0, 1 - var_r/var_sr)  # 0 a 1 (mayor = estacionalidad más fuerte)
+
+# --- Recomendaciones automáticas de diferencias (regular y estacional) ---
+d_rec <- ndiffs(serie_bc, alpha = 0.05, test = "adf")
+D_rec <- nsdiffs(serie_bc, m = 12)
+
+# --- Tabla 8: estacionalidad y recomendaciones ---
+tab8 <- data.frame(
+  Indicador = c("Fuerza de estacionalidad (0–1)", "d recomendado", "D recomendado (m=12)"),
+  Valor     = c(round(fuerza_est, 3), d_rec, D_rec)
+)
+
+knitr::kable(
+  tab8,
+  caption = "Tabla 8. Medida de estacionalidad y recomendaciones de diferenciación.",
+  align = "c",
+  booktabs = TRUE
+) |>
+  kableExtra::kable_styling(full_width = FALSE, position = "center",
+                            bootstrap_options = c("striped","hover","condensed"))
+
+```
+
+
+De acuerdo a los resultados de la Tabla 8 La fuerza estacional elevada (0.968) y las recomendaciones 𝑑=1y 𝐷=1 confirman que la serie Australia Monthly Retail Turnover presenta una estructura estacional dominante y una tendencia creciente, por lo que es necesario aplicar una doble diferenciación (regular y estacional).
+
+Esto garantiza que la serie cumpla con el supuesto de estacionariedad requerido para la estimación del modelo SARIMA(p,d,q)(P,D,Q)[12] en la siguiente unidad.
+
+
+## **Doble diferenciación (regular y estacional)**
+
+EL objetivo es remover tendencia y patrón estacional para lograr estacionariedad.
+
+Fórmulas:
+
+Diferencia regular:
+$$\nabla Y_t = Y_t - Y_{t-1}$$
+
+Diferencia estacional (m=12):
+$$\nabla_{12} Y_t = Y_t - Y_{t-12}$$
+
+Combinada (aplicando primero estacional y luego regular):
+
+$$\nabla \nabla_{12} Y_t = (Y_t - Y_{t-12}) - (Y_{t-1} - Y_{t-13})$$
+
+En esta unidad usamos los órdenes recomendados: d = 1 y D = 1.
+
+
+```{r, message=FALSE, warning=FALSE}
+stopifnot(exists("serie_bc"))   # Serie (posiblemente Box–Cox) y freq=12
+d_rec <- 1L
+D_rec <- 1L
+
+y_diff <- serie_bc
+if (D_rec > 0) y_diff <- diff(y_diff, lag = 12, differences = D_rec)
+if (d_rec > 0) y_diff <- diff(y_diff, differences = d_rec)
+
+# Figura 14. Serie transformada y doblemente diferenciada (Δ·Δ12)
+print(
+  autoplot(y_diff) +
+    labs(
+      title = "Figura 14. Serie transformada y diferenciada (Δ·Δ₁₂)",
+      subtitle = "Ordenes aplicados: d = 1, D = 1 (m = 12)",
+      x = "Tiempo", y = "Escala transformada"
+    ) + gg_std
+)
+```
+
+En la Figura 14 vemos que después de aplicar las diferencias regular (𝑑=1) y estacional (D=1,m=12), la serie Australia Monthly Retail Turnover muestra un comportamiento claramente distinto al de la versión original.
+
+* La serie se oscila alrededor de la media cero, lo que sugiere que la tendencia fue eliminada.
+
+* La varianza se mantiene relativamente constante a lo largo del tiempo, indicando que el proceso de diferenciación logró estabilizar la escala.
+
+* Los picos irregulares observados alrededor del año 2000 podrían corresponder a eventos económicos puntuales (choques transitorios), pero no reflejan una tendencia sistemática.
+
+* No se aprecian patrones cíclicos definidos ni repetitivos, lo que evidencia que la estacionalidad fue removida con éxito.
+
+## ** Prueba ADF antes/después**
+
+El objetivo es evidenciar estacionariedad tras la doble diferenciación.
+
+Modelo (forma común de la ADF):
+$$\Delta Y_t = \alpha + \beta t + \gamma Y_{t-1} + \sum_{i=1}^{p}\phi_i \, \Delta Y_{t-i} + \varepsilon_t$$
+Hipótesis:
+$$H_0: \gamma = 0 \quad (\text{raíz unitaria, no estacionaria}) \qquad H_1: \gamma < 0 \quad (\text{estacionaria})$$
+Criterio: p-value < 0.05 → evidencia de estacionariedad.
+
+```{r, message=FALSE, warning=FALSE}
+suppressPackageStartupMessages({ library(tseries); library(knitr); library(kableExtra) })
+
+adf_before <- adf.test(serie_bc)
+adf_after  <- adf.test(na.omit(y_diff))
+
+# Crear tabla 
+tab9 <- data.frame(
+  `Etapa` = c("Antes (serie usada en STL)", "Después de $\\Delta·\\Delta_{12}$"),
+  `p-value ADF` = formatC(c(adf_before$p.value, adf_after$p.value),
+                          format = "f", digits = 3),
+  `Estacionaria` = c(adf_before$p.value < 0.05, adf_after$p.value < 0.05)
+)
+
+knitr::kable(
+  tab9,
+  caption = "Tabla 9. Prueba ADF antes y después de la doble diferenciación.",
+  align = "c", booktabs = TRUE, escape = FALSE
+) |>
+  kableExtra::kable_styling(full_width = FALSE, position = "center",
+                            bootstrap_options = c("striped","hover","condensed"))
+```
+
+En la Tabla 9 podemos apreciar que en ambos casos el p-value (0.01) es menor que 0.05, por lo que se rechaza la hipótesis nula (H₀) de raíz unitaria.
+
+Esto significa que tanto la serie transformada con Box–Cox como la doblemente diferenciada son estacionarias en términos de media y varianza.
+
+Sin embargo, el resultado “TRUE” en ambas etapas puede deberse a que el Box–Cox ya estabilizó gran parte de la varianza, y la doble diferenciación terminó de eliminar la tendencia residual y los ciclos anuales.
+
+La prueba ADF confirma que la serie procesada cumple con el supuesto de estacionariedad, lo cual valida el preprocesamiento y permite avanzar al análisis de autocorrelaciones (ACF/PACF) para determinar los órdenes del modelo SARIMA(p,d,q)(P,D,Q)[12].
+
+
+## **Validación visual: ACF y PACF**
+
+Objetivo: verificar la estacionariedad y la estructura de correlación temporal en la serie diferenciada.
+
+La función de autocorrelación (ACF) mide la relación entre valores separados por un rezago k:
+
+$$\rho_k = \frac{\text{Cov}(Y_t, Y_{t-k})}{\text{Var}(Y_t)}$$
+donde:
+
+* $\rho_k$ es el coeficiente de autocorrelación en el rezago k,
+* $Y_t$ es el valor de la serie en el tiempo t.
+
+En una serie estacionaria, la ACF decae rápidamente hacia cero y no muestra patrones sistemáticos.
+
+La autocorrelación parcial (PACF) mide la correlación directa entre $Y_t$ y $Y_{t-k}$, eliminando los efectos de los rezagos intermedios.Ambas funciones ayudan a:
+- Confirmar la estacionariedad de la serie diferenciada.
+- Sugerir los órdenes (p, q) y (P, Q) para el modelo SARIMA.
+
+
+```{r, message=FALSE, warning=FALSE}
+Acf(na.omit(y_diff),
+    main = "Figura 15. Función de Autocorrelación (ACF) - Serie diferenciada Δ·Δ₁₂")
+
+# Figura 16. PACF de la serie Δ·Δ₁₂
+Pacf(na.omit(y_diff),
+     main = "Figura 16. Función de Autocorrelación Parcial (PACF) - Serie diferenciada Δ·Δ₁₂")
+```
+
+
+Figura 15. Función de Autocorrelación (ACF)
+
+La función de autocorrelación de la serie diferenciada (Δ·Δ₁₂) muestra una rápida caída de las correlaciones después de los primeros rezagos, lo que indica que no existe dependencia temporal prolongada.
+Los picos en los primeros lags son bajos y dentro del intervalo de confianza (líneas azules), lo que confirma que no hay estructura de tendencia ni estacionalidad remanente.
+Además, los rezagos en múltiplos de 12 no presentan un patrón fuerte, evidenciando que la diferenciación estacional eliminó efectivamente la periodicidad anual observada en la serie original.
+
+
+Figura 16. Función de Autocorrelación Parcial (PACF)
+
+En la PACF, los picos significativos se concentran en los primeros rezagos (lag 1), mientras que los demás coeficientes se encuentran dentro de las bandas de confianza.
+Este patrón —un corte abrupto en la PACF y una ACF que decae gradualmente— sugiere la presencia de un término autorregresivo (AR) de primer orden.
+
+
+Los resultados combinados de las Figuras 15 y 16 confirman que la serie diferenciada ya cumple con el supuesto de estacionariedad, con media constante, varianza homogénea y ausencia de patrones estacionales o tendencias residuales.
+De acuerdo con los patrones observados, un modelo inicial adecuado para evaluar sería:
+
+
+SARIMA(1,1,1)(0,1,1)12
+	
+
+Este modelo integra un componente autorregresivo y otro de media móvil en la parte regular, junto con una diferencia y un término estacional de orden anual.
+
+
+El modelo SARIMA (Seasonal ARIMA) amplía el ARIMA tradicional incorporando componentes estacionales.
+
+Su formula general es:
+
+
+$$SARIMA(p,d,q)(P,D,Q)_{m}$$
+
+donde:
+* $p$  → orden autorregresivo (AR),
+* $d$  → número de diferencias regulares,
+* $q$  → orden de media móvil (MA),
+* $P$  → orden autorregresivo estacional,
+* $D$  → número de diferencias estacionales,
+* $Q$  → orden de media móvil estacional,
+* $m$  → periodicidad (12 para datos mensuales).
+
+Este checklist resume las decisiones y verificaciones realizadas en el preprocesamiento.
+
+```{r, message=FALSE, warning=FALSE}
+check_tbl <- data.frame(
+  `Aspecto evaluado` = c(
+    "Transformacion Box-Cox aplicada",
+    "Diferencias aplicadas (d, D)",
+    "Prueba ADF final (p-value < 0.05)",
+    "Confirmacion visual (ACF / PACF)",
+    "Serie lista para modelado SARIMA"
+  ),
+  `Resultado / Evidencia` = c(
+    if (exists("lambda_bc") && abs(lambda_bc - 1) > 0.1)
+      paste0("Si, lambda = ", round(lambda_bc, 3))
+    else
+      "No necesaria (lambda ≈ 1)",
+    "d = 1, D = 1 (m = 12)",
+    ifelse(adf_after$p.value < 0.05, "Si - estacionaria", "No - requiere mas diferencias"),
+    "ACF y PACF confirman estacionariedad y estructura AR(1)/MA(1)",
+    ifelse(adf_after$p.value < 0.05, "Si - lista para modelar", "Ajustar diferenciacion")
+  )
+)
+
+knitr::kable(
+  check_tbl,
+  caption = "Tabla 10. Checklist final de preprocesamiento para el modelo SARIMA(p,d,q)(P,D,Q)[12].",
+  align = "c",
+  booktabs = TRUE,
+  escape = FALSE
+) |>
+  kableExtra::kable_styling(full_width = FALSE, position = "center",
+                            bootstrap_options = c("striped","hover","condensed"))
+```
+
+
+La Tabla 10 resume los pasos y comprobaciones realizados durante el preprocesamiento de la serie mensual Australia Monthly Retail Turnover (1982–2024):
+
+| **Aspecto evaluado** | **Interpretación** |
+|:-------------|:----------------|
+| **Transformación Box-Cox aplicada** | Se aplicó la transformación Box-Cox con λ = 0.196, lo que redujo significativamente la varianza y estabilizó la escala de la serie. Esta corrección permitió controlar la heterocedasticidad y cumplir con los supuestos de varianza constante requeridos por los modelos ARIMA/SARIMA. |
+| **Diferencias aplicadas (d, D)** | La combinación de d = 1 y D = 1 (m = 12) eliminó tanto la tendencia como el patrón estacional anual, dejando la serie centrada en torno a una media estable. |
+| **Prueba ADF final (p-value < 0.05)** | Con un p-value = 0.010, se rechaza la hipótesis nula de raíz unitaria. La serie presenta evidencia estadística de estacionariedad después del proceso de diferenciación. |
+| **Confirmación visual (ACF / PACF)** | Los gráficos ACF y PACF muestran un rápido decaimiento de las correlaciones, sin patrones periódicos marcados, lo que confirma la estacionariedad y sugiere una estructura AR(1)/MA(1) de bajo orden. |
+| **Serie lista para modelado SARIMA** | La serie procesada cumple los supuestos de estacionariedad, por lo que está lista para la estimación del modelo SARIMA(1,1,1)(0,1,1)[12] como punto de partida para la siguiente unidad. |
+
+## **Conclusiones unidad 3**
+
+El preprocesamiento realizado en la Unidad 3 permitió consolidar la preparación de la serie mensual Australia Monthly Retail Turnover (1982–2024) para su futura modelación mediante técnicas SARIMA. A través de transformaciones estadísticas y validaciones gráficas, se garantizó que la serie cumpliera los supuestos de estacionariedad, condición fundamental para el análisis de series de tiempo.
+
+En primer lugar, la aplicación de la transformación Box–Cox (λ = 0.196) redujo de manera significativa la varianza y estabilizó la escala, mejorando la homogeneidad de los datos. Posteriormente, la doble diferenciación (d = 1, D = 1, m = 12) eliminó la tendencia y los patrones estacionales anuales, lo cual se reflejó en una serie con media constante y comportamiento aleatorio alrededor del cero.
+
+La prueba ADF (p-value = 0.01) confirmó estadísticamente que la serie diferenciada es estacionaria, mientras que el análisis visual de las funciones ACF y PACF evidenció la ausencia de autocorrelaciones prolongadas y la presencia de picos iniciales compatibles con componentes AR(1) y MA(1). Estos resultados validan el correcto preprocesamiento de los datos y orientan la estructura base para la estimación del modelo.
+
+Finalmente, los resultados obtenidos en el checklist de preprocesamiento (Tabla 10) verifican que la serie está lista para su modelado. Como punto de partida, se recomienda evaluar el modelo SARIMA(1,1,1)(0,1,1)[12], el cual integrará los componentes identificados y permitirá realizar pronósticos robustos sobre el comportamiento futuro de las ventas minoristas australianas.
+
+## **Referencias**
+
+- Universidad Javeriana Cali (2025). *Material del curso Análisis de Series de Tiempo — Unidad 2: Estructura de los datos en series de tiempo*. Aula Digital PUJ Cali.
+
+- Kaggle (2023). *Australia Monthly Retail Turnover Data*. Generado de [https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data](https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data).
+
+- Hyndman, R. J, & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice*. Generado de [https://otexts.com/fpp3/](https://otexts.com/fpp3/)
 
 
 # Metodología Holter-Winter y suavizamiento a la variable tiempo.
