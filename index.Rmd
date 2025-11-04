@@ -1142,7 +1142,7 @@ En la Figura 14 vemos que después de aplicar las diferencias regular (𝑑=1) y
 
 * No se aprecian patrones cíclicos definidos ni repetitivos, lo que evidencia que la estacionalidad fue removida con éxito.
 
-## ** Prueba ADF antes/después**
+## **Prueba ADF antes/después**
 
 El objetivo es evidenciar estacionariedad tras la doble diferenciación.
 
