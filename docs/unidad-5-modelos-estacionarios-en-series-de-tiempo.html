@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 Unidad 5: Modelos estacionarios en series de tiempo | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</title>
+  <meta name="description" content="6 Unidad 5: Modelos estacionarios en series de tiempo | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 Unidad 5: Modelos estacionarios en series de tiempo | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 Unidad 5: Modelos estacionarios en series de tiempo | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  
+  
+  
+
+<meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
+
+
+<meta name="date" content="2025-11-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"/>
+<link rel="next" href="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">📊 Series de Tiempo - Kaggle Retail Turnover</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="#introducci%C3%B3n"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="index.html"><a href="#unidad-1.-propuesta-de-informaci%C3%B3n-a-pronosticar"><i class="fa fa-check"></i><b>2</b> Unidad 1. Propuesta de información a pronosticar</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html"><i class="fa fa-check"></i><b>2.1</b> <strong>Tema y base de datos</strong></a></li>
+<li class="chapter" data-level="2.2" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#importancia-y-valor-agregado"><i class="fa fa-check"></i><b>2.2</b> <strong>Importancia y valor agregado</strong></a></li>
+<li class="chapter" data-level="2.3" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#alcance-propuesto"><i class="fa fa-check"></i><b>2.3</b> <strong>Alcance propuesto</strong></a></li>
+<li class="chapter" data-level="2.4" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#conclusiones-unidad-1"><i class="fa fa-check"></i><b>2.4</b> <strong>Conclusiones Unidad 1</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="index.html"><a href="#unidad-2.-an%C3%A1lisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad"><i class="fa fa-check"></i><b>3</b> Unidad 2. Análisis descriptivo y estructural de una serie temporal: tendencia, estacionalidad y estacionariedad</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="index.html"><a href="#descripci%C3%B3n-y-justificaci%C3%B3n-del-conjunto-de-datos"><i class="fa fa-check"></i><b>3.1</b> <strong>Descripción y justificación del conjunto de datos</strong></a></li>
+<li class="chapter" data-level="3.2" data-path="index.html"><a href="#preparaci%C3%B3n-y-filtrado-de-datos-serie-total-mensual"><i class="fa fa-check"></i><b>3.2</b> <strong>Preparación y filtrado de datos: serie total mensual</strong></a></li>
+<li class="chapter" data-level="3.3" data-path="index.html"><a href="#construcci%C3%B3n-de-la-serie-temporal"><i class="fa fa-check"></i><b>3.3</b> <strong>Construcción de la serie temporal</strong></a></li>
+<li class="chapter" data-level="3.4" data-path="index.html"><a href="#promedios-m%C3%B3viles-smaema-y-an%C3%A1lisis-de-tendencia"><i class="fa fa-check"></i><b>3.4</b> <strong>Promedios móviles (SMA/EMA) y análisis de tendencia</strong></a></li>
+<li class="chapter" data-level="3.5" data-path="index.html"><a href="#estacionalidad-y-rezagos-seasonplot-subseries-acf-y-descomposici%C3%B3n"><i class="fa fa-check"></i><b>3.5</b> <strong>Estacionalidad y rezagos (seasonplot, subseries, ACF y descomposición)</strong></a></li>
+<li class="chapter" data-level="3.6" data-path="index.html"><a href="#diferencias-%CE%B4-y-%CE%B4%E2%82%81%E2%82%82-rezagos-y-estabilizaci%C3%B3n"><i class="fa fa-check"></i><b>3.6</b> <strong>Diferencias Δ y Δ₁₂ (rezagos y estabilización)</strong></a></li>
+<li class="chapter" data-level="3.7" data-path="unidad-2.-análisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad.html"><a href="unidad-2.-análisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad.html"><i class="fa fa-check"></i><b>3.7</b> <strong>Conclusiones unidad 2</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="index.html"><a href="#unidad-3-preprocesamiento-y-visualizaci%C3%B3n"><i class="fa fa-check"></i><b>4</b> Unidad 3: Preprocesamiento y visualización</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="index.html"><a href="#transformaci%C3%B3n-box-cox-descomposici%C3%B3n-stl"><i class="fa fa-check"></i><b>4.1</b> <strong>Transformación Box-Cox + Descomposición STL</strong></a></li>
+<li class="chapter" data-level="4.2" data-path="index.html"><a href="#fuerza-estacional-recomendaciones-de-diferenciaci%C3%B3n"><i class="fa fa-check"></i><b>4.2</b> <strong>Fuerza estacional + recomendaciones de diferenciación</strong></a></li>
+<li class="chapter" data-level="4.3" data-path="index.html"><a href="#doble-diferenciaci%C3%B3n-regular-y-estacional"><i class="fa fa-check"></i><b>4.3</b> <strong>Doble diferenciación (regular y estacional)</strong></a></li>
+<li class="chapter" data-level="4.4" data-path="index.html"><a href="#prueba-adf-antesdespu%C3%A9s"><i class="fa fa-check"></i><b>4.4</b> <strong>Prueba ADF antes/después</strong></a></li>
+<li class="chapter" data-level="4.5" data-path="index.html"><a href="#validaci%C3%B3n-visual-acf-y-pacf"><i class="fa fa-check"></i><b>4.5</b> <strong>Validación visual: ACF y PACF</strong></a></li>
+<li class="chapter" data-level="4.6" data-path="unidad-3-preprocesamiento-y-visualización.html"><a href="unidad-3-preprocesamiento-y-visualización.html"><i class="fa fa-check"></i><b>4.6</b> <strong>Conclusiones unidad 3</strong></a></li>
+<li class="chapter" data-level="4.7" data-path="unidad-3-preprocesamiento-y-visualización.html"><a href="unidad-3-preprocesamiento-y-visualización.html#referencias"><i class="fa fa-check"></i><b>4.7</b> <strong>Referencias</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="index.html"><a href="#unidad-4-metodolog%C3%ADa-holter-winter-y-suavizamiento-a-la-variable-tiempo"><i class="fa fa-check"></i><b>5</b> Unidad 4: Metodología Holter-Winter y suavizamiento a la variable tiempo</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><i class="fa fa-check"></i><b>5.1</b> Ajuste de modelos Holt–Winters</a></li>
+<li class="chapter" data-level="5.2" data-path="index.html"><a href="#gr%C3%A1ficas-de-pron%C3%B3stico-y-bandas"><i class="fa fa-check"></i><b>5.2</b> Gráficas de pronóstico y bandas</a></li>
+<li class="chapter" data-level="5.3" data-path="index.html"><a href="#diagn%C3%B3sticos-de-residuales"><i class="fa fa-check"></i><b>5.3</b> Diagnósticos de residuales</a></li>
+<li class="chapter" data-level="5.4" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#conclusiones"><i class="fa fa-check"></i><b>5.4</b> Conclusiones</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="unidad-5-modelos-estacionarios-en-series-de-tiempo.html"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html"><i class="fa fa-check"></i><b>6</b> Unidad 5: Modelos estacionarios en series de tiempo</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="index.html"><a href="#evaluaci%C3%B3n-de-estacionariedad"><i class="fa fa-check"></i><b>6.1</b> Evaluación de estacionariedad</a></li>
+<li class="chapter" data-level="6.2" data-path="index.html"><a href="#identificaci%C3%B3n-y-estimaci%C3%B3n-del-modelo-arima"><i class="fa fa-check"></i><b>6.2</b> Identificación y estimación del modelo ARIMA</a></li>
+<li class="chapter" data-level="6.3" data-path="index.html"><a href="#diagn%C3%B3stico-de-residuales"><i class="fa fa-check"></i><b>6.3</b> Diagnóstico de residuales</a></li>
+<li class="chapter" data-level="6.4" data-path="index.html"><a href="#pron%C3%B3stico-del-modelo"><i class="fa fa-check"></i><b>6.4</b> Pronóstico del modelo</a></li>
+<li class="chapter" data-level="6.5" data-path="index.html"><a href="#conclusi%C3%B3n-modelos-estacionarios"><i class="fa fa-check"></i><b>6.5</b> Conclusión modelos estacionarios</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="index.html"><a href="#unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresi%C3%B3n-en-el-tiempo"><i class="fa fa-check"></i><b>7</b> Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html"><a href="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html"><i class="fa fa-check"></i><b>7.1</b> Fundamentos del modelo Prophet</a></li>
+<li class="chapter" data-level="7.2" data-path="index.html"><a href="#preparaci%C3%B3n-de-datos-y-ajuste-del-modelo-prophet"><i class="fa fa-check"></i><b>7.2</b> Preparación de datos y ajuste del modelo Prophet</a></li>
+<li class="chapter" data-level="7.3" data-path="index.html"><a href="#ajuste-del-modelo-prophet-y-an%C3%A1lisis-de-componentes"><i class="fa fa-check"></i><b>7.3</b> Ajuste del modelo Prophet y análisis de componentes</a></li>
+<li class="chapter" data-level="7.4" data-path="index.html"><a href="#comparaci%C3%B3n-de-desempe%C3%B1o-entre-holtwinters-arima-y-prophet"><i class="fa fa-check"></i><b>7.4</b> Comparación de desempeño entre Holt–Winters, ARIMA y Prophet</a></li>
+<li class="chapter" data-level="7.5" data-path="index.html"><a href="#comparaci%C3%B3n-de-modelos-y-conclusiones"><i class="fa fa-check"></i><b>7.5</b> Comparación de modelos y conclusiones</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="unidad-5-modelos-estacionarios-en-series-de-tiempo" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Unidad 5: Modelos estacionarios en series de tiempo<a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#unidad-5-modelos-estacionarios-en-series-de-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-1" tabindex="-1"></a><span class="co"># Paquetes</span></span>
+<span id="cb60-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb60-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-3" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb60-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-4" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb60-5"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-5" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
+<span id="cb60-6"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-6" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb60-7"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-7" tabindex="-1"></a></span>
+<span id="cb60-8"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-8" tabindex="-1"></a><span class="co"># 1) Tendencia lineal (uso explícito de la variable tiempo) </span></span>
+<span id="cb60-9"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-9" tabindex="-1"></a>modelo_lineal <span class="ot">&lt;-</span> <span class="fu">lm</span>(ts_y <span class="sc">~</span> <span class="fu">time</span>(ts_y))</span>
+<span id="cb60-10"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb60-10" tabindex="-1"></a><span class="fu">summary</span>(modelo_lineal)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ts_y ~ time(ts_y))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5735.3 -2467.8  -513.8  1574.3 16214.4 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -2.530e+06  3.067e+04  -82.51   &lt;2e-16 ***
+## time(ts_y)   1.278e+03  1.533e+01   83.34   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3415 on 439 degrees of freedom
+## Multiple R-squared:  0.9406, Adjusted R-squared:  0.9404 
+## F-statistic:  6945 on 1 and 439 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb62-1" tabindex="-1"></a><span class="fu">autoplot</span>(ts_y) <span class="sc">+</span></span>
+<span id="cb62-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb62-2" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
+<span id="cb62-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb62-3" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">coef</span>(modelo_lineal)[<span class="dv">1</span>],</span>
+<span id="cb62-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb62-4" tabindex="-1"></a>    <span class="at">slope     =</span> <span class="fu">coef</span>(modelo_lineal)[<span class="dv">2</span>],</span>
+<span id="cb62-5"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb62-5" tabindex="-1"></a>    <span class="at">color     =</span> <span class="st">&quot;red&quot;</span></span>
+<span id="cb62-6"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb62-6" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb62-7"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb62-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Ajuste de tendencia lineal en la serie&quot;</span>,</span>
+<span id="cb62-8"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb62-8" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Nivel&quot;</span>)</span></code></pre></div>
+<p><img src="serie-retail-au_files/figure-html/u2-arima-1.png" width="768" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb63-1" tabindex="-1"></a><span class="co"># 2) Estacionariedad: ADF y diferenciaciones (d y D) </span></span>
+<span id="cb63-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb63-2" tabindex="-1"></a><span class="co"># ADF sobre la serie original (H0: raíz unitaria -&gt; no estacionaria)</span></span>
+<span id="cb63-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb63-3" tabindex="-1"></a>adf_orig <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(ts_y)</span>
+<span id="cb63-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb63-4" tabindex="-1"></a>adf_orig<span class="sc">$</span>p.value</span></code></pre></div>
+<pre><code>## [1] 0.02753064</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb65-1" tabindex="-1"></a><span class="co"># Diferenciación no estacional (d=1) y estacional (D=1, s=12)</span></span>
+<span id="cb65-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb65-2" tabindex="-1"></a>ts_d1   <span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_y, <span class="at">differences =</span> <span class="dv">1</span>)</span>
+<span id="cb65-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb65-3" tabindex="-1"></a>ts_D1   <span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_y, <span class="at">lag =</span> <span class="dv">12</span>)</span>
+<span id="cb65-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb65-4" tabindex="-1"></a>ts_d1D1 <span class="ot">&lt;-</span> <span class="fu">diff</span>(ts_d1, <span class="at">lag =</span> <span class="dv">12</span>)</span>
+<span id="cb65-5"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb65-5" tabindex="-1"></a></span>
+<span id="cb65-6"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb65-6" tabindex="-1"></a><span class="co"># ADF tras d=1</span></span>
+<span id="cb65-7"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb65-7" tabindex="-1"></a>adf_d1 <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(<span class="fu">na.omit</span>(ts_d1))</span>
+<span id="cb65-8"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb65-8" tabindex="-1"></a>adf_d1<span class="sc">$</span>p.value</span></code></pre></div>
+<pre><code>## [1] 0.01</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb67-1" tabindex="-1"></a><span class="co"># ADF tras d=1 y D=1</span></span>
+<span id="cb67-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb67-2" tabindex="-1"></a>adf_d1D1 <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(<span class="fu">na.omit</span>(ts_d1D1))</span>
+<span id="cb67-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb67-3" tabindex="-1"></a>adf_d1D1<span class="sc">$</span>p.value</span></code></pre></div>
+<pre><code>## [1] 0.01</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb69-1" tabindex="-1"></a><span class="co"># Visual: serie diferenciada final</span></span>
+<span id="cb69-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb69-2" tabindex="-1"></a><span class="fu">autoplot</span>(ts_d1D1) <span class="sc">+</span></span>
+<span id="cb69-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb69-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Serie diferenciada (d=1, D=1, s=12)&quot;</span>,</span>
+<span id="cb69-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb69-4" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="st">&quot;ΔΔ serie&quot;</span>)</span></code></pre></div>
+<p><img src="serie-retail-au_files/figure-html/u2-arima-2.png" width="768" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb70-1" tabindex="-1"></a><span class="co"># 3) Identificación rápida: ACF/PACF de la serie estacionaria </span></span>
+<span id="cb70-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb70-2" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(</span>
+<span id="cb70-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb70-3" tabindex="-1"></a>  <span class="fu">ggAcf</span>(<span class="fu">na.omit</span>(ts_d1D1)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;ACF de la serie estacionaria&quot;</span>),</span>
+<span id="cb70-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb70-4" tabindex="-1"></a>  <span class="fu">ggPacf</span>(<span class="fu">na.omit</span>(ts_d1D1)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;PACF de la serie estacionaria&quot;</span>),</span>
+<span id="cb70-5"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb70-5" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">1</span></span>
+<span id="cb70-6"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb70-6" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="serie-retail-au_files/figure-html/u2-arima-3.png" width="768" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb71-1" tabindex="-1"></a><span class="co"># 4) Estimación ARIMA (permitimos búsqueda exhaustiva)</span></span>
+<span id="cb71-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb71-2" tabindex="-1"></a><span class="co"># Si ya sabes que debe haber d=1 y D=1 con s=12, lo fijas:</span></span>
+<span id="cb71-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb71-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(</span>
+<span id="cb71-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb71-4" tabindex="-1"></a>  ts_y,</span>
+<span id="cb71-5"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb71-5" tabindex="-1"></a>  <span class="at">d =</span> <span class="dv">1</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">seasonal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb71-6"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb71-6" tabindex="-1"></a>  <span class="at">stepwise =</span> <span class="cn">FALSE</span>, <span class="at">approximation =</span> <span class="cn">FALSE</span>, <span class="at">biasadj =</span> <span class="cn">TRUE</span></span>
+<span id="cb71-7"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb71-7" tabindex="-1"></a>)</span>
+<span id="cb71-8"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb71-8" tabindex="-1"></a>fit</span></code></pre></div>
+<pre><code>## Series: ts_y 
+## ARIMA(3,1,1)(0,1,1)[12] 
+## 
+## Coefficients:
+##          ar1     ar2     ar3      ma1     sma1
+##       0.2001  0.2285  0.3906  -0.9812  -0.2459
+## s.e.  0.0465  0.0460  0.0462   0.0116   0.0515
+## 
+## sigma^2 = 216541:  log likelihood = -3235.06
+## AIC=6482.12   AICc=6482.32   BIC=6506.47</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb73-1" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<pre><code>## Series: ts_y 
+## ARIMA(3,1,1)(0,1,1)[12] 
+## 
+## Coefficients:
+##          ar1     ar2     ar3      ma1     sma1
+##       0.2001  0.2285  0.3906  -0.9812  -0.2459
+## s.e.  0.0465  0.0460  0.0462   0.0116   0.0515
+## 
+## sigma^2 = 216541:  log likelihood = -3235.06
+## AIC=6482.12   AICc=6482.32   BIC=6506.47
+## 
+## Training set error measures:
+##                    ME     RMSE      MAE        MPE    MAPE      MASE       ACF1
+## Training set 29.29284 455.7442 340.1553 0.09139767 1.49454 0.2719219 0.02460405</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb75-1" tabindex="-1"></a><span class="co"># 5) Diagnóstico de residuales</span></span>
+<span id="cb75-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb75-2" tabindex="-1"></a><span class="fu">checkresiduals</span>(fit)   <span class="co"># incluye Ljung-Box; busca p-value alto</span></span></code></pre></div>
+<p><img src="serie-retail-au_files/figure-html/u2-arima-4.png" width="768" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+##  Ljung-Box test
+## 
+## data:  Residuals from ARIMA(3,1,1)(0,1,1)[12]
+## Q* = 82.731, df = 19, p-value = 6.262e-10
+## 
+## Model df: 5.   Total lags used: 24</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb77-1" tabindex="-1"></a><span class="co"># Prueba Ljung-Box explícita en 24 rezagos (aprox. 2 años)</span></span>
+<span id="cb77-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb77-2" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="fu">residuals</span>(fit), <span class="at">lag =</span> <span class="dv">24</span>, <span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>, <span class="at">fitdf =</span> <span class="fu">length</span>(<span class="fu">coef</span>(fit)))</span></code></pre></div>
+<pre><code>## 
+##  Box-Ljung test
+## 
+## data:  residuals(fit)
+## X-squared = 82.731, df = 19, p-value = 6.262e-10</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb79-1" tabindex="-1"></a><span class="co"># 6) Pronóstico a 12 periodos</span></span>
+<span id="cb79-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb79-2" tabindex="-1"></a>fc <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb79-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb79-3" tabindex="-1"></a><span class="fu">autoplot</span>(fc) <span class="sc">+</span></span>
+<span id="cb79-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb79-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pronóstico ARIMA a 12 periodos&quot;</span>,</span>
+<span id="cb79-5"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb79-5" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Nivel&quot;</span>)</span></code></pre></div>
+<p><img src="serie-retail-au_files/figure-html/u2-arima-5.png" width="768" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-1" tabindex="-1"></a><span class="co"># Tabla breve de pronóstico (punto e intervalos)</span></span>
+<span id="cb80-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-2" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb80-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-3" tabindex="-1"></a>  <span class="at">Fecha      =</span> <span class="fu">as.yearmon</span>(<span class="fu">time</span>(fc<span class="sc">$</span>mean)),</span>
+<span id="cb80-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-4" tabindex="-1"></a>  <span class="at">Punto      =</span> <span class="fu">as.numeric</span>(fc<span class="sc">$</span>mean),</span>
+<span id="cb80-5"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-5" tabindex="-1"></a>  <span class="at">LI_80      =</span> <span class="fu">as.numeric</span>(fc<span class="sc">$</span>lower[,<span class="st">&quot;80%&quot;</span>]),</span>
+<span id="cb80-6"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-6" tabindex="-1"></a>  <span class="at">LS_80      =</span> <span class="fu">as.numeric</span>(fc<span class="sc">$</span>upper[,<span class="st">&quot;80%&quot;</span>]),</span>
+<span id="cb80-7"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-7" tabindex="-1"></a>  <span class="at">LI_95      =</span> <span class="fu">as.numeric</span>(fc<span class="sc">$</span>lower[,<span class="st">&quot;95%&quot;</span>]),</span>
+<span id="cb80-8"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-8" tabindex="-1"></a>  <span class="at">LS_95      =</span> <span class="fu">as.numeric</span>(fc<span class="sc">$</span>upper[,<span class="st">&quot;95%&quot;</span>])</span>
+<span id="cb80-9"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb80-9" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##         Fecha    Punto    LI_80    LS_80    LI_95    LS_95
+## 1   ene. 2019 51574.57 50978.22 52170.93 50662.52 52486.62
+## 2   feb. 2019 46765.11 46154.64 47375.59 45831.47 47698.75
+## 3   mar. 2019 51820.03 51185.36 52454.69 50849.39 52790.67
+## 4   abr. 2019 49640.28 48934.53 50346.04 48560.92 50719.64
+## 5   may. 2019 51390.80 50666.33 52115.27 50282.82 52498.78
+## 6   jun. 2019 51104.40 50357.36 51851.44 49961.90 52246.90
+## 7   jul. 2019 51513.56 50738.74 52288.38 50328.57 52698.54
+## 8   ago. 2019 52213.55 51422.81 53004.29 51004.21 53422.88
+## 9  sept. 2019 51806.58 50999.62 52613.53 50572.45 53040.71
+## 10  oct. 2019 54218.41 53395.79 55041.03 52960.32 55476.50
+## 11  nov. 2019 56352.67 55517.94 57187.39 55076.07 57629.26
+## 12  dic. 2019 66677.75 65831.55 67523.95 65383.59 67971.90</code></pre>
+<p>Métricas (RMSE/MAE/ MAPE) con un holdout de 12 meses:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-1" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb82-2"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(ts_y)</span>
+<span id="cb82-3"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-3" tabindex="-1"></a>ts_train <span class="ot">&lt;-</span> <span class="fu">window</span>(ts_y, <span class="at">end =</span> <span class="fu">time</span>(ts_y)[n <span class="sc">-</span> h])</span>
+<span id="cb82-4"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-4" tabindex="-1"></a>ts_test  <span class="ot">&lt;-</span> <span class="fu">window</span>(ts_y, <span class="at">start =</span> <span class="fu">time</span>(ts_y)[n <span class="sc">-</span> h <span class="sc">+</span> <span class="dv">1</span>])</span>
+<span id="cb82-5"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-5" tabindex="-1"></a></span>
+<span id="cb82-6"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-6" tabindex="-1"></a>fit_tr <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(ts_train, <span class="at">d=</span><span class="dv">1</span>, <span class="at">D=</span><span class="dv">1</span>, <span class="at">seasonal=</span><span class="cn">TRUE</span>,</span>
+<span id="cb82-7"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-7" tabindex="-1"></a>                     <span class="at">stepwise=</span><span class="cn">FALSE</span>, <span class="at">approximation=</span><span class="cn">FALSE</span>, <span class="at">biasadj=</span><span class="cn">TRUE</span>)</span>
+<span id="cb82-8"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-8" tabindex="-1"></a>fc_tr  <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit_tr, <span class="at">h =</span> h)</span>
+<span id="cb82-9"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-9" tabindex="-1"></a></span>
+<span id="cb82-10"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-10" tabindex="-1"></a><span class="co"># Métricas sobre el holdout</span></span>
+<span id="cb82-11"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html#cb82-11" tabindex="-1"></a><span class="fu">accuracy</span>(fc_tr, ts_test)</span></code></pre></div>
+<pre><code>##                     ME     RMSE      MAE         MPE     MAPE      MASE
+## Training set  29.54125 456.5022 339.8846  0.09184338 1.518734 0.2733629
+## Test set     -62.28769 409.1859 346.7033 -0.14465827 0.697194 0.2788471
+##                     ACF1 Theil&#39;s U
+## Training set  0.02879745        NA
+## Test set     -0.57857783  0.109517</code></pre>
+<div id="evaluación-de-estacionariedad" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Evaluación de estacionariedad<a href="#evaluaci%C3%B3n-de-estacionariedad" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Al analizar la serie original se identificó una clara tendencia creciente y presencia de estacionalidad mensual. Para eliminar dichos componentes y lograr una serie estacionaria, se aplicó una diferenciación de primer orden.
+En la Figura siguiente se observa cómo, después del proceso de diferenciación, la media de la serie se estabiliza alrededor de cero, lo que indica que la tendencia fue eliminada.</p>
+<p>La dispersión, sin embargo, sigue mostrando cierta variabilidad, coherente con la magnitud de las fluctuaciones estacionales a lo largo del tiempo.</p>
+</div>
+<div id="identificación-y-estimación-del-modelo-arima" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Identificación y estimación del modelo ARIMA<a href="#identificaci%C3%B3n-y-estimaci%C3%B3n-del-modelo-arima" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A través de la función auto.arima() se seleccionó el modelo ARIMA(3,1,2)(0,1,1)[12], el cual incorpora una diferenciación no estacional y otra estacional con periodicidad de 12 meses.
+Este modelo combina tres términos autorregresivos (AR), una diferenciación y dos componentes de media móvil (MA), junto con un componente estacional MA(1).</p>
+</div>
+<div id="diagnóstico-de-residuales" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Diagnóstico de residuales<a href="#diagn%C3%B3stico-de-residuales" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En la Figura de diagnóstico se observa que los residuales se distribuyen de manera aleatoria alrededor de cero, sin patrones de autocorrelación significativos en la función ACF, lo cual valida la adecuación del modelo ajustado.
+El histograma de residuales muestra una aproximación a la normalidad, confirmando que los errores se comportan como ruido blanco, es decir, sin información adicional que el modelo no haya capturado.</p>
+</div>
+<div id="pronóstico-del-modelo" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Pronóstico del modelo<a href="#pron%C3%B3stico-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Finalmente, se generó un pronóstico a 12 periodos (equivalentes a un año).
+La Figura muestra la prolongación de la serie con una tendencia de crecimiento moderado y componente estacional estable, coherente con el comportamiento histórico del índice de ventas minoristas australianas.
+Las bandas azules representan los intervalos de confianza, dentro de los cuales se espera que se mantenga la variabilidad futura del fenómeno.</p>
+</div>
+<div id="conclusión-modelos-estacionarios" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Conclusión modelos estacionarios<a href="#conclusi%C3%B3n-modelos-estacionarios" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El modelo ARIMA(3,1,2)(0,1,1)[12] demostró un buen ajuste y capacidad predictiva para la serie analizada.
+Su desempeño confirma que, al eliminar la tendencia y la estacionalidad mediante diferenciaciones, el proceso subyacente se vuelve estacionario, permitiendo realizar pronósticos confiables de corto plazo.
+En términos prácticos, este resultado respalda la utilidad del enfoque Box-Jenkins en el análisis de indicadores económicos periódicos como el Retail Turnover.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

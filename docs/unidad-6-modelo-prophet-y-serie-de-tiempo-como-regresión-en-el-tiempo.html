@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7 Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</title>
+  <meta name="description" content="7 Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7 Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7 Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  
+  
+  
+
+<meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
+
+
+<meta name="date" content="2025-11-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">📊 Series de Tiempo - Kaggle Retail Turnover</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="#introducci%C3%B3n"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="index.html"><a href="#unidad-1.-propuesta-de-informaci%C3%B3n-a-pronosticar"><i class="fa fa-check"></i><b>2</b> Unidad 1. Propuesta de información a pronosticar</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html"><i class="fa fa-check"></i><b>2.1</b> <strong>Tema y base de datos</strong></a></li>
+<li class="chapter" data-level="2.2" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#importancia-y-valor-agregado"><i class="fa fa-check"></i><b>2.2</b> <strong>Importancia y valor agregado</strong></a></li>
+<li class="chapter" data-level="2.3" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#alcance-propuesto"><i class="fa fa-check"></i><b>2.3</b> <strong>Alcance propuesto</strong></a></li>
+<li class="chapter" data-level="2.4" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#conclusiones-unidad-1"><i class="fa fa-check"></i><b>2.4</b> <strong>Conclusiones Unidad 1</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="index.html"><a href="#unidad-2.-an%C3%A1lisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad"><i class="fa fa-check"></i><b>3</b> Unidad 2. Análisis descriptivo y estructural de una serie temporal: tendencia, estacionalidad y estacionariedad</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="index.html"><a href="#descripci%C3%B3n-y-justificaci%C3%B3n-del-conjunto-de-datos"><i class="fa fa-check"></i><b>3.1</b> <strong>Descripción y justificación del conjunto de datos</strong></a></li>
+<li class="chapter" data-level="3.2" data-path="index.html"><a href="#preparaci%C3%B3n-y-filtrado-de-datos-serie-total-mensual"><i class="fa fa-check"></i><b>3.2</b> <strong>Preparación y filtrado de datos: serie total mensual</strong></a></li>
+<li class="chapter" data-level="3.3" data-path="index.html"><a href="#construcci%C3%B3n-de-la-serie-temporal"><i class="fa fa-check"></i><b>3.3</b> <strong>Construcción de la serie temporal</strong></a></li>
+<li class="chapter" data-level="3.4" data-path="index.html"><a href="#promedios-m%C3%B3viles-smaema-y-an%C3%A1lisis-de-tendencia"><i class="fa fa-check"></i><b>3.4</b> <strong>Promedios móviles (SMA/EMA) y análisis de tendencia</strong></a></li>
+<li class="chapter" data-level="3.5" data-path="index.html"><a href="#estacionalidad-y-rezagos-seasonplot-subseries-acf-y-descomposici%C3%B3n"><i class="fa fa-check"></i><b>3.5</b> <strong>Estacionalidad y rezagos (seasonplot, subseries, ACF y descomposición)</strong></a></li>
+<li class="chapter" data-level="3.6" data-path="index.html"><a href="#diferencias-%CE%B4-y-%CE%B4%E2%82%81%E2%82%82-rezagos-y-estabilizaci%C3%B3n"><i class="fa fa-check"></i><b>3.6</b> <strong>Diferencias Δ y Δ₁₂ (rezagos y estabilización)</strong></a></li>
+<li class="chapter" data-level="3.7" data-path="unidad-2.-análisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad.html"><a href="unidad-2.-análisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad.html"><i class="fa fa-check"></i><b>3.7</b> <strong>Conclusiones unidad 2</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="index.html"><a href="#unidad-3-preprocesamiento-y-visualizaci%C3%B3n"><i class="fa fa-check"></i><b>4</b> Unidad 3: Preprocesamiento y visualización</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="index.html"><a href="#transformaci%C3%B3n-box-cox-descomposici%C3%B3n-stl"><i class="fa fa-check"></i><b>4.1</b> <strong>Transformación Box-Cox + Descomposición STL</strong></a></li>
+<li class="chapter" data-level="4.2" data-path="index.html"><a href="#fuerza-estacional-recomendaciones-de-diferenciaci%C3%B3n"><i class="fa fa-check"></i><b>4.2</b> <strong>Fuerza estacional + recomendaciones de diferenciación</strong></a></li>
+<li class="chapter" data-level="4.3" data-path="index.html"><a href="#doble-diferenciaci%C3%B3n-regular-y-estacional"><i class="fa fa-check"></i><b>4.3</b> <strong>Doble diferenciación (regular y estacional)</strong></a></li>
+<li class="chapter" data-level="4.4" data-path="index.html"><a href="#prueba-adf-antesdespu%C3%A9s"><i class="fa fa-check"></i><b>4.4</b> <strong>Prueba ADF antes/después</strong></a></li>
+<li class="chapter" data-level="4.5" data-path="index.html"><a href="#validaci%C3%B3n-visual-acf-y-pacf"><i class="fa fa-check"></i><b>4.5</b> <strong>Validación visual: ACF y PACF</strong></a></li>
+<li class="chapter" data-level="4.6" data-path="unidad-3-preprocesamiento-y-visualización.html"><a href="unidad-3-preprocesamiento-y-visualización.html"><i class="fa fa-check"></i><b>4.6</b> <strong>Conclusiones unidad 3</strong></a></li>
+<li class="chapter" data-level="4.7" data-path="unidad-3-preprocesamiento-y-visualización.html"><a href="unidad-3-preprocesamiento-y-visualización.html#referencias"><i class="fa fa-check"></i><b>4.7</b> <strong>Referencias</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="index.html"><a href="#unidad-4-metodolog%C3%ADa-holter-winter-y-suavizamiento-a-la-variable-tiempo"><i class="fa fa-check"></i><b>5</b> Unidad 4: Metodología Holter-Winter y suavizamiento a la variable tiempo</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><i class="fa fa-check"></i><b>5.1</b> Ajuste de modelos Holt–Winters</a></li>
+<li class="chapter" data-level="5.2" data-path="index.html"><a href="#gr%C3%A1ficas-de-pron%C3%B3stico-y-bandas"><i class="fa fa-check"></i><b>5.2</b> Gráficas de pronóstico y bandas</a></li>
+<li class="chapter" data-level="5.3" data-path="index.html"><a href="#diagn%C3%B3sticos-de-residuales"><i class="fa fa-check"></i><b>5.3</b> Diagnósticos de residuales</a></li>
+<li class="chapter" data-level="5.4" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#conclusiones"><i class="fa fa-check"></i><b>5.4</b> Conclusiones</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="unidad-5-modelos-estacionarios-en-series-de-tiempo.html"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html"><i class="fa fa-check"></i><b>6</b> Unidad 5: Modelos estacionarios en series de tiempo</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="index.html"><a href="#evaluaci%C3%B3n-de-estacionariedad"><i class="fa fa-check"></i><b>6.1</b> Evaluación de estacionariedad</a></li>
+<li class="chapter" data-level="6.2" data-path="index.html"><a href="#identificaci%C3%B3n-y-estimaci%C3%B3n-del-modelo-arima"><i class="fa fa-check"></i><b>6.2</b> Identificación y estimación del modelo ARIMA</a></li>
+<li class="chapter" data-level="6.3" data-path="index.html"><a href="#diagn%C3%B3stico-de-residuales"><i class="fa fa-check"></i><b>6.3</b> Diagnóstico de residuales</a></li>
+<li class="chapter" data-level="6.4" data-path="index.html"><a href="#pron%C3%B3stico-del-modelo"><i class="fa fa-check"></i><b>6.4</b> Pronóstico del modelo</a></li>
+<li class="chapter" data-level="6.5" data-path="index.html"><a href="#conclusi%C3%B3n-modelos-estacionarios"><i class="fa fa-check"></i><b>6.5</b> Conclusión modelos estacionarios</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="index.html"><a href="#unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresi%C3%B3n-en-el-tiempo"><i class="fa fa-check"></i><b>7</b> Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html"><a href="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html"><i class="fa fa-check"></i><b>7.1</b> Fundamentos del modelo Prophet</a></li>
+<li class="chapter" data-level="7.2" data-path="index.html"><a href="#preparaci%C3%B3n-de-datos-y-ajuste-del-modelo-prophet"><i class="fa fa-check"></i><b>7.2</b> Preparación de datos y ajuste del modelo Prophet</a></li>
+<li class="chapter" data-level="7.3" data-path="index.html"><a href="#ajuste-del-modelo-prophet-y-an%C3%A1lisis-de-componentes"><i class="fa fa-check"></i><b>7.3</b> Ajuste del modelo Prophet y análisis de componentes</a></li>
+<li class="chapter" data-level="7.4" data-path="index.html"><a href="#comparaci%C3%B3n-de-desempe%C3%B1o-entre-holtwinters-arima-y-prophet"><i class="fa fa-check"></i><b>7.4</b> Comparación de desempeño entre Holt–Winters, ARIMA y Prophet</a></li>
+<li class="chapter" data-level="7.5" data-path="index.html"><a href="#comparaci%C3%B3n-de-modelos-y-conclusiones"><i class="fa fa-check"></i><b>7.5</b> Comparación de modelos y conclusiones</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">7</span> Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo<a href="#unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresi%C3%B3n-en-el-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>En esta unidad se incorpora el algoritmo <strong>Facebook Prophet</strong> como alternativa de modelación y pronóstico para la serie mensual <em>Australia Monthly Retail Turnover</em>. El objetivo es:</p>
+<ol style="list-style-type: decimal">
+<li>Ajustar un modelo Prophet sobre la misma serie utilizada en las unidades anteriores.<br />
+</li>
+<li>Analizar sus componentes (tendencia y estacionalidad) y el pronóstico a 12 meses.<br />
+</li>
+<li>Justificar la interpretación de la serie como una <strong>regresión en el tiempo</strong>, conectando Prophet con el modelo de tendencia lineal y con los enfoques estacionarios (ARIMA/SARIMA).</li>
+</ol>
+<div id="fundamentos-del-modelo-prophet" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Fundamentos del modelo Prophet<a href="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html#fundamentos-del-modelo-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Prophet es un modelo de pronóstico desarrollado por Facebook que se formula como una <strong>regresión aditiva en el tiempo</strong>:</p>
+<p><span class="math display">\[
+y_t = g(t) + s(t) + h(t) + \varepsilon_t,
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(g(t)\)</span>: componente de <strong>tendencia</strong> (lineal o logística) con posibles puntos de cambio,</li>
+<li><span class="math inline">\(s(t)\)</span>: componente <strong>estacional</strong>, modelado mediante funciones de Fourier,</li>
+<li><span class="math inline">\(h(t)\)</span>: efectos de <strong>festivos o eventos especiales</strong> (si se incluyen),</li>
+<li><span class="math inline">\(\varepsilon_t\)</span>: término de error (ruido).</li>
+</ul>
+<p>En este enfoque, el <strong>tiempo <span class="math inline">\(t\)</span> y funciones derivadas del tiempo</strong> (por ejemplo, senos y cosenos para la estacionalidad) actúan como <strong>regresores</strong> dentro de un modelo de regresión generalizado. De esta manera, Prophet se entiende como una regresión donde la variable respuesta es el <em>retail turnover</em> mensual y las variables explicativas son funciones del tiempo (tendencia, estacionalidad y eventos).</p>
+</div>
+<div id="preparación-de-datos-y-ajuste-del-modelo-prophet" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Preparación de datos y ajuste del modelo Prophet<a href="#preparaci%C3%B3n-de-datos-y-ajuste-del-modelo-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para aplicar el modelo Facebook Prophet dentro del flujo de trabajo del curso, es necesario convertir la serie mensual en un formato adecuado para los paquetes modernos de análisis temporal. En particular, Prophet —a través del paquete fable.prophet— requiere que los datos estén organizados como un tsibble, una estructura ordenada que define explícitamente el índice temporal y garantiza que cada observación corresponda a un único punto en el tiempo.</p>
+<p>Esta conversión permite que el modelo reconozca automáticamente la frecuencia mensual de la serie, identifique discontinuidades, maneje estacionalidades y procese de forma eficiente las funciones de tendencia y componente estacional. Una vez estructurada la información en formato tsibble, se ajusta el modelo Prophet, el cual interpreta la serie como una regresión aditiva en el tiempo compuesta por tendencia, estacionalidad y ruido, coherente con los supuestos explorados en las unidades anteriores.</p>
+<p>En esta sección se presenta la preparación de la serie consolidada y el ajuste del modelo Prophet para generar un pronóstico coherente con el comportamiento histórico del Retail Turnover australiano.</p>
+<p>La Tabla 12 presenta las primeras 12 observaciones de la serie en formato tsibble. En ella se reconoce la columna fecha como índice temporal mensual, mientras que valor corresponde al nivel observado del retail turnover en millones de dólares australianos. Las columnas Nivel, SMA (12m) y EMA (6m) son variables derivadas de la Unidad 2 (serie original y promedios móviles simple y exponencial); por eso, en los primeros registros los promedios móviles aparecen como NA, ya que aún no se dispone de suficientes meses previos para calcular las ventanas de 6 o 12 periodos.</p>
+<p>Esta salida confirma que la serie está correctamente ordenada en el tiempo y que cada fecha tiene una única observación, condición necesaria para trabajar con tsibble y para ajustar el modelo Prophet en los pasos siguientes.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-22">Table 7.1: </span>Primeras 12 observaciones de la serie en formato tsibble.</caption>
+<thead>
+<tr class="header">
+<th align="center">fecha</th>
+<th align="center">valor</th>
+<th align="center">Nivel</th>
+<th align="center">SMA (12m)</th>
+<th align="center">EMA (6m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1982-04-01</td>
+<td align="center">6225.3</td>
+<td align="center">6225.3</td>
+<td align="center">NA</td>
+<td align="center">6225.300</td>
+</tr>
+<tr class="even">
+<td align="center">1982-05-01</td>
+<td align="center">6382.4</td>
+<td align="center">6382.4</td>
+<td align="center">NA</td>
+<td align="center">6270.186</td>
+</tr>
+<tr class="odd">
+<td align="center">1982-06-01</td>
+<td align="center">6161.8</td>
+<td align="center">6161.8</td>
+<td align="center">NA</td>
+<td align="center">6239.218</td>
+</tr>
+<tr class="even">
+<td align="center">1982-07-01</td>
+<td align="center">6398.8</td>
+<td align="center">6398.8</td>
+<td align="center">NA</td>
+<td align="center">6284.813</td>
+</tr>
+<tr class="odd">
+<td align="center">1982-08-01</td>
+<td align="center">6163.4</td>
+<td align="center">6163.4</td>
+<td align="center">NA</td>
+<td align="center">6250.124</td>
+</tr>
+<tr class="even">
+<td align="center">1982-09-01</td>
+<td align="center">6330.9</td>
+<td align="center">6330.9</td>
+<td align="center">NA</td>
+<td align="center">6273.203</td>
+</tr>
+<tr class="odd">
+<td align="center">1982-10-01</td>
+<td align="center">6535.2</td>
+<td align="center">6535.2</td>
+<td align="center">NA</td>
+<td align="center">6348.059</td>
+</tr>
+<tr class="even">
+<td align="center">1982-11-01</td>
+<td align="center">7021.7</td>
+<td align="center">7021.7</td>
+<td align="center">NA</td>
+<td align="center">6540.528</td>
+</tr>
+<tr class="odd">
+<td align="center">1982-12-01</td>
+<td align="center">9321.8</td>
+<td align="center">9321.8</td>
+<td align="center">NA</td>
+<td align="center">7335.177</td>
+</tr>
+<tr class="even">
+<td align="center">1983-01-01</td>
+<td align="center">6286.3</td>
+<td align="center">6286.3</td>
+<td align="center">NA</td>
+<td align="center">7035.498</td>
+</tr>
+<tr class="odd">
+<td align="center">1983-02-01</td>
+<td align="center">6255.9</td>
+<td align="center">6255.9</td>
+<td align="center">NA</td>
+<td align="center">6812.756</td>
+</tr>
+<tr class="even">
+<td align="center">1983-03-01</td>
+<td align="center">7019.1</td>
+<td align="center">7019.1</td>
+<td align="center">6675.217</td>
+<td align="center">6871.711</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ajuste-del-modelo-prophet-y-análisis-de-componentes" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Ajuste del modelo Prophet y análisis de componentes<a href="#ajuste-del-modelo-prophet-y-an%C3%A1lisis-de-componentes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En esta sección se ajusta el modelo Prophet sobre la serie mensual de ventas minoristas australianas utilizando el paquete fable.prophet.</p>
+<p>El objetivo es ajustar y analizar el modelo Prophet para la serie mensual Australia Monthly Retail Turnover, interpretando sus componentes (tendencia y estacionalidad) y justificando por qué Prophet puede entenderse como una regresión en el tiempo.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:prophet-ajuste"></span>
+<img src="serie-retail-au_files/figure-html/prophet-ajuste-1.png" alt="Pronóstico a 12 meses con el modelo Prophet" width="768" />
+<p class="caption">
+Figure 7.1: Pronóstico a 12 meses con el modelo Prophet
+</p>
+</div>
+<p>La figura muestra el pronóstico a 12 meses generado con el modelo Prophet a partir de la serie mensual de Retail Turnover en Australia. En la parte histórica (línea negra) se observa nuevamente una tendencia claramente creciente en el volumen de ventas minoristas, acompañada de picos estacionales muy marcados hacia el final de cada año y descensos en los primeros meses, patrón que ya se había identificado con Holt–Winters y SARIMA.</p>
+<p>En la zona sombreada azul se visualiza el pronóstico para el año siguiente, donde el modelo proyecta que el retail turnover continuará creciendo, manteniendo la misma estructura de comportamiento: aumentos graduales a lo largo del año y máximos en los meses de cierre (noviembre–diciembre), con posteriores caídas estacionales. Las bandas de confianza al 80 % y 95 % se abren ligeramente conforme avanza el horizonte de tiempo, reflejando una incertidumbre moderada pero controlada: el intervalo es relativamente estrecho frente al nivel de la serie, lo que indica que Prophet logra capturar de forma estable la combinación de tendencia y estacionalidad. En conjunto, el resultado confirma que el modelo Prophet reproduce adecuadamente el patrón histórico y ofrece pronósticos coherentes con la dinámica observada del comercio minorista australiano.</p>
+<p><strong>Componentes del modelo Prophet: tendencia y estacionalidad</strong></p>
+<p>La figura muestra la descomposición del modelo Prophet aplicada a la serie mensual Retail Turnover de Australia. Prophet expresa la serie como la suma (y en algunos casos multiplicación) de tres elementos principales: tendencia, estacionalidad y residuo. La visualización de estos componentes permite entender cómo el modelo explica la dinámica temporal del comportamiento de las ventas minoristas.</p>
+<p><img src="serie-retail-au_files/figure-html/unnamed-chunk-23-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><strong>1. Componente original (valor)</strong></p>
+<p>Corresponde a la serie observada históricamente. Se identifica nuevamente una combinación de:</p>
+<ul>
+<li><p>Una tendencia creciente sostenida en el tiempo.</p></li>
+<li><p>Picos estacionales marcados al cierre de cada año.</p></li>
+<li><p>Descensos recurrentes al inicio de cada periodo anual.</p></li>
+</ul>
+<p><strong>2. Tendencia (trend)</strong></p>
+<p>Refleja el comportamiento de largo plazo de la serie.</p>
+<ul>
+<li><p>La tendencia es claramente ascendente, consistente con el crecimiento estructural del comercio minorista australiano.</p></li>
+<li><p>La pendiente se incrementa especialmente a partir de los años 2000, sugiriendo un ritmo de expansión mayor.</p></li>
+</ul>
+<p>Este término corresponde a <span class="math inline">\(𝑔(𝑡)\)</span>, el componente determinístico que modela la evolución general del nivel de ventas en función del tiempo.</p>
+<p><strong>3. Términos multiplicativos (multiplicative_terms)</strong></p>
+<p>Este componente aparece prácticamente plano.</p>
+<ul>
+<li><p>Indica que el modelo no utiliza estacionalidad multiplicativa relevante.</p></li>
+<li><p>La estructura estacional se comporta de manera aditiva, coherente con la serie analizada.</p></li>
+</ul>
+<p><strong>4. Términos aditivos (additive_terms)</strong></p>
+<p>Representan la estacionalidad anual modelada mediante funciones de Fourier.</p>
+<ul>
+<li><p>Exhiben un ciclo regular con máximos en noviembre–diciembre y mínimos en enero–febrero.</p></li>
+<li><p>La amplitud del ciclo es estable, lo que indica un patrón estacional consistente a lo largo del tiempo.</p></li>
+<li><p>Este componente corresponde al término <span class="math inline">\(𝑠(𝑡)\)</span>, que captura los comportamientos periódicos de la serie a través de funciones trigonométricas.</p></li>
+</ul>
+<p><strong>5. Residuo (resid)</strong>
+Incluye las fluctuaciones no explicadas por la tendencia ni por la estacionalidad.</p>
+<ul>
+<li><p>No se observan patrones sistemáticos, lo que indica que el modelo captura adecuadamente la estructura determinista de la serie.</p></li>
+<li><p>Se observan picos puntuales, probablemente asociados a eventos atípicos del sector.</p></li>
+</ul>
+</div>
+<div id="comparación-de-desempeño-entre-holtwinters-arima-y-prophet" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Comparación de desempeño entre Holt–Winters, ARIMA y Prophet<a href="#comparaci%C3%B3n-de-desempe%C3%B1o-entre-holtwinters-arima-y-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El objetivo de esta sección es comparar cuantitativamente el rendimiento de los tres enfoques de pronóstico aplicados a la serie Australia Monthly Retail Turnover: el modelo Holt–Winters aditivo, el modelo ARIMA estacional y el modelo Prophet.</p>
+<p>Para ello, se utiliza una partición temporal común: los últimos 12 meses de la serie se reservan como conjunto de prueba (test), mientras que el resto se emplea para entrenar cada modelo.
+Sobre ese horizonte de 12 meses se calculan las métricas RMSE, MAE y MAPE, lo cual permite evaluar qué método ofrece mejor precisión en términos de error absoluto, cuadrático y relativo.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-24">Table 7.2: </span>Comparación de RMSE, MAE y MAPE para Holt–Winters, ARIMA y Prophet (horizonte de 12 meses).</caption>
+<thead>
+<tr class="header">
+<th align="center">Modelo</th>
+<th align="center">RMSE</th>
+<th align="center">MAE</th>
+<th align="center">MAPE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Holt–Winters aditivo</td>
+<td align="center">375.90</td>
+<td align="center">290.53</td>
+<td align="center">0.58</td>
+</tr>
+<tr class="even">
+<td align="center">ARIMA estacional</td>
+<td align="center">409.19</td>
+<td align="center">346.70</td>
+<td align="center">0.70</td>
+</tr>
+<tr class="odd">
+<td align="center">Prophet</td>
+<td align="center">10095.87</td>
+<td align="center">9777.25</td>
+<td align="center">19.58</td>
+</tr>
+</tbody>
+</table>
+<p>La Tabla anterior presenta los valores de RMSE, MAE y MAPE obtenidos para los tres modelos evaluados (Holt–Winters aditivo, ARIMA estacional y Prophet) utilizando un horizonte de predicción de 12 meses. Estas métricas permiten comparar su capacidad predictiva bajo un mismo conjunto de prueba.</p>
+<p>En primer lugar, se observa que Holt–Winters aditivo presenta el mejor desempeño general, con el menor RMSE (375.90), menor MAE (290.53) y un MAPE muy bajo (0.58%), lo cual indica que el error absoluto promedio representa menos del 1% del valor real. Este resultado confirma que, para series altamente estacionales y con un patrón relativamente suave, los modelos exponenciales suavizados pueden capturar adecuadamente la dinámica temporal.</p>
+<p>El modelo ARIMA estacional también obtiene un buen desempeño, aunque ligeramente inferior al de Holt–Winters. Sus valores de RMSE (409.19) y MAE (346.70) son mayores, y el MAPE (0.70%) evidencia un aumento leve en la proporción del error. Sin embargo, continúa siendo un modelo sólido para este tipo de series.</p>
+<p>Finalmente, el modelo Prophet es el que muestra el desempeño más débil, con errores sustancialmente más altos (RMSE de 10083.90 y MAE de 9764.46) y un MAPE de 19.55%, valor muy superior al de los otros dos métodos. Esto sugiere que Prophet no logró capturar adecuadamente la estructura temporal en este conjunto particular, posiblemente debido a la intensidad de la estacionalidad mensual y al comportamiento local de la serie, que favorece más a modelos clásicos como Holt–Winters o ARIMA.</p>
+<p>En síntesis, el mejor modelo para este caso específico es Holt–Winters aditivo, seguido por ARIMA estacional, mientras que Prophet no resulta competitivo bajo estas condiciones.</p>
+</div>
+<div id="comparación-de-modelos-y-conclusiones" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Comparación de modelos y conclusiones<a href="#comparaci%C3%B3n-de-modelos-y-conclusiones" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En las secciones anteriores se ajustaron y analizaron tres enfoques de modelamiento para la serie mensual Retail Turnover de Australia: modelos suavizados (Holt–Winters), modelos ARIMA estacionales y el algoritmo Prophet. Cada uno aporta una perspectiva diferente sobre la estructura temporal de la serie y permite analizar cómo se combinan tendencia, estacionalidad y variabilidad residual.</p>
+<p>Los modelos Holt–Winters y ARIMA representan enfoques clásicos. Holt–Winters capturó adecuadamente la tendencia creciente y la estacionalidad mensual mediante suavizamiento exponencial, mostrando pronósticos estables y con bajo error. ARIMA, por su parte, incorpora una estructura estocástica más flexible, modelando la autocorrelación y la estacionalidad mediante términos diferenciados. Ambos modelos obtuvieron errores muy bajos en el horizonte de prueba, lo que confirma su pertinencia para series con patrones regulares y marcados.</p>
+<p>El modelo Prophet ofrece una perspectiva distinta al interpretar la serie como una regresión aditiva en el tiempo, donde la tendencia y la estacionalidad se modelan mediante funciones determinísticas del tiempo (incluidas bases de Fourier). Esta formulación resulta útil para obtener una descomposición clara de la tendencia y los ciclos anuales. Sin embargo, aunque Prophet es conceptualmente interpretativo, su desempeño predictivo fue considerablemente menor en este caso, como lo evidencian los valores de RMSE, MAE y MAPE, mucho más altos en comparación con Holt–Winters y ARIMA.</p>
+<p>Esto sugiere que, para esta serie en particular, caracterizada por una estacionalidad mensual muy pronunciada y patrones altamente regulares, los métodos clásicos (Holt–Winters y ARIMA) capturan mejor la dinámica temporal. No obstante, Prophet sigue siendo valioso porque complementa la visión estadística tradicional con un enfoque de regresión funcional, permitiendo interpretar la serie en términos de componentes determinísticos y tendencia suavizada.</p>
+<p>En síntesis, aunque todos los modelos permiten describir la estructura de la serie, el mejor desempeño predictivo lo obtuvo Holt–Winters, seguido por ARIMA. Prophet, si bien proporciona una representación interpretativa clara de la tendencia y la estacionalidad, no fue el modelo más adecuado para este conjunto de datos. Su inclusión, sin embargo, enriquece el análisis al ofrecer una visión alternativa basada en regresión sobre el tiempo, lo que aporta coherencia conceptual al desarrollo del documento en esta fase del proyecto.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1521,3 +1521,460 @@ El modelo aditivo presenta los menores valores en todas las métricas, por lo cu
 - Los residuales muestran un comportamiento estable, aunque con cierta autocorrelación, lo que sugiere complementar el análisis con modelos SARIMA en etapas posteriores.
 
 - El método demuestra la utilidad del suavizamiento exponencial triple para pronósticos económicos, consolidando el uso de herramientas TIC (R + Bookdown) para la elaboración reproducible del informe.
+
+
+# Unidad 5: Modelos estacionarios en series de tiempo
+
+
+```{r u2-arima, message=FALSE, warning=FALSE}
+# Paquetes
+library(ggplot2)
+library(forecast)
+library(tseries)
+library(zoo)
+theme_set(theme_minimal(base_size = 12))
+
+# 1) Tendencia lineal (uso explícito de la variable tiempo) 
+modelo_lineal <- lm(ts_y ~ time(ts_y))
+summary(modelo_lineal)
+
+autoplot(ts_y) +
+  geom_abline(
+    intercept = coef(modelo_lineal)[1],
+    slope     = coef(modelo_lineal)[2],
+    color     = "red"
+  ) +
+  labs(title = "Ajuste de tendencia lineal en la serie",
+       x = "Time", y = "Nivel")
+
+# 2) Estacionariedad: ADF y diferenciaciones (d y D) 
+# ADF sobre la serie original (H0: raíz unitaria -> no estacionaria)
+adf_orig <- adf.test(ts_y)
+adf_orig$p.value
+
+# Diferenciación no estacional (d=1) y estacional (D=1, s=12)
+ts_d1   <- diff(ts_y, differences = 1)
+ts_D1   <- diff(ts_y, lag = 12)
+ts_d1D1 <- diff(ts_d1, lag = 12)
+
+# ADF tras d=1
+adf_d1 <- adf.test(na.omit(ts_d1))
+adf_d1$p.value
+
+# ADF tras d=1 y D=1
+adf_d1D1 <- adf.test(na.omit(ts_d1D1))
+adf_d1D1$p.value
+
+# Visual: serie diferenciada final
+autoplot(ts_d1D1) +
+  labs(title = "Serie diferenciada (d=1, D=1, s=12)",
+       x = "Time", y = "ΔΔ serie")
+
+# 3) Identificación rápida: ACF/PACF de la serie estacionaria 
+gridExtra::grid.arrange(
+  ggAcf(na.omit(ts_d1D1)) + labs(title = "ACF de la serie estacionaria"),
+  ggPacf(na.omit(ts_d1D1)) + labs(title = "PACF de la serie estacionaria"),
+  nrow = 1
+)
+
+# 4) Estimación ARIMA (permitimos búsqueda exhaustiva)
+# Si ya sabes que debe haber d=1 y D=1 con s=12, lo fijas:
+fit <- auto.arima(
+  ts_y,
+  d = 1, D = 1, seasonal = TRUE,
+  stepwise = FALSE, approximation = FALSE, biasadj = TRUE
+)
+fit
+summary(fit)
+
+# 5) Diagnóstico de residuales
+checkresiduals(fit)   # incluye Ljung-Box; busca p-value alto
+
+# Prueba Ljung-Box explícita en 24 rezagos (aprox. 2 años)
+Box.test(residuals(fit), lag = 24, type = "Ljung-Box", fitdf = length(coef(fit)))
+
+# 6) Pronóstico a 12 periodos
+fc <- forecast(fit, h = 12)
+autoplot(fc) +
+  labs(title = "Pronóstico ARIMA a 12 periodos",
+       x = "Time", y = "Nivel")
+
+# Tabla breve de pronóstico (punto e intervalos)
+data.frame(
+  Fecha      = as.yearmon(time(fc$mean)),
+  Punto      = as.numeric(fc$mean),
+  LI_80      = as.numeric(fc$lower[,"80%"]),
+  LS_80      = as.numeric(fc$upper[,"80%"]),
+  LI_95      = as.numeric(fc$lower[,"95%"]),
+  LS_95      = as.numeric(fc$upper[,"95%"])
+)
+```
+
+Métricas (RMSE/MAE/ MAPE) con un holdout de 12 meses:
+
+```{r u2-holdout, message=FALSE, warning=FALSE}
+h <- 12
+n <- length(ts_y)
+ts_train <- window(ts_y, end = time(ts_y)[n - h])
+ts_test  <- window(ts_y, start = time(ts_y)[n - h + 1])
+
+fit_tr <- auto.arima(ts_train, d=1, D=1, seasonal=TRUE,
+                     stepwise=FALSE, approximation=FALSE, biasadj=TRUE)
+fc_tr  <- forecast(fit_tr, h = h)
+
+# Métricas sobre el holdout
+accuracy(fc_tr, ts_test)
+```
+
+
+## Evaluación de estacionariedad
+
+Al analizar la serie original se identificó una clara tendencia creciente y presencia de estacionalidad mensual. Para eliminar dichos componentes y lograr una serie estacionaria, se aplicó una diferenciación de primer orden.
+En la Figura siguiente se observa cómo, después del proceso de diferenciación, la media de la serie se estabiliza alrededor de cero, lo que indica que la tendencia fue eliminada.
+
+La dispersión, sin embargo, sigue mostrando cierta variabilidad, coherente con la magnitud de las fluctuaciones estacionales a lo largo del tiempo.
+
+## Identificación y estimación del modelo ARIMA
+
+A través de la función auto.arima() se seleccionó el modelo ARIMA(3,1,2)(0,1,1)[12], el cual incorpora una diferenciación no estacional y otra estacional con periodicidad de 12 meses.
+Este modelo combina tres términos autorregresivos (AR), una diferenciación y dos componentes de media móvil (MA), junto con un componente estacional MA(1).
+
+## Diagnóstico de residuales
+
+En la Figura de diagnóstico se observa que los residuales se distribuyen de manera aleatoria alrededor de cero, sin patrones de autocorrelación significativos en la función ACF, lo cual valida la adecuación del modelo ajustado.
+El histograma de residuales muestra una aproximación a la normalidad, confirmando que los errores se comportan como ruido blanco, es decir, sin información adicional que el modelo no haya capturado.
+
+## Pronóstico del modelo
+
+Finalmente, se generó un pronóstico a 12 periodos (equivalentes a un año).
+La Figura muestra la prolongación de la serie con una tendencia de crecimiento moderado y componente estacional estable, coherente con el comportamiento histórico del índice de ventas minoristas australianas.
+Las bandas azules representan los intervalos de confianza, dentro de los cuales se espera que se mantenga la variabilidad futura del fenómeno.
+
+## Conclusión modelos estacionarios
+
+El modelo ARIMA(3,1,2)(0,1,1)[12] demostró un buen ajuste y capacidad predictiva para la serie analizada.
+Su desempeño confirma que, al eliminar la tendencia y la estacionalidad mediante diferenciaciones, el proceso subyacente se vuelve estacionario, permitiendo realizar pronósticos confiables de corto plazo.
+En términos prácticos, este resultado respalda la utilidad del enfoque Box-Jenkins en el análisis de indicadores económicos periódicos como el Retail Turnover.
+
+# Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo
+
+En esta unidad se incorpora el algoritmo **Facebook Prophet** como alternativa de modelación y pronóstico para la serie mensual *Australia Monthly Retail Turnover*. El objetivo es:
+
+1. Ajustar un modelo Prophet sobre la misma serie utilizada en las unidades anteriores.  
+2. Analizar sus componentes (tendencia y estacionalidad) y el pronóstico a 12 meses.  
+3. Justificar la interpretación de la serie como una **regresión en el tiempo**, conectando Prophet con el modelo de tendencia lineal y con los enfoques estacionarios (ARIMA/SARIMA).
+
+## Fundamentos del modelo Prophet
+
+Prophet es un modelo de pronóstico desarrollado por Facebook que se formula como una **regresión aditiva en el tiempo**:
+
+\[
+y_t = g(t) + s(t) + h(t) + \varepsilon_t,
+\]
+
+donde:
+
+- \( g(t) \): componente de **tendencia** (lineal o logística) con posibles puntos de cambio,
+- \( s(t) \): componente **estacional**, modelado mediante funciones de Fourier,
+- \( h(t) \): efectos de **festivos o eventos especiales** (si se incluyen),
+- \( \varepsilon_t \): término de error (ruido).
+
+En este enfoque, el **tiempo \(t\) y funciones derivadas del tiempo** (por ejemplo, senos y cosenos para la estacionalidad) actúan como **regresores** dentro de un modelo de regresión generalizado. De esta manera, Prophet se entiende como una regresión donde la variable respuesta es el *retail turnover* mensual y las variables explicativas son funciones del tiempo (tendencia, estacionalidad y eventos).
+
+
+## Preparación de datos y ajuste del modelo Prophet
+
+
+Para aplicar el modelo Facebook Prophet dentro del flujo de trabajo del curso, es necesario convertir la serie mensual en un formato adecuado para los paquetes modernos de análisis temporal. En particular, Prophet —a través del paquete fable.prophet— requiere que los datos estén organizados como un tsibble, una estructura ordenada que define explícitamente el índice temporal y garantiza que cada observación corresponda a un único punto en el tiempo.
+
+Esta conversión permite que el modelo reconozca automáticamente la frecuencia mensual de la serie, identifique discontinuidades, maneje estacionalidades y procese de forma eficiente las funciones de tendencia y componente estacional. Una vez estructurada la información en formato tsibble, se ajusta el modelo Prophet, el cual interpreta la serie como una regresión aditiva en el tiempo compuesta por tendencia, estacionalidad y ruido, coherente con los supuestos explorados en las unidades anteriores.
+
+En esta sección se presenta la preparación de la serie consolidada y el ajuste del modelo Prophet para generar un pronóstico coherente con el comportamiento histórico del Retail Turnover australiano.
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(tsibble)
+  library(fable)
+  library(fable.prophet)  
+  library(fabletools)
+  library(knitr)
+})
+
+# Verificar que existe la serie consolidada df y la columna fecha
+stopifnot(exists("df"), all(c("fecha","valor") %in% names(df)))
+
+# Convertir a tsibble para usar fable/fable.prophet
+serie_ts <- df %>%
+  as_tsibble(index = fecha)
+
+
+```
+
+La Tabla 12 presenta las primeras 12 observaciones de la serie en formato tsibble. En ella se reconoce la columna fecha como índice temporal mensual, mientras que valor corresponde al nivel observado del retail turnover en millones de dólares australianos. Las columnas Nivel, SMA (12m) y EMA (6m) son variables derivadas de la Unidad 2 (serie original y promedios móviles simple y exponencial); por eso, en los primeros registros los promedios móviles aparecen como NA, ya que aún no se dispone de suficientes meses previos para calcular las ventanas de 6 o 12 periodos.
+
+Esta salida confirma que la serie está correctamente ordenada en el tiempo y que cada fecha tiene una única observación, condición necesaria para trabajar con tsibble y para ajustar el modelo Prophet en los pasos siguientes.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+# Pasar df a tsibble para trabajar con fable / Prophet
+serie_ts <- df %>%
+  as_tsibble(index = fecha)
+
+# Vista rápida de las primeras filas (sin escribir "Tabla X" en el caption)
+serie_ts %>%
+  head(12) %>%
+  knitr::kable(
+    caption = "Primeras 12 observaciones de la serie en formato tsibble.",
+    align = "c"
+  )
+
+```
+
+
+## Ajuste del modelo Prophet y análisis de componentes
+
+En esta sección se ajusta el modelo Prophet sobre la serie mensual de ventas minoristas australianas utilizando el paquete fable.prophet.
+
+El objetivo es ajustar y analizar el modelo Prophet para la serie mensual Australia Monthly Retail Turnover, interpretando sus componentes (tendencia y estacionalidad) y justificando por qué Prophet puede entenderse como una regresión en el tiempo.
+
+
+
+```{r prophet-ajuste, echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "Pronóstico a 12 meses con el modelo Prophet"}
+
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(tsibble)
+  library(fable)
+  library(fable.prophet)
+  library(fabletools)
+  library(ggplot2)
+})
+
+# 0) Reconstruir la serie en formato tsibble (por si la sesión se reinició)
+serie_ts <- df %>%
+  dplyr::select(fecha, valor) %>%
+  as_tsibble(index = fecha)
+
+# 1) Ajustar el modelo Prophet con estacionalidad anual
+modelo_prophet <- serie_ts %>%
+  model(
+    prophet = prophet(valor ~ season("year"))
+  )
+
+# 2) Pronóstico a 12 meses
+fc_prophet <- modelo_prophet %>%
+  forecast(h = "12 months")
+
+# 3) Gráfico del pronóstico (queda numerado como Figura por el fig.cap)
+autoplot(fc_prophet, serie_ts) +
+  labs(
+    title = "Pronóstico a 12 meses con el modelo Prophet",
+    x = "Fecha",
+    y = "Turnover (millones de AUD)"
+  ) +
+  theme_bw()
+
+
+
+```
+La figura muestra el pronóstico a 12 meses generado con el modelo Prophet a partir de la serie mensual de Retail Turnover en Australia. En la parte histórica (línea negra) se observa nuevamente una tendencia claramente creciente en el volumen de ventas minoristas, acompañada de picos estacionales muy marcados hacia el final de cada año y descensos en los primeros meses, patrón que ya se había identificado con Holt–Winters y SARIMA.
+
+En la zona sombreada azul se visualiza el pronóstico para el año siguiente, donde el modelo proyecta que el retail turnover continuará creciendo, manteniendo la misma estructura de comportamiento: aumentos graduales a lo largo del año y máximos en los meses de cierre (noviembre–diciembre), con posteriores caídas estacionales. Las bandas de confianza al 80 % y 95 % se abren ligeramente conforme avanza el horizonte de tiempo, reflejando una incertidumbre moderada pero controlada: el intervalo es relativamente estrecho frente al nivel de la serie, lo que indica que Prophet logra capturar de forma estable la combinación de tendencia y estacionalidad. En conjunto, el resultado confirma que el modelo Prophet reproduce adecuadamente el patrón histórico y ofrece pronósticos coherentes con la dinámica observada del comercio minorista australiano.
+
+ **Componentes del modelo Prophet: tendencia y estacionalidad**
+ 
+La figura muestra la descomposición del modelo Prophet aplicada a la serie mensual Retail Turnover de Australia. Prophet expresa la serie como la suma (y en algunos casos multiplicación) de tres elementos principales: tendencia, estacionalidad y residuo. La visualización de estos componentes permite entender cómo el modelo explica la dinámica temporal del comportamiento de las ventas minoristas.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+# Componentes del modelo Prophet sobre los datos históricos
+
+# Asegurar paquetes
+suppressPackageStartupMessages({
+  library(fable)
+  library(fable.prophet)
+  library(fabletools)
+  library(ggplot2)
+})
+
+# 1) Obtener componentes del modelo (tendencia y estacionalidad)
+comp_prophet <- components(modelo_prophet)
+
+# 2) Gráfico de los componentes
+autoplot(comp_prophet) +
+  labs(
+    title = "Componentes del modelo Prophet: tendencia y estacionalidad",
+    x = "Fecha",
+    y = NULL
+  ) +
+  theme_bw()
+
+
+```
+
+**1. Componente original (valor)**
+
+Corresponde a la serie observada históricamente. Se identifica nuevamente una combinación de:
+
+- Una tendencia creciente sostenida en el tiempo.
+
+- Picos estacionales marcados al cierre de cada año.
+
+- Descensos recurrentes al inicio de cada periodo anual.
+
+**2. Tendencia (trend)**
+
+Refleja el comportamiento de largo plazo de la serie.
+
+- La tendencia es claramente ascendente, consistente con el crecimiento estructural del comercio minorista australiano.
+
+- La pendiente se incrementa especialmente a partir de los años 2000, sugiriendo un ritmo de expansión mayor.
+
+Este término corresponde a $𝑔(𝑡)$, el componente determinístico que modela la evolución general del nivel de ventas en función del tiempo.
+
+**3. Términos multiplicativos (multiplicative_terms)**
+
+Este componente aparece prácticamente plano.
+
+- Indica que el modelo no utiliza estacionalidad multiplicativa relevante.
+
+- La estructura estacional se comporta de manera aditiva, coherente con la serie analizada.
+
+**4. Términos aditivos (additive_terms)**
+
+Representan la estacionalidad anual modelada mediante funciones de Fourier.
+
+- Exhiben un ciclo regular con máximos en noviembre–diciembre y mínimos en enero–febrero.
+
+- La amplitud del ciclo es estable, lo que indica un patrón estacional consistente a lo largo del tiempo.
+
+- Este componente corresponde al término $𝑠(𝑡)$, que captura los comportamientos periódicos de la serie a través de funciones trigonométricas.
+
+**5. Residuo (resid)**
+Incluye las fluctuaciones no explicadas por la tendencia ni por la estacionalidad.
+
+- No se observan patrones sistemáticos, lo que indica que el modelo captura adecuadamente la estructura determinista de la serie.
+
+- Se observan picos puntuales, probablemente asociados a eventos atípicos del sector.
+
+## Comparación de desempeño entre Holt–Winters, ARIMA y Prophet
+
+El objetivo de esta sección es comparar cuantitativamente el rendimiento de los tres enfoques de pronóstico aplicados a la serie Australia Monthly Retail Turnover: el modelo Holt–Winters aditivo, el modelo ARIMA estacional y el modelo Prophet.
+
+Para ello, se utiliza una partición temporal común: los últimos 12 meses de la serie se reservan como conjunto de prueba (test), mientras que el resto se emplea para entrenar cada modelo.
+Sobre ese horizonte de 12 meses se calculan las métricas RMSE, MAE y MAPE, lo cual permite evaluar qué método ofrece mejor precisión en términos de error absoluto, cuadrático y relativo.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+# Horizonte de evaluación
+
+h <- 12
+
+# 1) Partición común train/test
+
+n <- length(ts_y)
+ts_train <- window(ts_y, end   = time(ts_y)[n - h])
+ts_test  <- window(ts_y, start = time(ts_y)[n - h + 1])
+
+# 2) Holt–Winters aditivo
+
+fit_hw <- HoltWinters(ts_train, seasonal = "additive")
+fc_hw  <- forecast(fit_hw, h = h)
+
+# 3) ARIMA estacional (misma lógica usada antes)
+
+fit_arima <- auto.arima(
+ts_train,
+d = 1, D = 1, seasonal = TRUE,
+stepwise = FALSE, approximation = FALSE, biasadj = TRUE
+)
+fc_arima <- forecast(fit_arima, h = h)
+
+# 4) Prophet entrenado sobre el mismo tramo de entrenamiento
+
+library(tsibble)
+library(fable)
+library(fable.prophet)
+library(dplyr)
+
+# Número de observaciones de entrenamiento (las mismas que tiene ts_train)
+len_train <- length(ts_train)
+
+# Tomar las primeras len_train filas de df y convertirlas a tsibble
+df_train <- df[1:len_train, ] %>%
+  as_tsibble(index = fecha)
+
+
+fit_prophet <- df_train |>
+model(prophet = prophet(valor ~ season("year")))
+
+fc_prophet <- forecast(fit_prophet, h = h)
+
+pred_prophet <- fc_prophet |>
+as_tibble() |>
+dplyr::pull(.mean) |>
+as.numeric()
+
+# 5) Métricas de error
+
+m_hw    <- accuracy(fc_hw,   ts_test)
+m_arima <- accuracy(fc_arima, ts_test)
+
+calc_metrics <- function(pred, real){
+err <- real - pred
+data.frame(
+RMSE = sqrt(mean(err^2, na.rm = TRUE)),
+MAE  = mean(abs(err), na.rm = TRUE),
+MAPE = mean(abs(err/real), na.rm = TRUE) * 100
+)
+}
+m_prophet <- calc_metrics(pred_prophet, as.numeric(ts_test))
+
+tab_modelos <- data.frame(
+Modelo = c("Holt–Winters aditivo",
+"ARIMA estacional",
+"Prophet"),
+RMSE = c(m_hw["Test set","RMSE"],
+m_arima["Test set","RMSE"],
+m_prophet$RMSE),
+MAE  = c(m_hw["Test set","MAE"],
+m_arima["Test set","MAE"],
+m_prophet$MAE),
+MAPE = c(m_hw["Test set","MAPE"],
+m_arima["Test set","MAPE"],
+m_prophet$MAPE)
+) |>
+dplyr::mutate(dplyr::across(c(RMSE, MAE, MAPE), ~ round(.x, 2)))
+
+knitr::kable(
+tab_modelos,
+caption = "Comparación de RMSE, MAE y MAPE para Holt–Winters, ARIMA y Prophet (horizonte de 12 meses).",
+align = "c"
+)
+
+```
+La Tabla anterior presenta los valores de RMSE, MAE y MAPE obtenidos para los tres modelos evaluados (Holt–Winters aditivo, ARIMA estacional y Prophet) utilizando un horizonte de predicción de 12 meses. Estas métricas permiten comparar su capacidad predictiva bajo un mismo conjunto de prueba.
+
+En primer lugar, se observa que Holt–Winters aditivo presenta el mejor desempeño general, con el menor RMSE (375.90), menor MAE (290.53) y un MAPE muy bajo (0.58%), lo cual indica que el error absoluto promedio representa menos del 1% del valor real. Este resultado confirma que, para series altamente estacionales y con un patrón relativamente suave, los modelos exponenciales suavizados pueden capturar adecuadamente la dinámica temporal.
+
+El modelo ARIMA estacional también obtiene un buen desempeño, aunque ligeramente inferior al de Holt–Winters. Sus valores de RMSE (409.19) y MAE (346.70) son mayores, y el MAPE (0.70%) evidencia un aumento leve en la proporción del error. Sin embargo, continúa siendo un modelo sólido para este tipo de series.
+
+Finalmente, el modelo Prophet es el que muestra el desempeño más débil, con errores sustancialmente más altos (RMSE de 10083.90 y MAE de 9764.46) y un MAPE de 19.55%, valor muy superior al de los otros dos métodos. Esto sugiere que Prophet no logró capturar adecuadamente la estructura temporal en este conjunto particular, posiblemente debido a la intensidad de la estacionalidad mensual y al comportamiento local de la serie, que favorece más a modelos clásicos como Holt–Winters o ARIMA.
+
+En síntesis, el mejor modelo para este caso específico es Holt–Winters aditivo, seguido por ARIMA estacional, mientras que Prophet no resulta competitivo bajo estas condiciones.
+
+## Comparación de modelos y conclusiones
+
+En las secciones anteriores se ajustaron y analizaron tres enfoques de modelamiento para la serie mensual Retail Turnover de Australia: modelos suavizados (Holt–Winters), modelos ARIMA estacionales y el algoritmo Prophet. Cada uno aporta una perspectiva diferente sobre la estructura temporal de la serie y permite analizar cómo se combinan tendencia, estacionalidad y variabilidad residual.
+
+Los modelos Holt–Winters y ARIMA representan enfoques clásicos. Holt–Winters capturó adecuadamente la tendencia creciente y la estacionalidad mensual mediante suavizamiento exponencial, mostrando pronósticos estables y con bajo error. ARIMA, por su parte, incorpora una estructura estocástica más flexible, modelando la autocorrelación y la estacionalidad mediante términos diferenciados. Ambos modelos obtuvieron errores muy bajos en el horizonte de prueba, lo que confirma su pertinencia para series con patrones regulares y marcados.
+
+El modelo Prophet ofrece una perspectiva distinta al interpretar la serie como una regresión aditiva en el tiempo, donde la tendencia y la estacionalidad se modelan mediante funciones determinísticas del tiempo (incluidas bases de Fourier). Esta formulación resulta útil para obtener una descomposición clara de la tendencia y los ciclos anuales. Sin embargo, aunque Prophet es conceptualmente interpretativo, su desempeño predictivo fue considerablemente menor en este caso, como lo evidencian los valores de RMSE, MAE y MAPE, mucho más altos en comparación con Holt–Winters y ARIMA.
+
+Esto sugiere que, para esta serie en particular, caracterizada por una estacionalidad mensual muy pronunciada y patrones altamente regulares, los métodos clásicos (Holt–Winters y ARIMA) capturan mejor la dinámica temporal. No obstante, Prophet sigue siendo valioso porque complementa la visión estadística tradicional con un enfoque de regresión funcional, permitiendo interpretar la serie en términos de componentes determinísticos y tendencia suavizada.
+
+En síntesis, aunque todos los modelos permiten describir la estructura de la serie, el mejor desempeño predictivo lo obtuvo Holt–Winters, seguido por ARIMA. Prophet, si bien proporciona una representación interpretativa clara de la tendencia y la estacionalidad, no fue el modelo más adecuado para este conjunto de datos. Su inclusión, sin embargo, enriquece el análisis al ofrecer una visión alternativa basada en regresión sobre el tiempo, lo que aporta coherencia conceptual al desarrollo del documento en esta fase del proyecto.
