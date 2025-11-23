@@ -2187,3 +2187,6 @@ El mayor desajuste se observa en los dos últimos meses, donde la serie real exp
 Este comportamiento puede explicarse porque las redes Elman requieren más información temporal o un número mayor de neuronas/capas para capturar variaciones pronunciadas en series altamente estacionales y crecientes. Además, a diferencia de Prophet o ARIMA, la arquitectura no incorpora explícitamente una modelación de estacionalidad ni tendencia, lo que reduce su capacidad predictiva en este tipo de datos económicos.
 
 En resumen, la red Elman funciona, pero su precisión es inferior a la de otros modelos utilizados previamente en el documento. Esto sugiere que, para este tipo de serie temporal, los modelos clásicos con estructura estacional explícita tienden a generalizar mejor en horizontes cortos de pronóstico.
+
+<!--chapter:end:index.Rmd-->
+
