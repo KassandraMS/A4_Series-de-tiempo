@@ -2068,8 +2068,7 @@ elman_net <- elman(
   maxit = 500
 )
 
-elman_net            # para ver el resumen que ya te salió
-
+elman_net          
 
 ```
 
@@ -2200,7 +2199,6 @@ pred_jordan_sc <- as.numeric(pred_jordan_sc)
 y_pred_jordan <- pred_jordan_sc * y_sd + y_mean
 
 # Tabla de resultados
-library(zoo)
 fechas_test <- as.Date(as.yearmon(time(ts_test)))
 
 res_jordan <- data.frame(
