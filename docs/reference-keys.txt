@@ -67,3 +67,11 @@ preparación-del-conjunto-supervisado-y-partición-traintest
 tab:elman-forecast
 entrenamiento-de-la-red-elman
 pronóstico-con-la-red-elman
+tab:jordan-forecast
+entrenamiento-de-la-red-neuronal-jordan
+tab:jordan
+tab:unnamed-chunk-25
+evaluación-del-desempeño-de-la-red-jordan
+gráfico-comparativo-valores-reales-vs-pronóstico-jordan
+comparación-entre-las-redes-elman-y-jordan
+conclusiones-1

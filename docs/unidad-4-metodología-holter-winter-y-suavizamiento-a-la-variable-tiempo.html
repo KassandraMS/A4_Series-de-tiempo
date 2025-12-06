@@ -23,7 +23,7 @@
 <meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
 
 
-<meta name="date" content="2025-11-22" />
+<meta name="date" content="2025-12-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -202,6 +202,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="index.html"><a href="#preparaci%C3%B3n-del-conjunto-supervisado-y-partici%C3%B3n-traintest"><i class="fa fa-check"></i><b>8.2</b> Preparación del conjunto supervisado y partición train/test</a></li>
 <li class="chapter" data-level="8.3" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-elman"><i class="fa fa-check"></i><b>8.3</b> Entrenamiento de la red Elman</a></li>
 <li class="chapter" data-level="8.4" data-path="index.html"><a href="#pron%C3%B3stico-con-la-red-elman"><i class="fa fa-check"></i><b>8.4</b> Pronóstico con la red Elman</a></li>
+<li class="chapter" data-level="8.5" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-neuronal-jordan"><i class="fa fa-check"></i><b>8.5</b> Entrenamiento de la red neuronal Jordan</a></li>
+<li class="chapter" data-level="8.6" data-path="index.html"><a href="#evaluaci%C3%B3n-del-desempe%C3%B1o-de-la-red-jordan"><i class="fa fa-check"></i><b>8.6</b> Evaluación del desempeño de la red Jordan</a></li>
+<li class="chapter" data-level="8.7" data-path="index.html"><a href="#gr%C3%A1fico-comparativo-valores-reales-vs-pron%C3%B3stico-jordan"><i class="fa fa-check"></i><b>8.7</b> Gráfico comparativo: valores reales vs pronóstico Jordan</a></li>
+<li class="chapter" data-level="8.8" data-path="index.html"><a href="#comparaci%C3%B3n-entre-las-redes-elman-y-jordan"><i class="fa fa-check"></i><b>8.8</b> Comparación entre las redes Elman y Jordan</a></li>
+<li class="chapter" data-level="8.9" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#conclusiones-1"><i class="fa fa-check"></i><b>8.9</b> Conclusiones</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
@@ -225,12 +230,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">5</span> Unidad 4: Metodología Holter-Winter y suavizamiento a la variable tiempo<a href="#unidad-4-metodolog%C3%ADa-holter-winter-y-suavizamiento-a-la-variable-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>En esta sección aplicamos el método de <strong>Holt–Winters</strong> a la serie, se compara aditivo vs. multiplicativo y se valida con una partición temporal (train/test),
-reportando métricas y pronósticos a 12 meses.</p>
+<p>En esta sección aplicamos el método de <strong>Holt–Winters</strong> a la serie, se compara aditivo vs. multiplicativo y se valida con una partición temporal (train/test), reportando métricas y pronósticos a 12 meses.</p>
 <p><strong>Holt-Winters (suavizamiento exponencial estacional)</strong></p>
 <p>Para frecuencia <span class="math inline">\(m = 12\)</span>.</p>
-<p><strong>Aditivo:</strong>
-<span class="math display">\[
+<p><strong>Aditivo:</strong> <span class="math display">\[
 \begin{aligned}
 \ell_t &amp;= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1}+b_{t-1}) \\
 b_t    &amp;= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \\
@@ -238,8 +241,7 @@ s_t    &amp;= \gamma(y_t - \ell_t) + (1-\gamma)s_{t-m} \\
 \hat{y}_{t+h} &amp;= \ell_t + hb_t + s_{t-m+h_m}
 \end{aligned}
 \]</span></p>
-<p><strong>Multiplicativo:</strong>
-<span class="math display">\[
+<p><strong>Multiplicativo:</strong> <span class="math display">\[
 \begin{aligned}
 \ell_t &amp;= \alpha\frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1}+b_{t-1}) \\
 b_t    &amp;= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \\
@@ -375,7 +377,8 @@ El método estima automáticamente los parámetros α, β y γ minimizando el er
 <span id="cb55-9"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#cb55-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb55-10"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#cb55-10" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="serie-retail-au_files/figure-html/unnamed-chunk-17-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>Con el modelo Holt–Winters aditivo en el cual se observa se observa una tendencia creciente sostenida, consistente con el crecimiento histórico del comercio minorista australiano. Un patrón de estacionalidad estable, con picos al cierre de cada año (noviembre-diciembre) y caídas posteriores (enero-febrero).</p>
+<p>Con el modelo Holt–Winters aditivo en el cual se observa se observa una tendencia creciente sostenida, consistente con el crecimiento histórico del comercio minorista australiano.
+Un patrón de estacionalidad estable, con picos al cierre de cada año (noviembre-diciembre) y caídas posteriores (enero-febrero).</p>
 <p>El pronóstico para los 12 meses posteriores mantiene esa estructura: tendencia al alza y fluctuaciones cíclicas similares.</p>
 <p>Estas características confirman que la serie presenta tanto tendencia como estacionalidad aditiva (de magnitud constante en el tiempo).</p>
 </div>
@@ -396,7 +399,8 @@ No obstante, la prueba de Ljung–Box (p &lt; 0.05) indica presencia de autocorr
 </div>
 <div id="conclusiones" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> Conclusiones<a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#conclusiones" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En esta etapa se implementó la metodología <strong>Holt–Winters</strong> para el análisis y pronóstico de la serie temporal mensual <strong>Australia Monthly Retail Turnover (1982–2018)</strong>. Este método permite capturar <strong>tendencia</strong>, <strong>nivel</strong> y <strong>estacionalidad</strong>, utilizando un sistema de ecuaciones recursivas que ajusta los componentes de la serie mediante tres parámetros de suavizamiento:</p>
+<p>En esta etapa se implementó la metodología <strong>Holt–Winters</strong> para el análisis y pronóstico de la serie temporal mensual <strong>Australia Monthly Retail Turnover (1982–2018)</strong>.
+Este método permite capturar <strong>tendencia</strong>, <strong>nivel</strong> y <strong>estacionalidad</strong>, utilizando un sistema de ecuaciones recursivas que ajusta los componentes de la serie mediante tres parámetros de suavizamiento:</p>
 <ul>
 <li>α (<em>nivel</em>),<br />
 </li>

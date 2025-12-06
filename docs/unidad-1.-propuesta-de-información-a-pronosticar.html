@@ -23,7 +23,7 @@
 <meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
 
 
-<meta name="date" content="2025-11-22" />
+<meta name="date" content="2025-12-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -202,6 +202,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="index.html"><a href="#preparaci%C3%B3n-del-conjunto-supervisado-y-partici%C3%B3n-traintest"><i class="fa fa-check"></i><b>8.2</b> Preparación del conjunto supervisado y partición train/test</a></li>
 <li class="chapter" data-level="8.3" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-elman"><i class="fa fa-check"></i><b>8.3</b> Entrenamiento de la red Elman</a></li>
 <li class="chapter" data-level="8.4" data-path="index.html"><a href="#pron%C3%B3stico-con-la-red-elman"><i class="fa fa-check"></i><b>8.4</b> Pronóstico con la red Elman</a></li>
+<li class="chapter" data-level="8.5" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-neuronal-jordan"><i class="fa fa-check"></i><b>8.5</b> Entrenamiento de la red neuronal Jordan</a></li>
+<li class="chapter" data-level="8.6" data-path="index.html"><a href="#evaluaci%C3%B3n-del-desempe%C3%B1o-de-la-red-jordan"><i class="fa fa-check"></i><b>8.6</b> Evaluación del desempeño de la red Jordan</a></li>
+<li class="chapter" data-level="8.7" data-path="index.html"><a href="#gr%C3%A1fico-comparativo-valores-reales-vs-pron%C3%B3stico-jordan"><i class="fa fa-check"></i><b>8.7</b> Gráfico comparativo: valores reales vs pronóstico Jordan</a></li>
+<li class="chapter" data-level="8.8" data-path="index.html"><a href="#comparaci%C3%B3n-entre-las-redes-elman-y-jordan"><i class="fa fa-check"></i><b>8.8</b> Comparación entre las redes Elman y Jordan</a></li>
+<li class="chapter" data-level="8.9" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#conclusiones-1"><i class="fa fa-check"></i><b>8.9</b> Conclusiones</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
@@ -227,7 +232,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">2</span> Unidad 1. Propuesta de información a pronosticar<a href="#unidad-1.-propuesta-de-informaci%C3%B3n-a-pronosticar" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="tema-y-base-de-datos" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> <strong>Tema y base de datos</strong><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#tema-y-base-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Se trabajará con la serie <strong>Retail Turnover mensual de Australia</strong> (ventas minoristas agregadas por mes). Esta información proviene del dataset público “Australia Monthly Retail Turnover” disponible en Kaggle y recoge el gasto mensual del comercio al por menor a nivel nacional.</p>
+<p>Se trabajará con la serie <strong>Retail Turnover mensual de Australia</strong> (ventas minoristas agregadas por mes).
+Esta información proviene del dataset público “Australia Monthly Retail Turnover” disponible en Kaggle y recoge el gasto mensual del comercio al por menor a nivel nacional.</p>
 </div>
 <div id="importancia-y-valor-agregado" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> <strong>Importancia y valor agregado</strong><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#importancia-y-valor-agregado" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -253,14 +259,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p><strong>Fuentes y permisos</strong></p>
 <ul>
-<li><p><strong>Fuente:</strong> Kaggle (2024). Australia Monthly Retail Turnover Dataset, autor: <strong>kanyaweechomming101</strong>. URL: <a href="https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data" class="uri">https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data</a>.</p></li>
+<li><p><strong>Fuente:</strong> Kaggle (2024).
+Australia Monthly Retail Turnover Dataset, autor: <strong>kanyaweechomming101</strong>.
+URL: <a href="https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data" class="uri">https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data</a>.</p></li>
 <li><p><strong>ABS (Australian Bureau of Statistics)</strong> como fuente estadística original (referenciada en la descripción del dataset).</p></li>
-<li><p><strong>Uso</strong>: datos públicos para fines académicos;según los términos publicados en la página del dataset; se citará la fuente en el documento. No contiene información personal.</p></li>
+<li><p><strong>Uso</strong>: datos públicos para fines académicos;según los términos publicados en la página del dataset; se citará la fuente en el documento.
+No contiene información personal.</p></li>
 </ul>
 </div>
 <div id="conclusiones-unidad-1" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> <strong>Conclusiones Unidad 1</strong><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#conclusiones-unidad-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Esta propuesta demuestra el uso efectivo de herramientas TIC avanzadas, integrando <strong>RStudio, Bookdown y GitHub Pages</strong> como entornos para la gestión reproducible de documentos científicos. A través del análisis de la serie de tiempo “Australia Monthly Retail Turnover”, se pretende identificar patrones y tendencias que permitan comprender la dinámica del consumo minorista australiano y su evolución en el tiempo.</p>
+<p>Esta propuesta demuestra el uso efectivo de herramientas TIC avanzadas, integrando <strong>RStudio, Bookdown y GitHub Pages</strong> como entornos para la gestión reproducible de documentos científicos.
+A través del análisis de la serie de tiempo “Australia Monthly Retail Turnover”, se pretende identificar patrones y tendencias que permitan comprender la dinámica del consumo minorista australiano y su evolución en el tiempo.</p>
 <p>Este trabajo constituye la base para la aplicación de modelos predictivos que fortalezcan la toma de decisiones en entornos comerciales y académicos, promoviendo la innovación y la analítica como pilares de la gestión de datos.</p>
 <hr />
 </div>

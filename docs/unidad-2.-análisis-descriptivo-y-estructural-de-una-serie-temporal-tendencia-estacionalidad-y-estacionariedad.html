@@ -23,7 +23,7 @@
 <meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
 
 
-<meta name="date" content="2025-11-22" />
+<meta name="date" content="2025-12-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -202,6 +202,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="index.html"><a href="#preparaci%C3%B3n-del-conjunto-supervisado-y-partici%C3%B3n-traintest"><i class="fa fa-check"></i><b>8.2</b> Preparación del conjunto supervisado y partición train/test</a></li>
 <li class="chapter" data-level="8.3" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-elman"><i class="fa fa-check"></i><b>8.3</b> Entrenamiento de la red Elman</a></li>
 <li class="chapter" data-level="8.4" data-path="index.html"><a href="#pron%C3%B3stico-con-la-red-elman"><i class="fa fa-check"></i><b>8.4</b> Pronóstico con la red Elman</a></li>
+<li class="chapter" data-level="8.5" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-neuronal-jordan"><i class="fa fa-check"></i><b>8.5</b> Entrenamiento de la red neuronal Jordan</a></li>
+<li class="chapter" data-level="8.6" data-path="index.html"><a href="#evaluaci%C3%B3n-del-desempe%C3%B1o-de-la-red-jordan"><i class="fa fa-check"></i><b>8.6</b> Evaluación del desempeño de la red Jordan</a></li>
+<li class="chapter" data-level="8.7" data-path="index.html"><a href="#gr%C3%A1fico-comparativo-valores-reales-vs-pron%C3%B3stico-jordan"><i class="fa fa-check"></i><b>8.7</b> Gráfico comparativo: valores reales vs pronóstico Jordan</a></li>
+<li class="chapter" data-level="8.8" data-path="index.html"><a href="#comparaci%C3%B3n-entre-las-redes-elman-y-jordan"><i class="fa fa-check"></i><b>8.8</b> Comparación entre las redes Elman y Jordan</a></li>
+<li class="chapter" data-level="8.9" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#conclusiones-1"><i class="fa fa-check"></i><b>8.9</b> Conclusiones</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
@@ -568,7 +573,8 @@ El dataset inicial incluye registros mensuales desagregados por estado e industr
 Para los fines de esta Unidad —centrados en el análisis de la estructura de los datos y la identificación de patrones temporales— se seleccionó una serie agregada, correspondiente al total mensual de ventas minoristas a nivel nacional.</p>
 <p>El código ejecutado agrupa los registros por la variable fecha y suma el valor del “Turnover” (ventas) de todas las industrias disponibles.
 De este modo, se obtiene una serie más estable y representativa del comportamiento general del comercio minorista australiano.</p>
-<p>La Tabla 2 presenta las primeras observaciones de la serie consolidada. En ella se observan las columnas:</p>
+<p>La Tabla 2 presenta las primeras observaciones de la serie consolidada.
+En ella se observan las columnas:</p>
 <table>
 <colgroup>
 <col width="45%" />
@@ -812,7 +818,8 @@ Este resultado establece la base para los siguientes análisis, donde se abordar
 </div>
 <div id="estacionalidad-y-rezagos-seasonplot-subseries-acf-y-descomposición" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> <strong>Estacionalidad y rezagos (seasonplot, subseries, ACF y descomposición)</strong><a href="#estacionalidad-y-rezagos-seasonplot-subseries-acf-y-descomposici%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En una serie temporal, la estacionalidad se refiere a los patrones que se repiten a intervalos regulares, como meses, trimestres o años. Estos ciclos son producto de comportamientos periódicos (por ejemplo, aumentos de ventas en diciembre o caídas en enero).</p>
+<p>En una serie temporal, la estacionalidad se refiere a los patrones que se repiten a intervalos regulares, como meses, trimestres o años.
+Estos ciclos son producto de comportamientos periódicos (por ejemplo, aumentos de ventas en diciembre o caídas en enero).</p>
 <p>Fórmulas</p>
 <p><strong>Modelo aditivo:</strong></p>
 <p><span class="math display">\[
@@ -1037,7 +1044,8 @@ Para analizarlo:</p>
 </table>
 <p>Seasonplot (Figura 3)</p>
 <p>El gráfico estacional traza, para cada año, la evolución a lo largo de los 12 meses.
-Se observa un patrón altamente repetitivo: incrementos hacia el cierre de año y caídas posteriores, evidencia clara de estacionalidad mensual. La superposición de curvas similares entre años indica que el patrón es estable y persistente.</p>
+Se observa un patrón altamente repetitivo: incrementos hacia el cierre de año y caídas posteriores, evidencia clara de estacionalidad mensual.
+La superposición de curvas similares entre años indica que el patrón es estable y persistente.</p>
 <p>Para evitar la sobrecarga visual del seasonplot con todos los años, se presentan dos vistas complementarias:</p>
 <p>Figura 3A (últimos 10 años): la estacionalidad reciente es nítida; se mantiene el pico en noviembre–diciembre y la caída en enero–febrero.</p>
 <p>Figura 3B (facetas por década): el promedio mensual de cada década (línea azul) confirma la estabilidad del patrón anual, mientras que la curva del último año (naranja) permite contrastar el presente con su contexto histórico.</p>
@@ -1047,7 +1055,8 @@ Se observa un patrón altamente repetitivo: incrementos hacia el cierre de año 
 Los paneles permiten identificar qué meses presentan niveles sistemáticamente altos (p. ej., noviembre–diciembre) y cuáles tienden a ser bajos (p. ej., enero–febrero).
 Esto refuerza la lectura del seasonplot con una visión mes a mes.</p>
 <p>Autocorrelación (Figura 5)</p>
-<p>La ACF exhibe picos significativos en rezagos de 12, 24, 36… meses, lo cual confirma formalmente la estacionalidad anual. Además, la persistencia de autocorrelación en rezagos cortos indica que la serie no es ruido blanco y posee memoria (dependencia temporal).</p>
+<p>La ACF exhibe picos significativos en rezagos de 12, 24, 36… meses, lo cual confirma formalmente la estacionalidad anual.
+Además, la persistencia de autocorrelación en rezagos cortos indica que la serie no es ruido blanco y posee memoria (dependencia temporal).</p>
 <p>Descomposición STL (Figura 6)</p>
 <p>La descomposición STL separa la serie en tendencia, estacionalidad y residuo.</p>
 <ul>

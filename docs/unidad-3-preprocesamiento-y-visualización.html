@@ -23,7 +23,7 @@
 <meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
 
 
-<meta name="date" content="2025-11-22" />
+<meta name="date" content="2025-12-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -202,6 +202,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="index.html"><a href="#preparaci%C3%B3n-del-conjunto-supervisado-y-partici%C3%B3n-traintest"><i class="fa fa-check"></i><b>8.2</b> Preparación del conjunto supervisado y partición train/test</a></li>
 <li class="chapter" data-level="8.3" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-elman"><i class="fa fa-check"></i><b>8.3</b> Entrenamiento de la red Elman</a></li>
 <li class="chapter" data-level="8.4" data-path="index.html"><a href="#pron%C3%B3stico-con-la-red-elman"><i class="fa fa-check"></i><b>8.4</b> Pronóstico con la red Elman</a></li>
+<li class="chapter" data-level="8.5" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-neuronal-jordan"><i class="fa fa-check"></i><b>8.5</b> Entrenamiento de la red neuronal Jordan</a></li>
+<li class="chapter" data-level="8.6" data-path="index.html"><a href="#evaluaci%C3%B3n-del-desempe%C3%B1o-de-la-red-jordan"><i class="fa fa-check"></i><b>8.6</b> Evaluación del desempeño de la red Jordan</a></li>
+<li class="chapter" data-level="8.7" data-path="index.html"><a href="#gr%C3%A1fico-comparativo-valores-reales-vs-pron%C3%B3stico-jordan"><i class="fa fa-check"></i><b>8.7</b> Gráfico comparativo: valores reales vs pronóstico Jordan</a></li>
+<li class="chapter" data-level="8.8" data-path="index.html"><a href="#comparaci%C3%B3n-entre-las-redes-elman-y-jordan"><i class="fa fa-check"></i><b>8.8</b> Comparación entre las redes Elman y Jordan</a></li>
+<li class="chapter" data-level="8.9" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#conclusiones-1"><i class="fa fa-check"></i><b>8.9</b> Conclusiones</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
@@ -225,8 +230,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="unidad-3-preprocesamiento-y-visualización" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">4</span> Unidad 3: Preprocesamiento y visualización<a href="#unidad-3-preprocesamiento-y-visualizaci%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>En esta unidad se continúa el análisis desarrollado en la Unidad 2, profundizando en las etapas de preprocesamiento de datos y visualización aplicadas a la serie mensual Australia Monthly Retail Turnover (1982–2024). El objetivo es garantizar que la serie cumpla con las condiciones necesarias para su posterior modelado, particularmente en la identificación de componentes estructurales y la estabilización de la varianza y la media.</p>
-<p>A través de técnicas estadísticas y gráficas, se analizan nuevamente los patrones de tendencia y estacionalidad, la descomposición de la serie y las transformaciones requeridas para alcanzar la estacionariedad, utilizando funciones de diferenciación regular y estacional (Δ y Δ₁₂). Estas operaciones forman parte esencial del preprocesamiento, al eliminar dependencias sistemáticas y preparar la información para la estimación de modelos ARIMA estacionales (SARIMA).</p>
+<p>En esta unidad se continúa el análisis desarrollado en la Unidad 2, profundizando en las etapas de preprocesamiento de datos y visualización aplicadas a la serie mensual Australia Monthly Retail Turnover (1982–2024).
+El objetivo es garantizar que la serie cumpla con las condiciones necesarias para su posterior modelado, particularmente en la identificación de componentes estructurales y la estabilización de la varianza y la media.</p>
+<p>A través de técnicas estadísticas y gráficas, se analizan nuevamente los patrones de tendencia y estacionalidad, la descomposición de la serie y las transformaciones requeridas para alcanzar la estacionariedad, utilizando funciones de diferenciación regular y estacional (Δ y Δ₁₂).
+Estas operaciones forman parte esencial del preprocesamiento, al eliminar dependencias sistemáticas y preparar la información para la estimación de modelos ARIMA estacionales (SARIMA).</p>
 <p>El proceso descrito integra la manipulación de datos, la verificación de supuestos y la interpretación visual como base para la comprensión del comportamiento temporal de las ventas minoristas australianas, asegurando una estructura adecuada y confiable para las fases siguientes de modelado y validación.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="unidad-3-preprocesamiento-y-visualización.html#cb40-1" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
 <span id="cb40-2"><a href="unidad-3-preprocesamiento-y-visualización.html#cb40-2" tabindex="-1"></a>  <span class="fu">library</span>(forecast); <span class="fu">library</span>(tseries); <span class="fu">library</span>(ggplot2)</span>
@@ -256,8 +263,7 @@ Y&#39;_t =
 \frac{Y_t^{\lambda} - 1}{\lambda}, &amp; \text{si } \lambda \neq 0 \\
 \ln(Y_t), &amp; \text{si } \lambda = 0
 \end{cases}
-\]</span>
-𝑌𝑡 es el valor original de la serie,</p>
+\]</span> 𝑌𝑡 es el valor original de la serie,</p>
 <p>𝑌𝑡 es la serie transformada,</p>
 <p>𝜆 es el parámetro que controla el grado de transformación (estimado con BoxCox.lambda()).</p>
 <p>Interpretación práctica:</p>
@@ -351,13 +357,15 @@ Box-Cox (lambda = 0.196)
 </tr>
 </tbody>
 </table>
-<p>Figura 13. Descomposición STL de la serie mensual</p>
+<p>Figura 13.
+Descomposición STL de la serie mensual</p>
 <p>La descomposición STL (con transformación Box–Cox, λ = 0.196) permite analizar la estructura interna de la serie mensual Australia Monthly Retail Turnover y distinguir sus componentes principales:</p>
 <p>Data (serie original transformada): muestra un comportamiento creciente a lo largo del tiempo, lo que confirma la presencia de una tendencia positiva estructural en las ventas minoristas australianas.</p>
 <p>Trend (tendencia): evidencia un incremento sostenido, especialmente a partir del año 2000, reflejando el crecimiento económico y la expansión del consumo en el país.</p>
 <p>Seasonal (estacionalidad): presenta un patrón cíclico muy regular y estable, con picos pronunciados en los meses de noviembre y diciembre (temporada alta por fin de año) y caídas en enero–febrero.</p>
 <p>Remainder (residuo): agrupa las fluctuaciones irregulares no explicadas por los componentes sistemáticos, asociadas a choques económicos o cambios coyunturales del mercado.</p>
-<p>Tabla 7. Comparación de varianzas: original vs transformada</p>
+<p>Tabla 7.
+Comparación de varianzas: original vs transformada</p>
 <p>La varianza de la serie se redujo drásticamente tras aplicar la transformación Box–Cox, pasando de aproximadamente 1.96×10⁸ a 18.2.</p>
 <p>Esto indica que la transformación logró estabilizar la variabilidad de la serie, uno de los requisitos para que el modelo ARIMA (o SARIMA) funcione correctamente.</p>
 <p>La estimación del parámetro λ = 0.196 confirma que una transformación de tipo raíz o logarítmica era necesaria para homogeneizar la escala de las observaciones.</p>
@@ -365,7 +373,8 @@ Box-Cox (lambda = 0.196)
 </div>
 <div id="fuerza-estacional-recomendaciones-de-diferenciación" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> <strong>Fuerza estacional + recomendaciones de diferenciación</strong><a href="#fuerza-estacional-recomendaciones-de-diferenciaci%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>La fuerza de estacionalidad cuantifica qué tan dominante es el componente estacional frente a la variación total de la serie. Se calcula a partir de la descomposición STL mediante la siguiente fórmula:</p>
+<p>La fuerza de estacionalidad cuantifica qué tan dominante es el componente estacional frente a la variación total de la serie.
+Se calcula a partir de la descomposición STL mediante la siguiente fórmula:</p>
 <p><span class="math display">\[F_s = 1 - \frac{Var(R_t)}{Var(S_t + R_t)}\]</span></p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="unidad-3-preprocesamiento-y-visualización.html#cb47-1" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({ <span class="fu">library</span>(forecast); <span class="fu">library</span>(knitr); <span class="fu">library</span>(kableExtra) })</span>
 <span id="cb47-2"><a href="unidad-3-preprocesamiento-y-visualización.html#cb47-2" tabindex="-1"></a></span>
@@ -443,10 +452,8 @@ D recomendado (m=12)
 <h2><span class="header-section-number">4.3</span> <strong>Doble diferenciación (regular y estacional)</strong><a href="#doble-diferenciaci%C3%B3n-regular-y-estacional" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>EL objetivo es remover tendencia y patrón estacional para lograr estacionariedad.</p>
 <p>Fórmulas:</p>
-<p>Diferencia regular:
-<span class="math display">\[\nabla Y_t = Y_t - Y_{t-1}\]</span></p>
-<p>Diferencia estacional (m=12):
-<span class="math display">\[\nabla_{12} Y_t = Y_t - Y_{t-12}\]</span></p>
+<p>Diferencia regular: <span class="math display">\[\nabla Y_t = Y_t - Y_{t-1}\]</span></p>
+<p>Diferencia estacional (m=12): <span class="math display">\[\nabla_{12} Y_t = Y_t - Y_{t-12}\]</span></p>
 <p>Combinada (aplicando primero estacional y luego regular):</p>
 <p><span class="math display">\[\nabla \nabla_{12} Y_t = (Y_t - Y_{t-12}) - (Y_{t-1} - Y_{t-13})\]</span></p>
 <p>En esta unidad usamos los órdenes recomendados: d = 1 y D = 1.</p>
@@ -479,11 +486,7 @@ D recomendado (m=12)
 <div id="prueba-adf-antesdespués" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> <strong>Prueba ADF antes/después</strong><a href="#prueba-adf-antesdespu%C3%A9s" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>El objetivo es evidenciar estacionariedad tras la doble diferenciación.</p>
-<p>Modelo (forma común de la ADF):
-<span class="math display">\[\Delta Y_t = \alpha + \beta t + \gamma Y_{t-1} + \sum_{i=1}^{p}\phi_i \, \Delta Y_{t-i} + \varepsilon_t\]</span>
-Hipótesis:
-<span class="math display">\[H_0: \gamma = 0 \quad (\text{raíz unitaria, no estacionaria}) \qquad H_1: \gamma &lt; 0 \quad (\text{estacionaria})\]</span>
-Criterio: p-value &lt; 0.05 → evidencia de estacionariedad.</p>
+<p>Modelo (forma común de la ADF): <span class="math display">\[\Delta Y_t = \alpha + \beta t + \gamma Y_{t-1} + \sum_{i=1}^{p}\phi_i \, \Delta Y_{t-i} + \varepsilon_t\]</span> Hipótesis: <span class="math display">\[H_0: \gamma = 0 \quad (\text{raíz unitaria, no estacionaria}) \qquad H_1: \gamma &lt; 0 \quad (\text{estacionaria})\]</span> Criterio: p-value &lt; 0.05 → evidencia de estacionariedad.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="unidad-3-preprocesamiento-y-visualización.html#cb49-1" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({ <span class="fu">library</span>(tseries); <span class="fu">library</span>(knitr); <span class="fu">library</span>(kableExtra) })</span>
 <span id="cb49-2"><a href="unidad-3-preprocesamiento-y-visualización.html#cb49-2" tabindex="-1"></a></span>
 <span id="cb49-3"><a href="unidad-3-preprocesamiento-y-visualización.html#cb49-3" tabindex="-1"></a>adf_before <span class="ot">&lt;-</span> <span class="fu">adf.test</span>(serie_bc)</span>
@@ -555,15 +558,13 @@ TRUE
 <h2><span class="header-section-number">4.5</span> <strong>Validación visual: ACF y PACF</strong><a href="#validaci%C3%B3n-visual-acf-y-pacf" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Objetivo: verificar la estacionariedad y la estructura de correlación temporal en la serie diferenciada.</p>
 <p>La función de autocorrelación (ACF) mide la relación entre valores separados por un rezago k:</p>
-<p><span class="math display">\[\rho_k = \frac{\text{Cov}(Y_t, Y_{t-k})}{\text{Var}(Y_t)}\]</span>
-donde:</p>
+<p><span class="math display">\[\rho_k = \frac{\text{Cov}(Y_t, Y_{t-k})}{\text{Var}(Y_t)}\]</span> donde:</p>
 <ul>
 <li><span class="math inline">\(\rho_k\)</span> es el coeficiente de autocorrelación en el rezago k,</li>
 <li><span class="math inline">\(Y_t\)</span> es el valor de la serie en el tiempo t.</li>
 </ul>
 <p>En una serie estacionaria, la ACF decae rápidamente hacia cero y no muestra patrones sistemáticos.</p>
-<p>La autocorrelación parcial (PACF) mide la correlación directa entre <span class="math inline">\(Y_t\)</span> y <span class="math inline">\(Y_{t-k}\)</span>, eliminando los efectos de los rezagos intermedios.Ambas funciones ayudan a:
-- Confirmar la estacionariedad de la serie diferenciada.
+<p>La autocorrelación parcial (PACF) mide la correlación directa entre <span class="math inline">\(Y_t\)</span> y <span class="math inline">\(Y_{t-k}\)</span>, eliminando los efectos de los rezagos intermedios.Ambas funciones ayudan a: - Confirmar la estacionariedad de la serie diferenciada.
 - Sugerir los órdenes (p, q) y (P, Q) para el modelo SARIMA.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="unidad-3-preprocesamiento-y-visualización.html#cb50-1" tabindex="-1"></a><span class="fu">Acf</span>(<span class="fu">na.omit</span>(y_diff),</span>
 <span id="cb50-2"><a href="unidad-3-preprocesamiento-y-visualización.html#cb50-2" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;Figura 15. Función de Autocorrelación (ACF) - Serie diferenciada Δ·Δ₁₂&quot;</span>)</span></code></pre></div>
@@ -572,11 +573,13 @@ donde:</p>
 <span id="cb51-2"><a href="unidad-3-preprocesamiento-y-visualización.html#cb51-2" tabindex="-1"></a><span class="fu">Pacf</span>(<span class="fu">na.omit</span>(y_diff),</span>
 <span id="cb51-3"><a href="unidad-3-preprocesamiento-y-visualización.html#cb51-3" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Figura 16. Función de Autocorrelación Parcial (PACF) - Serie diferenciada Δ·Δ₁₂&quot;</span>)</span></code></pre></div>
 <p><img src="serie-retail-au_files/figure-html/unnamed-chunk-13-2.png" width="768" style="display: block; margin: auto;" /></p>
-<p>Figura 15. Función de Autocorrelación (ACF)</p>
+<p>Figura 15.
+Función de Autocorrelación (ACF)</p>
 <p>La función de autocorrelación de la serie diferenciada (Δ·Δ₁₂) muestra una rápida caída de las correlaciones después de los primeros rezagos, lo que indica que no existe dependencia temporal prolongada.
 Los picos en los primeros lags son bajos y dentro del intervalo de confianza (líneas azules), lo que confirma que no hay estructura de tendencia ni estacionalidad remanente.
 Además, los rezagos en múltiplos de 12 no presentan un patrón fuerte, evidenciando que la diferenciación estacional eliminó efectivamente la periodicidad anual observada en la serie original.</p>
-<p>Figura 16. Función de Autocorrelación Parcial (PACF)</p>
+<p>Figura 16.
+Función de Autocorrelación Parcial (PACF)</p>
 <p>En la PACF, los picos significativos se concentran en los primeros rezagos (lag 1), mientras que los demás coeficientes se encuentran dentro de las bandas de confianza.
 Este patrón —un corte abrupto en la PACF y una ACF que decae gradualmente— sugiere la presencia de un término autorregresivo (AR) de primer orden.</p>
 <p>Los resultados combinados de las Figuras 15 y 16 confirman que la serie diferenciada ya cumple con el supuesto de estacionariedad, con media constante, varianza homogénea y ausencia de patrones estacionales o tendencias residuales.
@@ -586,14 +589,7 @@ De acuerdo con los patrones observados, un modelo inicial adecuado para evaluar 
 <p>El modelo SARIMA (Seasonal ARIMA) amplía el ARIMA tradicional incorporando componentes estacionales.</p>
 <p>Su formula general es:</p>
 <p><span class="math display">\[SARIMA(p,d,q)(P,D,Q)_{m}\]</span></p>
-<p>donde:
-* <span class="math inline">\(p\)</span> → orden autorregresivo (AR),
-* <span class="math inline">\(d\)</span> → número de diferencias regulares,
-* <span class="math inline">\(q\)</span> → orden de media móvil (MA),
-* <span class="math inline">\(P\)</span> → orden autorregresivo estacional,
-* <span class="math inline">\(D\)</span> → número de diferencias estacionales,
-* <span class="math inline">\(Q\)</span> → orden de media móvil estacional,
-* <span class="math inline">\(m\)</span> → periodicidad (12 para datos mensuales).</p>
+<p>donde: * <span class="math inline">\(p\)</span> → orden autorregresivo (AR), * <span class="math inline">\(d\)</span> → número de diferencias regulares, * <span class="math inline">\(q\)</span> → orden de media móvil (MA), * <span class="math inline">\(P\)</span> → orden autorregresivo estacional, * <span class="math inline">\(D\)</span> → número de diferencias estacionales, * <span class="math inline">\(Q\)</span> → orden de media móvil estacional, * <span class="math inline">\(m\)</span> → periodicidad (12 para datos mensuales).</p>
 <p>Este checklist resume las decisiones y verificaciones realizadas en el preprocesamiento.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="unidad-3-preprocesamiento-y-visualización.html#cb52-1" tabindex="-1"></a>check_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb52-2"><a href="unidad-3-preprocesamiento-y-visualización.html#cb52-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Aspecto evaluado</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
@@ -719,17 +715,28 @@ Si - lista para modelar
 </div>
 <div id="conclusiones-unidad-3" class="section level2 hasAnchor" number="4.6">
 <h2><span class="header-section-number">4.6</span> <strong>Conclusiones unidad 3</strong><a href="unidad-3-preprocesamiento-y-visualización.html#conclusiones-unidad-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>El preprocesamiento realizado en la Unidad 3 permitió consolidar la preparación de la serie mensual Australia Monthly Retail Turnover (1982–2024) para su futura modelación mediante técnicas SARIMA. A través de transformaciones estadísticas y validaciones gráficas, se garantizó que la serie cumpliera los supuestos de estacionariedad, condición fundamental para el análisis de series de tiempo.</p>
-<p>En primer lugar, la aplicación de la transformación Box–Cox (λ = 0.196) redujo de manera significativa la varianza y estabilizó la escala, mejorando la homogeneidad de los datos. Posteriormente, la doble diferenciación (d = 1, D = 1, m = 12) eliminó la tendencia y los patrones estacionales anuales, lo cual se reflejó en una serie con media constante y comportamiento aleatorio alrededor del cero.</p>
-<p>La prueba ADF (p-value = 0.01) confirmó estadísticamente que la serie diferenciada es estacionaria, mientras que el análisis visual de las funciones ACF y PACF evidenció la ausencia de autocorrelaciones prolongadas y la presencia de picos iniciales compatibles con componentes AR(1) y MA(1). Estos resultados validan el correcto preprocesamiento de los datos y orientan la estructura base para la estimación del modelo.</p>
-<p>Finalmente, los resultados obtenidos en el checklist de preprocesamiento (Tabla 10) verifican que la serie está lista para su modelado. Como punto de partida, se recomienda evaluar el modelo SARIMA(1,1,1)(0,1,1)[12], el cual integrará los componentes identificados y permitirá realizar pronósticos robustos sobre el comportamiento futuro de las ventas minoristas australianas.</p>
+<p>El preprocesamiento realizado en la Unidad 3 permitió consolidar la preparación de la serie mensual Australia Monthly Retail Turnover (1982–2024) para su futura modelación mediante técnicas SARIMA.
+A través de transformaciones estadísticas y validaciones gráficas, se garantizó que la serie cumpliera los supuestos de estacionariedad, condición fundamental para el análisis de series de tiempo.</p>
+<p>En primer lugar, la aplicación de la transformación Box–Cox (λ = 0.196) redujo de manera significativa la varianza y estabilizó la escala, mejorando la homogeneidad de los datos.
+Posteriormente, la doble diferenciación (d = 1, D = 1, m = 12) eliminó la tendencia y los patrones estacionales anuales, lo cual se reflejó en una serie con media constante y comportamiento aleatorio alrededor del cero.</p>
+<p>La prueba ADF (p-value = 0.01) confirmó estadísticamente que la serie diferenciada es estacionaria, mientras que el análisis visual de las funciones ACF y PACF evidenció la ausencia de autocorrelaciones prolongadas y la presencia de picos iniciales compatibles con componentes AR(1) y MA(1).
+Estos resultados validan el correcto preprocesamiento de los datos y orientan la estructura base para la estimación del modelo.</p>
+<p>Finalmente, los resultados obtenidos en el checklist de preprocesamiento (Tabla 10) verifican que la serie está lista para su modelado.
+Como punto de partida, se recomienda evaluar el modelo SARIMA(1,1,1)(0,1,1)[12], el cual integrará los componentes identificados y permitirá realizar pronósticos robustos sobre el comportamiento futuro de las ventas minoristas australianas.</p>
 </div>
 <div id="referencias" class="section level2 hasAnchor" number="4.7">
 <h2><span class="header-section-number">4.7</span> <strong>Referencias</strong><a href="unidad-3-preprocesamiento-y-visualización.html#referencias" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li><p>Universidad Javeriana Cali (2025). <em>Material del curso Análisis de Series de Tiempo — Unidad 2: Estructura de los datos en series de tiempo</em>. Aula Digital PUJ Cali.</p></li>
-<li><p>Kaggle (2023). <em>Australia Monthly Retail Turnover Data</em>. Generado de <a href="https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data">https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data</a>.</p></li>
-<li><p>Hyndman, R. J, &amp; Athanasopoulos, G. (2021). <em>Forecasting: Principles and Practice</em>. Generado de <a href="https://otexts.com/fpp3/">https://otexts.com/fpp3/</a></p></li>
+<li><p>Universidad Javeriana Cali (2025).
+<em>Material del curso Análisis de Series de Tiempo — Unidad 2: Estructura de los datos en series de tiempo</em>.
+Aula Digital PUJ Cali.</p></li>
+<li><p>Kaggle (2023).
+<em>Australia Monthly Retail Turnover Data</em>.
+Generado de <a href="https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data" class="uri">https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data</a>.</p></li>
+<li><p>Hyndman, R. J, &amp; Athanasopoulos, G.
+(2021).
+<em>Forecasting: Principles and Practice</em>.
+Generado de <a href="https://otexts.com/fpp3/" class="uri">https://otexts.com/fpp3/</a></p></li>
 </ul>
 </div>
 </div>

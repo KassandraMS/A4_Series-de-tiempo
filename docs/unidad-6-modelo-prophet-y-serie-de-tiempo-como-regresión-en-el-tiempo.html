@@ -23,7 +23,7 @@
 <meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
 
 
-<meta name="date" content="2025-11-22" />
+<meta name="date" content="2025-12-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -202,6 +202,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="index.html"><a href="#preparaci%C3%B3n-del-conjunto-supervisado-y-partici%C3%B3n-traintest"><i class="fa fa-check"></i><b>8.2</b> Preparación del conjunto supervisado y partición train/test</a></li>
 <li class="chapter" data-level="8.3" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-elman"><i class="fa fa-check"></i><b>8.3</b> Entrenamiento de la red Elman</a></li>
 <li class="chapter" data-level="8.4" data-path="index.html"><a href="#pron%C3%B3stico-con-la-red-elman"><i class="fa fa-check"></i><b>8.4</b> Pronóstico con la red Elman</a></li>
+<li class="chapter" data-level="8.5" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-neuronal-jordan"><i class="fa fa-check"></i><b>8.5</b> Entrenamiento de la red neuronal Jordan</a></li>
+<li class="chapter" data-level="8.6" data-path="index.html"><a href="#evaluaci%C3%B3n-del-desempe%C3%B1o-de-la-red-jordan"><i class="fa fa-check"></i><b>8.6</b> Evaluación del desempeño de la red Jordan</a></li>
+<li class="chapter" data-level="8.7" data-path="index.html"><a href="#gr%C3%A1fico-comparativo-valores-reales-vs-pron%C3%B3stico-jordan"><i class="fa fa-check"></i><b>8.7</b> Gráfico comparativo: valores reales vs pronóstico Jordan</a></li>
+<li class="chapter" data-level="8.8" data-path="index.html"><a href="#comparaci%C3%B3n-entre-las-redes-elman-y-jordan"><i class="fa fa-check"></i><b>8.8</b> Comparación entre las redes Elman y Jordan</a></li>
+<li class="chapter" data-level="8.9" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#conclusiones-1"><i class="fa fa-check"></i><b>8.9</b> Conclusiones</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
@@ -225,7 +230,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">7</span> Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo<a href="#unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresi%C3%B3n-en-el-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>En esta unidad se incorpora el algoritmo <strong>Facebook Prophet</strong> como alternativa de modelación y pronóstico para la serie mensual <em>Australia Monthly Retail Turnover</em>. El objetivo es:</p>
+<p>En esta unidad se incorpora el algoritmo <strong>Facebook Prophet</strong> como alternativa de modelación y pronóstico para la serie mensual <em>Australia Monthly Retail Turnover</em>.
+El objetivo es:</p>
 <ol style="list-style-type: decimal">
 <li>Ajustar un modelo Prophet sobre la misma serie utilizada en las unidades anteriores.<br />
 </li>
@@ -246,14 +252,19 @@ y_t = g(t) + s(t) + h(t) + \varepsilon_t,
 <li><span class="math inline">\(h(t)\)</span>: efectos de <strong>festivos o eventos especiales</strong> (si se incluyen),</li>
 <li><span class="math inline">\(\varepsilon_t\)</span>: término de error (ruido).</li>
 </ul>
-<p>En este enfoque, el <strong>tiempo <span class="math inline">\(t\)</span> y funciones derivadas del tiempo</strong> (por ejemplo, senos y cosenos para la estacionalidad) actúan como <strong>regresores</strong> dentro de un modelo de regresión generalizado. De esta manera, Prophet se entiende como una regresión donde la variable respuesta es el <em>retail turnover</em> mensual y las variables explicativas son funciones del tiempo (tendencia, estacionalidad y eventos).</p>
+<p>En este enfoque, el <strong>tiempo</strong> <span class="math inline">\(t\)</span> y funciones derivadas del tiempo (por ejemplo, senos y cosenos para la estacionalidad) actúan como <strong>regresores</strong> dentro de un modelo de regresión generalizado.
+De esta manera, Prophet se entiende como una regresión donde la variable respuesta es el <em>retail turnover</em> mensual y las variables explicativas son funciones del tiempo (tendencia, estacionalidad y eventos).</p>
 </div>
 <div id="preparación-de-datos-y-ajuste-del-modelo-prophet" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Preparación de datos y ajuste del modelo Prophet<a href="#preparaci%C3%B3n-de-datos-y-ajuste-del-modelo-prophet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Para aplicar el modelo Facebook Prophet dentro del flujo de trabajo del curso, es necesario convertir la serie mensual en un formato adecuado para los paquetes modernos de análisis temporal. En particular, Prophet —a través del paquete fable.prophet— requiere que los datos estén organizados como un tsibble, una estructura ordenada que define explícitamente el índice temporal y garantiza que cada observación corresponda a un único punto en el tiempo.</p>
-<p>Esta conversión permite que el modelo reconozca automáticamente la frecuencia mensual de la serie, identifique discontinuidades, maneje estacionalidades y procese de forma eficiente las funciones de tendencia y componente estacional. Una vez estructurada la información en formato tsibble, se ajusta el modelo Prophet, el cual interpreta la serie como una regresión aditiva en el tiempo compuesta por tendencia, estacionalidad y ruido, coherente con los supuestos explorados en las unidades anteriores.</p>
+<p>Para aplicar el modelo Facebook Prophet dentro del flujo de trabajo del curso, es necesario convertir la serie mensual en un formato adecuado para los paquetes modernos de análisis temporal.
+En particular, Prophet —a través del paquete fable.prophet— requiere que los datos estén organizados como un tsibble, una estructura ordenada que define explícitamente el índice temporal y garantiza que cada observación corresponda a un único punto en el tiempo.</p>
+<p>Esta conversión permite que el modelo reconozca automáticamente la frecuencia mensual de la serie, identifique discontinuidades, maneje estacionalidades y procese de forma eficiente las funciones de tendencia y componente estacional.
+Una vez estructurada la información en formato tsibble, se ajusta el modelo Prophet, el cual interpreta la serie como una regresión aditiva en el tiempo compuesta por tendencia, estacionalidad y ruido, coherente con los supuestos explorados en las unidades anteriores.</p>
 <p>En esta sección se presenta la preparación de la serie consolidada y el ajuste del modelo Prophet para generar un pronóstico coherente con el comportamiento histórico del Retail Turnover australiano.</p>
-<p>La Tabla 12 presenta las primeras 12 observaciones de la serie en formato tsibble. En ella se reconoce la columna fecha como índice temporal mensual, mientras que valor corresponde al nivel observado del retail turnover en millones de dólares australianos. Las columnas Nivel, SMA (12m) y EMA (6m) son variables derivadas de la Unidad 2 (serie original y promedios móviles simple y exponencial); por eso, en los primeros registros los promedios móviles aparecen como NA, ya que aún no se dispone de suficientes meses previos para calcular las ventanas de 6 o 12 periodos.</p>
+<p>La Tabla 12 presenta las primeras 12 observaciones de la serie en formato tsibble.
+En ella se reconoce la columna fecha como índice temporal mensual, mientras que valor corresponde al nivel observado del retail turnover en millones de dólares australianos.
+Las columnas Nivel, SMA (12m) y EMA (6m) son variables derivadas de la Unidad 2 (serie original y promedios móviles simple y exponencial); por eso, en los primeros registros los promedios móviles aparecen como NA, ya que aún no se dispone de suficientes meses previos para calcular las ventanas de 6 o 12 periodos.</p>
 <p>Esta salida confirma que la serie está correctamente ordenada en el tiempo y que cada fecha tiene una única observación, condición necesaria para trabajar con tsibble y para ajustar el modelo Prophet en los pasos siguientes.</p>
 <table>
 <caption><span id="tab:unnamed-chunk-22">Table 7.1: </span>Primeras 12 observaciones de la serie en formato tsibble.</caption>
@@ -364,13 +375,19 @@ y_t = g(t) + s(t) + h(t) + \varepsilon_t,
 Figure 7.1: Pronóstico a 12 meses con el modelo Prophet
 </p>
 </div>
-<p>La figura muestra el pronóstico a 12 meses generado con el modelo Prophet a partir de la serie mensual de Retail Turnover en Australia. En la parte histórica (línea negra) se observa nuevamente una tendencia claramente creciente en el volumen de ventas minoristas, acompañada de picos estacionales muy marcados hacia el final de cada año y descensos en los primeros meses, patrón que ya se había identificado con Holt–Winters y SARIMA.</p>
-<p>En la zona sombreada azul se visualiza el pronóstico para el año siguiente, donde el modelo proyecta que el retail turnover continuará creciendo, manteniendo la misma estructura de comportamiento: aumentos graduales a lo largo del año y máximos en los meses de cierre (noviembre–diciembre), con posteriores caídas estacionales. Las bandas de confianza al 80 % y 95 % se abren ligeramente conforme avanza el horizonte de tiempo, reflejando una incertidumbre moderada pero controlada: el intervalo es relativamente estrecho frente al nivel de la serie, lo que indica que Prophet logra capturar de forma estable la combinación de tendencia y estacionalidad. En conjunto, el resultado confirma que el modelo Prophet reproduce adecuadamente el patrón histórico y ofrece pronósticos coherentes con la dinámica observada del comercio minorista australiano.</p>
+<p>La figura muestra el pronóstico a 12 meses generado con el modelo Prophet a partir de la serie mensual de Retail Turnover en Australia.
+En la parte histórica (línea negra) se observa nuevamente una tendencia claramente creciente en el volumen de ventas minoristas, acompañada de picos estacionales muy marcados hacia el final de cada año y descensos en los primeros meses, patrón que ya se había identificado con Holt–Winters y SARIMA.</p>
+<p>En la zona sombreada azul se visualiza el pronóstico para el año siguiente, donde el modelo proyecta que el retail turnover continuará creciendo, manteniendo la misma estructura de comportamiento: aumentos graduales a lo largo del año y máximos en los meses de cierre (noviembre–diciembre), con posteriores caídas estacionales.
+Las bandas de confianza al 80 % y 95 % se abren ligeramente conforme avanza el horizonte de tiempo, reflejando una incertidumbre moderada pero controlada: el intervalo es relativamente estrecho frente al nivel de la serie, lo que indica que Prophet logra capturar de forma estable la combinación de tendencia y estacionalidad.
+En conjunto, el resultado confirma que el modelo Prophet reproduce adecuadamente el patrón histórico y ofrece pronósticos coherentes con la dinámica observada del comercio minorista australiano.</p>
 <p><strong>Componentes del modelo Prophet: tendencia y estacionalidad</strong></p>
-<p>La figura muestra la descomposición del modelo Prophet aplicada a la serie mensual Retail Turnover de Australia. Prophet expresa la serie como la suma (y en algunos casos multiplicación) de tres elementos principales: tendencia, estacionalidad y residuo. La visualización de estos componentes permite entender cómo el modelo explica la dinámica temporal del comportamiento de las ventas minoristas.</p>
+<p>La figura muestra la descomposición del modelo Prophet aplicada a la serie mensual Retail Turnover de Australia.
+Prophet expresa la serie como la suma (y en algunos casos multiplicación) de tres elementos principales: tendencia, estacionalidad y residuo.
+La visualización de estos componentes permite entender cómo el modelo explica la dinámica temporal del comportamiento de las ventas minoristas.</p>
 <p><img src="serie-retail-au_files/figure-html/unnamed-chunk-23-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p><strong>1. Componente original (valor)</strong></p>
-<p>Corresponde a la serie observada históricamente. Se identifica nuevamente una combinación de:</p>
+<p>Corresponde a la serie observada históricamente.
+Se identifica nuevamente una combinación de:</p>
 <ul>
 <li><p>Una tendencia creciente sostenida en el tiempo.</p></li>
 <li><p>Picos estacionales marcados al cierre de cada año.</p></li>
@@ -396,8 +413,7 @@ Figure 7.1: Pronóstico a 12 meses con el modelo Prophet
 <li><p>La amplitud del ciclo es estable, lo que indica un patrón estacional consistente a lo largo del tiempo.</p></li>
 <li><p>Este componente corresponde al término <span class="math inline">\(𝑠(𝑡)\)</span>, que captura los comportamientos periódicos de la serie a través de funciones trigonométricas.</p></li>
 </ul>
-<p><strong>5. Residuo (resid)</strong>
-Incluye las fluctuaciones no explicadas por la tendencia ni por la estacionalidad.</p>
+<p><strong>5. Residuo (resid)</strong> Incluye las fluctuaciones no explicadas por la tendencia ni por la estacionalidad.</p>
 <ul>
 <li><p>No se observan patrones sistemáticos, lo que indica que el modelo captura adecuadamente la estructura determinista de la serie.</p></li>
 <li><p>Se observan picos puntuales, probablemente asociados a eventos atípicos del sector.</p></li>
@@ -433,25 +449,39 @@ Sobre ese horizonte de 12 meses se calculan las métricas RMSE, MAE y MAPE, lo c
 </tr>
 <tr class="odd">
 <td align="center">Prophet</td>
-<td align="center">10084.09</td>
-<td align="center">9765.92</td>
-<td align="center">19.56</td>
+<td align="center">10090.11</td>
+<td align="center">9771.65</td>
+<td align="center">19.57</td>
 </tr>
 </tbody>
 </table>
-<p>La Tabla anterior presenta los valores de RMSE, MAE y MAPE obtenidos para los tres modelos evaluados (Holt–Winters aditivo, ARIMA estacional y Prophet) utilizando un horizonte de predicción de 12 meses. Estas métricas permiten comparar su capacidad predictiva bajo un mismo conjunto de prueba.</p>
-<p>En primer lugar, se observa que Holt–Winters aditivo presenta el mejor desempeño general, con el menor RMSE (375.90), menor MAE (290.53) y un MAPE muy bajo (0.58%), lo cual indica que el error absoluto promedio representa menos del 1% del valor real. Este resultado confirma que, para series altamente estacionales y con un patrón relativamente suave, los modelos exponenciales suavizados pueden capturar adecuadamente la dinámica temporal.</p>
-<p>El modelo ARIMA estacional también obtiene un buen desempeño, aunque ligeramente inferior al de Holt–Winters. Sus valores de RMSE (409.19) y MAE (346.70) son mayores, y el MAPE (0.70%) evidencia un aumento leve en la proporción del error. Sin embargo, continúa siendo un modelo sólido para este tipo de series.</p>
-<p>Finalmente, el modelo Prophet es el que muestra el desempeño más débil, con errores sustancialmente más altos (RMSE de 10083.90 y MAE de 9764.46) y un MAPE de 19.55%, valor muy superior al de los otros dos métodos. Esto sugiere que Prophet no logró capturar adecuadamente la estructura temporal en este conjunto particular, posiblemente debido a la intensidad de la estacionalidad mensual y al comportamiento local de la serie, que favorece más a modelos clásicos como Holt–Winters o ARIMA.</p>
+<p>La Tabla anterior presenta los valores de RMSE, MAE y MAPE obtenidos para los tres modelos evaluados (Holt–Winters aditivo, ARIMA estacional y Prophet) utilizando un horizonte de predicción de 12 meses.
+Estas métricas permiten comparar su capacidad predictiva bajo un mismo conjunto de prueba.</p>
+<p>En primer lugar, se observa que Holt–Winters aditivo presenta el mejor desempeño general, con el menor RMSE (375.90), menor MAE (290.53) y un MAPE muy bajo (0.58%), lo cual indica que el error absoluto promedio representa menos del 1% del valor real.
+Este resultado confirma que, para series altamente estacionales y con un patrón relativamente suave, los modelos exponenciales suavizados pueden capturar adecuadamente la dinámica temporal.</p>
+<p>El modelo ARIMA estacional también obtiene un buen desempeño, aunque ligeramente inferior al de Holt–Winters.
+Sus valores de RMSE (409.19) y MAE (346.70) son mayores, y el MAPE (0.70%) evidencia un aumento leve en la proporción del error.
+Sin embargo, continúa siendo un modelo sólido para este tipo de series.</p>
+<p>Finalmente, el modelo Prophet es el que muestra el desempeño más débil, con errores sustancialmente más altos (RMSE de 10083.90 y MAE de 9764.46) y un MAPE de 19.55%, valor muy superior al de los otros dos métodos.
+Esto sugiere que Prophet no logró capturar adecuadamente la estructura temporal en este conjunto particular, posiblemente debido a la intensidad de la estacionalidad mensual y al comportamiento local de la serie, que favorece más a modelos clásicos como Holt–Winters o ARIMA.</p>
 <p>En síntesis, el mejor modelo para este caso específico es Holt–Winters aditivo, seguido por ARIMA estacional, mientras que Prophet no resulta competitivo bajo estas condiciones.</p>
 </div>
 <div id="comparación-de-modelos-y-conclusiones" class="section level2 hasAnchor" number="7.5">
 <h2><span class="header-section-number">7.5</span> Comparación de modelos y conclusiones<a href="#comparaci%C3%B3n-de-modelos-y-conclusiones" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En las secciones anteriores se ajustaron y analizaron tres enfoques de modelamiento para la serie mensual Retail Turnover de Australia: modelos suavizados (Holt–Winters), modelos ARIMA estacionales y el algoritmo Prophet. Cada uno aporta una perspectiva diferente sobre la estructura temporal de la serie y permite analizar cómo se combinan tendencia, estacionalidad y variabilidad residual.</p>
-<p>Los modelos Holt–Winters y ARIMA representan enfoques clásicos. Holt–Winters capturó adecuadamente la tendencia creciente y la estacionalidad mensual mediante suavizamiento exponencial, mostrando pronósticos estables y con bajo error. ARIMA, por su parte, incorpora una estructura estocástica más flexible, modelando la autocorrelación y la estacionalidad mediante términos diferenciados. Ambos modelos obtuvieron errores muy bajos en el horizonte de prueba, lo que confirma su pertinencia para series con patrones regulares y marcados.</p>
-<p>El modelo Prophet ofrece una perspectiva distinta al interpretar la serie como una regresión aditiva en el tiempo, donde la tendencia y la estacionalidad se modelan mediante funciones determinísticas del tiempo (incluidas bases de Fourier). Esta formulación resulta útil para obtener una descomposición clara de la tendencia y los ciclos anuales. Sin embargo, aunque Prophet es conceptualmente interpretativo, su desempeño predictivo fue considerablemente menor en este caso, como lo evidencian los valores de RMSE, MAE y MAPE, mucho más altos en comparación con Holt–Winters y ARIMA.</p>
-<p>Esto sugiere que, para esta serie en particular, caracterizada por una estacionalidad mensual muy pronunciada y patrones altamente regulares, los métodos clásicos (Holt–Winters y ARIMA) capturan mejor la dinámica temporal. No obstante, Prophet sigue siendo valioso porque complementa la visión estadística tradicional con un enfoque de regresión funcional, permitiendo interpretar la serie en términos de componentes determinísticos y tendencia suavizada.</p>
-<p>En síntesis, aunque todos los modelos permiten describir la estructura de la serie, el mejor desempeño predictivo lo obtuvo Holt–Winters, seguido por ARIMA. Prophet, si bien proporciona una representación interpretativa clara de la tendencia y la estacionalidad, no fue el modelo más adecuado para este conjunto de datos. Su inclusión, sin embargo, enriquece el análisis al ofrecer una visión alternativa basada en regresión sobre el tiempo, lo que aporta coherencia conceptual al desarrollo del documento en esta fase del proyecto.</p>
+<p>En las secciones anteriores se ajustaron y analizaron tres enfoques de modelamiento para la serie mensual Retail Turnover de Australia: modelos suavizados (Holt–Winters), modelos ARIMA estacionales y el algoritmo Prophet.
+Cada uno aporta una perspectiva diferente sobre la estructura temporal de la serie y permite analizar cómo se combinan tendencia, estacionalidad y variabilidad residual.</p>
+<p>Los modelos Holt–Winters y ARIMA representan enfoques clásicos.
+Holt–Winters capturó adecuadamente la tendencia creciente y la estacionalidad mensual mediante suavizamiento exponencial, mostrando pronósticos estables y con bajo error.
+ARIMA, por su parte, incorpora una estructura estocástica más flexible, modelando la autocorrelación y la estacionalidad mediante términos diferenciados.
+Ambos modelos obtuvieron errores muy bajos en el horizonte de prueba, lo que confirma su pertinencia para series con patrones regulares y marcados.</p>
+<p>El modelo Prophet ofrece una perspectiva distinta al interpretar la serie como una regresión aditiva en el tiempo, donde la tendencia y la estacionalidad se modelan mediante funciones determinísticas del tiempo (incluidas bases de Fourier).
+Esta formulación resulta útil para obtener una descomposición clara de la tendencia y los ciclos anuales.
+Sin embargo, aunque Prophet es conceptualmente interpretativo, su desempeño predictivo fue considerablemente menor en este caso, como lo evidencian los valores de RMSE, MAE y MAPE, mucho más altos en comparación con Holt–Winters y ARIMA.</p>
+<p>Esto sugiere que, para esta serie en particular, caracterizada por una estacionalidad mensual muy pronunciada y patrones altamente regulares, los métodos clásicos (Holt–Winters y ARIMA) capturan mejor la dinámica temporal.
+No obstante, Prophet sigue siendo valioso porque complementa la visión estadística tradicional con un enfoque de regresión funcional, permitiendo interpretar la serie en términos de componentes determinísticos y tendencia suavizada.</p>
+<p>En síntesis, aunque todos los modelos permiten describir la estructura de la serie, el mejor desempeño predictivo lo obtuvo Holt–Winters, seguido por ARIMA.
+Prophet, si bien proporciona una representación interpretativa clara de la tendencia y la estacionalidad, no fue el modelo más adecuado para este conjunto de datos.
+Su inclusión, sin embargo, enriquece el análisis al ofrecer una visión alternativa basada en regresión sobre el tiempo, lo que aporta coherencia conceptual al desarrollo del documento en esta fase del proyecto.</p>
 </div>
 </div>
             </section>
