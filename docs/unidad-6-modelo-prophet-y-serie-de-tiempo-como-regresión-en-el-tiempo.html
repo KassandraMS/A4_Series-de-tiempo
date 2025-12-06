@@ -23,7 +23,7 @@
 <meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
 
 
-<meta name="date" content="2025-11-15" />
+<meta name="date" content="2025-11-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html"/>
-
+<link rel="next" href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -195,6 +195,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3" data-path="index.html"><a href="#ajuste-del-modelo-prophet-y-an%C3%A1lisis-de-componentes"><i class="fa fa-check"></i><b>7.3</b> Ajuste del modelo Prophet y análisis de componentes</a></li>
 <li class="chapter" data-level="7.4" data-path="index.html"><a href="#comparaci%C3%B3n-de-desempe%C3%B1o-entre-holtwinters-arima-y-prophet"><i class="fa fa-check"></i><b>7.4</b> Comparación de desempeño entre Holt–Winters, ARIMA y Prophet</a></li>
 <li class="chapter" data-level="7.5" data-path="index.html"><a href="#comparaci%C3%B3n-de-modelos-y-conclusiones"><i class="fa fa-check"></i><b>7.5</b> Comparación de modelos y conclusiones</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><i class="fa fa-check"></i><b>8</b> Unidad 7: Redes neuronales recurrentes Elman y Jordan</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="index.html"><a href="#fundamentos-te%C3%B3ricos-redes-elman-y-jordan"><i class="fa fa-check"></i><b>8.1</b> Fundamentos teóricos: redes Elman y Jordan</a></li>
+<li class="chapter" data-level="8.2" data-path="index.html"><a href="#preparaci%C3%B3n-del-conjunto-supervisado-y-partici%C3%B3n-traintest"><i class="fa fa-check"></i><b>8.2</b> Preparación del conjunto supervisado y partición train/test</a></li>
+<li class="chapter" data-level="8.3" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-elman"><i class="fa fa-check"></i><b>8.3</b> Entrenamiento de la red Elman</a></li>
+<li class="chapter" data-level="8.4" data-path="index.html"><a href="#pron%C3%B3stico-con-la-red-elman"><i class="fa fa-check"></i><b>8.4</b> Pronóstico con la red Elman</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
@@ -426,9 +433,9 @@ Sobre ese horizonte de 12 meses se calculan las métricas RMSE, MAE y MAPE, lo c
 </tr>
 <tr class="odd">
 <td align="center">Prophet</td>
-<td align="center">10095.87</td>
-<td align="center">9777.25</td>
-<td align="center">19.58</td>
+<td align="center">10084.09</td>
+<td align="center">9765.92</td>
+<td align="center">19.56</td>
 </tr>
 </tbody>
 </table>
@@ -445,7 +452,6 @@ Sobre ese horizonte de 12 meses se calculan las métricas RMSE, MAE y MAPE, lo c
 <p>El modelo Prophet ofrece una perspectiva distinta al interpretar la serie como una regresión aditiva en el tiempo, donde la tendencia y la estacionalidad se modelan mediante funciones determinísticas del tiempo (incluidas bases de Fourier). Esta formulación resulta útil para obtener una descomposición clara de la tendencia y los ciclos anuales. Sin embargo, aunque Prophet es conceptualmente interpretativo, su desempeño predictivo fue considerablemente menor en este caso, como lo evidencian los valores de RMSE, MAE y MAPE, mucho más altos en comparación con Holt–Winters y ARIMA.</p>
 <p>Esto sugiere que, para esta serie en particular, caracterizada por una estacionalidad mensual muy pronunciada y patrones altamente regulares, los métodos clásicos (Holt–Winters y ARIMA) capturan mejor la dinámica temporal. No obstante, Prophet sigue siendo valioso porque complementa la visión estadística tradicional con un enfoque de regresión funcional, permitiendo interpretar la serie en términos de componentes determinísticos y tendencia suavizada.</p>
 <p>En síntesis, aunque todos los modelos permiten describir la estructura de la serie, el mejor desempeño predictivo lo obtuvo Holt–Winters, seguido por ARIMA. Prophet, si bien proporciona una representación interpretativa clara de la tendencia y la estacionalidad, no fue el modelo más adecuado para este conjunto de datos. Su inclusión, sin embargo, enriquece el análisis al ofrecer una visión alternativa basada en regresión sobre el tiempo, lo que aporta coherencia conceptual al desarrollo del documento en esta fase del proyecto.</p>
-
 </div>
 </div>
             </section>
@@ -453,8 +459,8 @@ Sobre ese horizonte de 12 meses se calculan las métricas RMSE, MAE y MAPE, lo c
           </div>
         </div>
       </div>
-<a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Unidad 7: Redes neuronales recurrentes Elman y Jordan | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</title>
+  <meta name="description" content="8 Unidad 7: Redes neuronales recurrentes Elman y Jordan | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Unidad 7: Redes neuronales recurrentes Elman y Jordan | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Unidad 7: Redes neuronales recurrentes Elman y Jordan | Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)" />
+  
+  
+  
+
+<meta name="author" content="Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos" />
+
+
+<meta name="date" content="2025-11-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">📊 Series de Tiempo - Kaggle Retail Turnover</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="#introducci%C3%B3n"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="index.html"><a href="#unidad-1.-propuesta-de-informaci%C3%B3n-a-pronosticar"><i class="fa fa-check"></i><b>2</b> Unidad 1. Propuesta de información a pronosticar</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html"><i class="fa fa-check"></i><b>2.1</b> <strong>Tema y base de datos</strong></a></li>
+<li class="chapter" data-level="2.2" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#importancia-y-valor-agregado"><i class="fa fa-check"></i><b>2.2</b> <strong>Importancia y valor agregado</strong></a></li>
+<li class="chapter" data-level="2.3" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#alcance-propuesto"><i class="fa fa-check"></i><b>2.3</b> <strong>Alcance propuesto</strong></a></li>
+<li class="chapter" data-level="2.4" data-path="unidad-1.-propuesta-de-información-a-pronosticar.html"><a href="unidad-1.-propuesta-de-información-a-pronosticar.html#conclusiones-unidad-1"><i class="fa fa-check"></i><b>2.4</b> <strong>Conclusiones Unidad 1</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="index.html"><a href="#unidad-2.-an%C3%A1lisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad"><i class="fa fa-check"></i><b>3</b> Unidad 2. Análisis descriptivo y estructural de una serie temporal: tendencia, estacionalidad y estacionariedad</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="index.html"><a href="#descripci%C3%B3n-y-justificaci%C3%B3n-del-conjunto-de-datos"><i class="fa fa-check"></i><b>3.1</b> <strong>Descripción y justificación del conjunto de datos</strong></a></li>
+<li class="chapter" data-level="3.2" data-path="index.html"><a href="#preparaci%C3%B3n-y-filtrado-de-datos-serie-total-mensual"><i class="fa fa-check"></i><b>3.2</b> <strong>Preparación y filtrado de datos: serie total mensual</strong></a></li>
+<li class="chapter" data-level="3.3" data-path="index.html"><a href="#construcci%C3%B3n-de-la-serie-temporal"><i class="fa fa-check"></i><b>3.3</b> <strong>Construcción de la serie temporal</strong></a></li>
+<li class="chapter" data-level="3.4" data-path="index.html"><a href="#promedios-m%C3%B3viles-smaema-y-an%C3%A1lisis-de-tendencia"><i class="fa fa-check"></i><b>3.4</b> <strong>Promedios móviles (SMA/EMA) y análisis de tendencia</strong></a></li>
+<li class="chapter" data-level="3.5" data-path="index.html"><a href="#estacionalidad-y-rezagos-seasonplot-subseries-acf-y-descomposici%C3%B3n"><i class="fa fa-check"></i><b>3.5</b> <strong>Estacionalidad y rezagos (seasonplot, subseries, ACF y descomposición)</strong></a></li>
+<li class="chapter" data-level="3.6" data-path="index.html"><a href="#diferencias-%CE%B4-y-%CE%B4%E2%82%81%E2%82%82-rezagos-y-estabilizaci%C3%B3n"><i class="fa fa-check"></i><b>3.6</b> <strong>Diferencias Δ y Δ₁₂ (rezagos y estabilización)</strong></a></li>
+<li class="chapter" data-level="3.7" data-path="unidad-2.-análisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad.html"><a href="unidad-2.-análisis-descriptivo-y-estructural-de-una-serie-temporal-tendencia-estacionalidad-y-estacionariedad.html"><i class="fa fa-check"></i><b>3.7</b> <strong>Conclusiones unidad 2</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="index.html"><a href="#unidad-3-preprocesamiento-y-visualizaci%C3%B3n"><i class="fa fa-check"></i><b>4</b> Unidad 3: Preprocesamiento y visualización</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="index.html"><a href="#transformaci%C3%B3n-box-cox-descomposici%C3%B3n-stl"><i class="fa fa-check"></i><b>4.1</b> <strong>Transformación Box-Cox + Descomposición STL</strong></a></li>
+<li class="chapter" data-level="4.2" data-path="index.html"><a href="#fuerza-estacional-recomendaciones-de-diferenciaci%C3%B3n"><i class="fa fa-check"></i><b>4.2</b> <strong>Fuerza estacional + recomendaciones de diferenciación</strong></a></li>
+<li class="chapter" data-level="4.3" data-path="index.html"><a href="#doble-diferenciaci%C3%B3n-regular-y-estacional"><i class="fa fa-check"></i><b>4.3</b> <strong>Doble diferenciación (regular y estacional)</strong></a></li>
+<li class="chapter" data-level="4.4" data-path="index.html"><a href="#prueba-adf-antesdespu%C3%A9s"><i class="fa fa-check"></i><b>4.4</b> <strong>Prueba ADF antes/después</strong></a></li>
+<li class="chapter" data-level="4.5" data-path="index.html"><a href="#validaci%C3%B3n-visual-acf-y-pacf"><i class="fa fa-check"></i><b>4.5</b> <strong>Validación visual: ACF y PACF</strong></a></li>
+<li class="chapter" data-level="4.6" data-path="unidad-3-preprocesamiento-y-visualización.html"><a href="unidad-3-preprocesamiento-y-visualización.html"><i class="fa fa-check"></i><b>4.6</b> <strong>Conclusiones unidad 3</strong></a></li>
+<li class="chapter" data-level="4.7" data-path="unidad-3-preprocesamiento-y-visualización.html"><a href="unidad-3-preprocesamiento-y-visualización.html#referencias"><i class="fa fa-check"></i><b>4.7</b> <strong>Referencias</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="index.html"><a href="#unidad-4-metodolog%C3%ADa-holter-winter-y-suavizamiento-a-la-variable-tiempo"><i class="fa fa-check"></i><b>5</b> Unidad 4: Metodología Holter-Winter y suavizamiento a la variable tiempo</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><i class="fa fa-check"></i><b>5.1</b> Ajuste de modelos Holt–Winters</a></li>
+<li class="chapter" data-level="5.2" data-path="index.html"><a href="#gr%C3%A1ficas-de-pron%C3%B3stico-y-bandas"><i class="fa fa-check"></i><b>5.2</b> Gráficas de pronóstico y bandas</a></li>
+<li class="chapter" data-level="5.3" data-path="index.html"><a href="#diagn%C3%B3sticos-de-residuales"><i class="fa fa-check"></i><b>5.3</b> Diagnósticos de residuales</a></li>
+<li class="chapter" data-level="5.4" data-path="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html"><a href="unidad-4-metodología-holter-winter-y-suavizamiento-a-la-variable-tiempo.html#conclusiones"><i class="fa fa-check"></i><b>5.4</b> Conclusiones</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="unidad-5-modelos-estacionarios-en-series-de-tiempo.html"><a href="unidad-5-modelos-estacionarios-en-series-de-tiempo.html"><i class="fa fa-check"></i><b>6</b> Unidad 5: Modelos estacionarios en series de tiempo</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="index.html"><a href="#evaluaci%C3%B3n-de-estacionariedad"><i class="fa fa-check"></i><b>6.1</b> Evaluación de estacionariedad</a></li>
+<li class="chapter" data-level="6.2" data-path="index.html"><a href="#identificaci%C3%B3n-y-estimaci%C3%B3n-del-modelo-arima"><i class="fa fa-check"></i><b>6.2</b> Identificación y estimación del modelo ARIMA</a></li>
+<li class="chapter" data-level="6.3" data-path="index.html"><a href="#diagn%C3%B3stico-de-residuales"><i class="fa fa-check"></i><b>6.3</b> Diagnóstico de residuales</a></li>
+<li class="chapter" data-level="6.4" data-path="index.html"><a href="#pron%C3%B3stico-del-modelo"><i class="fa fa-check"></i><b>6.4</b> Pronóstico del modelo</a></li>
+<li class="chapter" data-level="6.5" data-path="index.html"><a href="#conclusi%C3%B3n-modelos-estacionarios"><i class="fa fa-check"></i><b>6.5</b> Conclusión modelos estacionarios</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="index.html"><a href="#unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresi%C3%B3n-en-el-tiempo"><i class="fa fa-check"></i><b>7</b> Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html"><a href="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html"><i class="fa fa-check"></i><b>7.1</b> Fundamentos del modelo Prophet</a></li>
+<li class="chapter" data-level="7.2" data-path="index.html"><a href="#preparaci%C3%B3n-de-datos-y-ajuste-del-modelo-prophet"><i class="fa fa-check"></i><b>7.2</b> Preparación de datos y ajuste del modelo Prophet</a></li>
+<li class="chapter" data-level="7.3" data-path="index.html"><a href="#ajuste-del-modelo-prophet-y-an%C3%A1lisis-de-componentes"><i class="fa fa-check"></i><b>7.3</b> Ajuste del modelo Prophet y análisis de componentes</a></li>
+<li class="chapter" data-level="7.4" data-path="index.html"><a href="#comparaci%C3%B3n-de-desempe%C3%B1o-entre-holtwinters-arima-y-prophet"><i class="fa fa-check"></i><b>7.4</b> Comparación de desempeño entre Holt–Winters, ARIMA y Prophet</a></li>
+<li class="chapter" data-level="7.5" data-path="index.html"><a href="#comparaci%C3%B3n-de-modelos-y-conclusiones"><i class="fa fa-check"></i><b>7.5</b> Comparación de modelos y conclusiones</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><i class="fa fa-check"></i><b>8</b> Unidad 7: Redes neuronales recurrentes Elman y Jordan</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="index.html"><a href="#fundamentos-te%C3%B3ricos-redes-elman-y-jordan"><i class="fa fa-check"></i><b>8.1</b> Fundamentos teóricos: redes Elman y Jordan</a></li>
+<li class="chapter" data-level="8.2" data-path="index.html"><a href="#preparaci%C3%B3n-del-conjunto-supervisado-y-partici%C3%B3n-traintest"><i class="fa fa-check"></i><b>8.2</b> Preparación del conjunto supervisado y partición train/test</a></li>
+<li class="chapter" data-level="8.3" data-path="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-elman"><i class="fa fa-check"></i><b>8.3</b> Entrenamiento de la red Elman</a></li>
+<li class="chapter" data-level="8.4" data-path="index.html"><a href="#pron%C3%B3stico-con-la-red-elman"><i class="fa fa-check"></i><b>8.4</b> Pronóstico con la red Elman</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/paolat87/1_Act_Series_de_tiempo_Bookdown" target="_blank">🌐 Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Propuesta — Series de Tiempo (Kaggle: Australia Monthly Retail Turnover)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="unidad-7-redes-neuronales-recurrentes-elman-y-jordan" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> Unidad 7: Redes neuronales recurrentes Elman y Jordan<a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#unidad-7-redes-neuronales-recurrentes-elman-y-jordan" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>En esta unidad se incorporan dos arquitecturas clásicas de redes neuronales recurrentes (RNR) para el pronóstico de series de tiempo: la <strong>red de Elman</strong> y la <strong>red de Jordan</strong>. El objetivo es:</p>
+<ol style="list-style-type: decimal">
+<li>Utilizar la misma serie mensual <em>Australia Monthly Retail Turnover</em> empleada en las unidades anteriores.</li>
+<li>Construir un conjunto de datos supervisado basado en rezagos (valores pasados de la serie como entradas).</li>
+<li>Entrenar redes Elman y Jordan sobre un conjunto de entrenamiento.</li>
+<li>Generar pronósticos a 12 meses y evaluar su desempeño mediante RMSE, MAE y MAPE.</li>
+</ol>
+<div id="fundamentos-teóricos-redes-elman-y-jordan" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Fundamentos teóricos: redes Elman y Jordan<a href="#fundamentos-te%C3%B3ricos-redes-elman-y-jordan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Las redes neuronales recurrentes permiten modelar dependencias temporales al incorporar conexiones de retroalimentación que conservan información del pasado. Dos variantes clásicas son:</p>
+<ul>
+<li><strong>Red de Elman:</strong> introduce una <strong>capa de contexto</strong> que recibe las salidas de la capa oculta en el tiempo <span class="math inline">\(t-1\)</span>.<br />
+</li>
+<li><strong>Red de Jordan:</strong> la capa de contexto recibe retroalimentación de la <strong>salida</strong> de la red en el tiempo anterior.</li>
+</ul>
+<p>En forma simplificada, una red recurrente tipo Elman puede escribirse como:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf{h}_t &amp;= f\left( W_{xh}\mathbf{x}_t + W_{hh}\mathbf{h}_{t-1} + \mathbf{b}_h \right),\\
+\hat{y}_t &amp;= g\left( W_{hy}\mathbf{h}_t + \mathbf{b}_y \right),
+\end{aligned}
+\]</span></p>
+<p>donde:
+- <span class="math inline">\(\mathbf{x}_t\)</span> es el vector de entradas (rezagos de la serie),
+- <span class="math inline">\(\mathbf{h}_t\)</span> es el estado oculto,
+- <span class="math inline">\(\hat{y}_t\)</span> es la salida pronosticada,
+- <span class="math inline">\(f(\cdot)\)</span> y <span class="math inline">\(g(\cdot)\)</span> suelen ser funciones de activación no lineales.</p>
+<p>En las redes Elman y Jordan el <strong>tiempo</strong> entra de forma indirecta: el modelo aprende una función no lineal <span class="math inline">\(\hat{y}_t = F(y_{t-1}, y_{t-2}, \dots, y_{t-p})\)</span>, donde los valores pasados de la serie actúan como regresores. Por tanto, estas arquitecturas pueden entenderse como modelos de <strong>regresión no lineal en el tiempo</strong>.</p>
+</div>
+<div id="preparación-del-conjunto-supervisado-y-partición-traintest" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Preparación del conjunto supervisado y partición train/test<a href="#preparaci%C3%B3n-del-conjunto-supervisado-y-partici%C3%B3n-traintest" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Se construyó un conjunto de datos supervisado donde las entradas son los <strong>12 rezagos mensuales</strong> de la serie y la salida es el valor en el mes actual. Se mantiene la misma partición temporal que en las unidades anteriores: los <strong>últimos 12 meses</strong> se reservan como conjunto de prueba (test).</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-1" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
+<span id="cb84-2"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-2" tabindex="-1"></a>  <span class="fu">library</span>(RSNNS)</span>
+<span id="cb84-3"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-3" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb84-4"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-4" tabindex="-1"></a>  <span class="fu">library</span>(knitr)</span>
+<span id="cb84-5"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-5" tabindex="-1"></a>})</span>
+<span id="cb84-6"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-6" tabindex="-1"></a></span>
+<span id="cb84-7"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-7" tabindex="-1"></a><span class="co"># Horizonte de evaluación</span></span>
+<span id="cb84-8"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-8" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span><span class="dt">L</span></span>
+<span id="cb84-9"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-9" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(ts_y)</span>
+<span id="cb84-10"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-10" tabindex="-1"></a></span>
+<span id="cb84-11"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-11" tabindex="-1"></a><span class="co"># Partición train/test (últimos 12 meses como prueba)</span></span>
+<span id="cb84-12"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-12" tabindex="-1"></a>ts_train <span class="ot">&lt;-</span> <span class="fu">window</span>(ts_y, <span class="at">end   =</span> <span class="fu">time</span>(ts_y)[n <span class="sc">-</span> h])</span>
+<span id="cb84-13"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-13" tabindex="-1"></a>ts_test  <span class="ot">&lt;-</span> <span class="fu">window</span>(ts_y, <span class="at">start =</span> <span class="fu">time</span>(ts_y)[n <span class="sc">-</span> h <span class="sc">+</span> <span class="dv">1</span>])</span>
+<span id="cb84-14"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-14" tabindex="-1"></a></span>
+<span id="cb84-15"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-15" tabindex="-1"></a><span class="co"># Conversión a vector numérico</span></span>
+<span id="cb84-16"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-16" tabindex="-1"></a>y_all <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ts_y)</span>
+<span id="cb84-17"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-17" tabindex="-1"></a></span>
+<span id="cb84-18"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-18" tabindex="-1"></a><span class="co"># Número de rezagos utilizados como entradas</span></span>
+<span id="cb84-19"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-19" tabindex="-1"></a>lag_input <span class="ot">&lt;-</span> <span class="dv">12</span><span class="dt">L</span></span>
+<span id="cb84-20"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-20" tabindex="-1"></a></span>
+<span id="cb84-21"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-21" tabindex="-1"></a><span class="co"># Construir matriz supervisada con embed:</span></span>
+<span id="cb84-22"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-22" tabindex="-1"></a><span class="co"># 1ª columna = y_t (objetivo), resto = rezagos y_{t-1},...,y_{t-12}</span></span>
+<span id="cb84-23"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-23" tabindex="-1"></a>X_mat <span class="ot">&lt;-</span> <span class="fu">embed</span>(y_all, lag_input <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb84-24"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-24" tabindex="-1"></a><span class="fu">colnames</span>(X_mat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;y_t&quot;</span>, <span class="fu">paste0</span>(<span class="st">&quot;lag_&quot;</span>, lag_input<span class="sc">:</span><span class="dv">1</span>))</span>
+<span id="cb84-25"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-25" tabindex="-1"></a></span>
+<span id="cb84-26"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-26" tabindex="-1"></a>y_target <span class="ot">&lt;-</span> X_mat[, <span class="st">&quot;y_t&quot;</span>]</span>
+<span id="cb84-27"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-27" tabindex="-1"></a>X_inputs <span class="ot">&lt;-</span> X_mat[, <span class="sc">-</span><span class="dv">1</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb84-28"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-28" tabindex="-1"></a></span>
+<span id="cb84-29"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-29" tabindex="-1"></a><span class="co"># Posición temporal de cada fila respecto a la serie original</span></span>
+<span id="cb84-30"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-30" tabindex="-1"></a>pos_out <span class="ot">&lt;-</span> (lag_input <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n</span>
+<span id="cb84-31"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-31" tabindex="-1"></a></span>
+<span id="cb84-32"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-32" tabindex="-1"></a><span class="co"># Índices de filas que caen en train y en test (según posición del y_t)</span></span>
+<span id="cb84-33"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-33" tabindex="-1"></a>train_end <span class="ot">&lt;-</span> <span class="fu">length</span>(ts_train)</span>
+<span id="cb84-34"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-34" tabindex="-1"></a>idx_train <span class="ot">&lt;-</span> <span class="fu">which</span>(pos_out <span class="sc">&lt;=</span> train_end)</span>
+<span id="cb84-35"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-35" tabindex="-1"></a>idx_test  <span class="ot">&lt;-</span> <span class="fu">which</span>(pos_out <span class="sc">&gt;</span>  train_end)</span>
+<span id="cb84-36"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-36" tabindex="-1"></a></span>
+<span id="cb84-37"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-37" tabindex="-1"></a>X_train <span class="ot">&lt;-</span> X_inputs[idx_train, ]</span>
+<span id="cb84-38"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-38" tabindex="-1"></a>X_test  <span class="ot">&lt;-</span> X_inputs[idx_test, ]</span>
+<span id="cb84-39"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-39" tabindex="-1"></a>y_train <span class="ot">&lt;-</span> y_target[idx_train]</span>
+<span id="cb84-40"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-40" tabindex="-1"></a>y_test  <span class="ot">&lt;-</span> y_target[idx_test]</span>
+<span id="cb84-41"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-41" tabindex="-1"></a></span>
+<span id="cb84-42"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-42" tabindex="-1"></a><span class="co"># Estandarización basada en el conjunto de entrenamiento</span></span>
+<span id="cb84-43"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-43" tabindex="-1"></a>x_center <span class="ot">&lt;-</span> <span class="fu">apply</span>(X_train, <span class="dv">2</span>, mean)</span>
+<span id="cb84-44"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-44" tabindex="-1"></a>x_scale  <span class="ot">&lt;-</span> <span class="fu">apply</span>(X_train, <span class="dv">2</span>, sd)</span>
+<span id="cb84-45"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-45" tabindex="-1"></a>X_train_sc <span class="ot">&lt;-</span> <span class="fu">scale</span>(X_train, <span class="at">center =</span> x_center, <span class="at">scale =</span> x_scale)</span>
+<span id="cb84-46"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-46" tabindex="-1"></a>X_test_sc  <span class="ot">&lt;-</span> <span class="fu">scale</span>(X_test,  <span class="at">center =</span> x_center, <span class="at">scale =</span> x_scale)</span>
+<span id="cb84-47"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-47" tabindex="-1"></a></span>
+<span id="cb84-48"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-48" tabindex="-1"></a>y_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(y_train)</span>
+<span id="cb84-49"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-49" tabindex="-1"></a>y_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(y_train)</span>
+<span id="cb84-50"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb84-50" tabindex="-1"></a>y_train_sc <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">scale</span>(y_train, <span class="at">center =</span> y_mean, <span class="at">scale =</span> y_sd))</span></code></pre></div>
+</div>
+<div id="entrenamiento-de-la-red-elman" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Entrenamiento de la red Elman<a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#entrenamiento-de-la-red-elman" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Se ajusta una red Elman usando como entradas los 12 rezagos y como salida el valor actual de la serie (todo estandarizado).</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-1" tabindex="-1"></a><span class="fu">library</span>(RSNNS)</span>
+<span id="cb85-2"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-2" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># para reproducibilidad</span></span>
+<span id="cb85-4"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-4" tabindex="-1"></a></span>
+<span id="cb85-5"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-5" tabindex="-1"></a>elman_net <span class="ot">&lt;-</span> <span class="fu">elman</span>(</span>
+<span id="cb85-6"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-6" tabindex="-1"></a>  <span class="at">x =</span> X_train_sc,</span>
+<span id="cb85-7"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-7" tabindex="-1"></a>  <span class="at">y =</span> y_train_sc,</span>
+<span id="cb85-8"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-8" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">8</span>,               <span class="co"># neuronas ocultas</span></span>
+<span id="cb85-9"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-9" tabindex="-1"></a>  <span class="at">learnFuncParams =</span> <span class="fu">c</span>(<span class="fl">0.2</span>),</span>
+<span id="cb85-10"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-10" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">500</span></span>
+<span id="cb85-11"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-11" tabindex="-1"></a>)</span>
+<span id="cb85-12"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-12" tabindex="-1"></a></span>
+<span id="cb85-13"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb85-13" tabindex="-1"></a>elman_net            <span class="co"># para ver el resumen que ya te salió</span></span></code></pre></div>
+<pre><code>## Class: elman-&gt;rsnns
+## Number of inputs: 12 
+## Number of outputs: 1 
+## Maximal iterations: 500 
+## Initialization function: JE_Weights 
+## Initialization function parameters: 1 -1 0.3 1 0.5 
+## Learning function: JE_BP 
+## Learning function parameters: 0.2 
+## Update function:JE_Order
+## Update function parameters: 0 
+## Patterns are shuffled internally: FALSE 
+## Compute error in every iteration: TRUE 
+## Architecture Parameters:
+## $size
+## [1] 8
+## 
+## All members of model:
+##  [1] &quot;nInputs&quot;               &quot;maxit&quot;                 &quot;initFunc&quot;             
+##  [4] &quot;initFuncParams&quot;        &quot;learnFunc&quot;             &quot;learnFuncParams&quot;      
+##  [7] &quot;updateFunc&quot;            &quot;updateFuncParams&quot;      &quot;shufflePatterns&quot;      
+## [10] &quot;computeIterativeError&quot; &quot;snnsObject&quot;            &quot;archParams&quot;           
+## [13] &quot;IterativeFitError&quot;     &quot;fitted.values&quot;         &quot;nOutputs&quot;</code></pre>
+</div>
+<div id="pronóstico-con-la-red-elman" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Pronóstico con la red Elman<a href="#pron%C3%B3stico-con-la-red-elman" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En esta sección vamos a:</p>
+<ul>
+<li><p>Usar la red Elman ya entrenada (elman_net).</p></li>
+<li><p>Obtener el pronóstico para los últimos 12 meses (conjunto de prueba).</p></li>
+<li><p>Calcular RMSE, MAE y MAPE.</p></li>
+<li><p>Generar un gráfico comparando valores reales vs pronosticados.</p></li>
+</ul>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-1" tabindex="-1"></a><span class="co"># Predicciones de la red Elman en el conjunto de prueba (últimos 12 meses)</span></span>
+<span id="cb87-2"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-2" tabindex="-1"></a>pred_elman_sc <span class="ot">&lt;-</span> <span class="fu">predict</span>(elman_net, X_test_sc)</span>
+<span id="cb87-3"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-3" tabindex="-1"></a>pred_elman_sc <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(pred_elman_sc)</span>
+<span id="cb87-4"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-4" tabindex="-1"></a></span>
+<span id="cb87-5"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-5" tabindex="-1"></a><span class="co"># Volver a la escala original (des-estandarizar)</span></span>
+<span id="cb87-6"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-6" tabindex="-1"></a>y_pred_elman <span class="ot">&lt;-</span> pred_elman_sc <span class="sc">*</span> y_sd <span class="sc">+</span> y_mean</span>
+<span id="cb87-7"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-7" tabindex="-1"></a></span>
+<span id="cb87-8"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-8" tabindex="-1"></a><span class="co"># Construir tabla con fechas, valor real y pronóstico</span></span>
+<span id="cb87-9"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-9" tabindex="-1"></a><span class="fu">library</span>(zoo)      <span class="co"># por si no está cargado</span></span>
+<span id="cb87-10"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-10" tabindex="-1"></a>fechas_test <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">as.yearmon</span>(<span class="fu">time</span>(ts_test)))</span>
+<span id="cb87-11"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-11" tabindex="-1"></a></span>
+<span id="cb87-12"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-12" tabindex="-1"></a>res_elman <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb87-13"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-13" tabindex="-1"></a>  <span class="at">Fecha =</span> fechas_test,</span>
+<span id="cb87-14"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-14" tabindex="-1"></a>  <span class="at">Real  =</span> <span class="fu">as.numeric</span>(ts_test),</span>
+<span id="cb87-15"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-15" tabindex="-1"></a>  <span class="at">Elman =</span> y_pred_elman</span>
+<span id="cb87-16"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-16" tabindex="-1"></a>)</span>
+<span id="cb87-17"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-17" tabindex="-1"></a></span>
+<span id="cb87-18"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-18" tabindex="-1"></a><span class="co"># Métricas de error</span></span>
+<span id="cb87-19"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-19" tabindex="-1"></a>rmse_elman <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((res_elman<span class="sc">$</span>Real <span class="sc">-</span> res_elman<span class="sc">$</span>Elman)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb87-20"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-20" tabindex="-1"></a>mae_elman  <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(res_elman<span class="sc">$</span>Real <span class="sc">-</span> res_elman<span class="sc">$</span>Elman))</span>
+<span id="cb87-21"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-21" tabindex="-1"></a>mape_elman <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>((res_elman<span class="sc">$</span>Real <span class="sc">-</span> res_elman<span class="sc">$</span>Elman) <span class="sc">/</span> res_elman<span class="sc">$</span>Real)) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb87-22"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-22" tabindex="-1"></a></span>
+<span id="cb87-23"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-23" tabindex="-1"></a>metrics_elman <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb87-24"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-24" tabindex="-1"></a>  <span class="at">Modelo =</span> <span class="st">&quot;Red Elman&quot;</span>,</span>
+<span id="cb87-25"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-25" tabindex="-1"></a>  <span class="at">RMSE   =</span> rmse_elman,</span>
+<span id="cb87-26"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-26" tabindex="-1"></a>  <span class="at">MAE    =</span> mae_elman,</span>
+<span id="cb87-27"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-27" tabindex="-1"></a>  <span class="at">MAPE   =</span> mape_elman</span>
+<span id="cb87-28"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-28" tabindex="-1"></a>)</span>
+<span id="cb87-29"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-29" tabindex="-1"></a></span>
+<span id="cb87-30"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-30" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb87-31"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-31" tabindex="-1"></a>  metrics_elman,</span>
+<span id="cb87-32"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-32" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;Métricas de error de la red neuronal Elman sobre el horizonte de 12 meses.&quot;</span>,</span>
+<span id="cb87-33"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-33" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb87-34"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-34" tabindex="-1"></a>  <span class="at">align =</span> <span class="st">&quot;c&quot;</span></span>
+<span id="cb87-35"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb87-35" tabindex="-1"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:elman-forecast">Table 8.1: </span>Métricas de error de la red neuronal Elman sobre el horizonte de 12 meses.</caption>
+<thead>
+<tr class="header">
+<th align="center">Modelo</th>
+<th align="center">RMSE</th>
+<th align="center">MAE</th>
+<th align="center">MAPE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Red Elman</td>
+<td align="center">1646.15</td>
+<td align="center">1601.22</td>
+<td align="center">3.12</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-1" tabindex="-1"></a><span class="co"># Gráfico: valores reales vs pronosticados</span></span>
+<span id="cb88-2"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-2" tabindex="-1"></a></span>
+<span id="cb88-3"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb88-4"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-4" tabindex="-1"></a></span>
+<span id="cb88-5"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-5" tabindex="-1"></a><span class="fu">ggplot</span>(res_elman, <span class="fu">aes</span>(<span class="at">x =</span> Fecha)) <span class="sc">+</span></span>
+<span id="cb88-6"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Real), <span class="at">color =</span> <span class="st">&quot;#0072B2&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb88-7"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Elman), <span class="at">color =</span> <span class="st">&quot;#E69F00&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb88-8"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-8" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb88-9"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-9" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Últimos 12 meses: valores reales vs pronóstico Elman&quot;</span>,</span>
+<span id="cb88-10"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-10" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Fecha&quot;</span>,</span>
+<span id="cb88-11"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-11" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Turnover (millones de AUD)&quot;</span></span>
+<span id="cb88-12"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-12" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb88-13"><a href="unidad-7-redes-neuronales-recurrentes-elman-y-jordan.html#cb88-13" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div>
+<p><img src="serie-retail-au_files/figure-html/elman-forecast-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>```</p>
+<p><strong>Interpretación de los resultados de la red Elman</strong></p>
+<p>Los resultados de la red neuronal recurrente tipo Elman muestran un desempeño moderado en el pronóstico de los últimos 12 meses del Retail Turnover australiano. La Tabla 8.1 presenta las métricas obtenidas:</p>
+<ul>
+<li><p>RMSE = 1646.15</p></li>
+<li><p>MAE = 1601.22</p></li>
+<li><p>MAPE = 3.12%</p></li>
+</ul>
+<p>Estas métricas indican que, aunque la red es capaz de capturar parte de la dinámica general de la serie, su error es considerablemente mayor comparado con modelos clásicos como Holt–Winters o ARIMA, los cuales tenían errores alrededor de RMSE ≈ 380–410.</p>
+<p>La Figura de valores reales vs pronóstico Elman evidencia que la red Elman reproduce adecuadamente la dirección general del movimiento, especialmente en los meses medios del período de evaluación; sin embargo:</p>
+<p>Tiende a subestimar los valores reales, especialmente cuando la serie presenta incrementos pronunciados.</p>
+<p>La red suaviza demasiado las oscilaciones, lo cual es consistente con el comportamiento típico de redes recurrentes entrenadas con pocos datos recientes.</p>
+<p>El mayor desajuste se observa en los dos últimos meses, donde la serie real experimenta un crecimiento abrupto que la red no logra anticipar.</p>
+<p>Este comportamiento puede explicarse porque las redes Elman requieren más información temporal o un número mayor de neuronas/capas para capturar variaciones pronunciadas en series altamente estacionales y crecientes. Además, a diferencia de Prophet o ARIMA, la arquitectura no incorpora explícitamente una modelación de estacionalidad ni tendencia, lo que reduce su capacidad predictiva en este tipo de datos económicos.</p>
+<p>En resumen, la red Elman funciona, pero su precisión es inferior a la de otros modelos utilizados previamente en el documento. Esto sugiere que, para este tipo de serie temporal, los modelos clásicos con estructura estacional explícita tienden a generalizar mejor en horizontes cortos de pronóstico.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="unidad-6-modelo-prophet-y-serie-de-tiempo-como-regresión-en-el-tiempo.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

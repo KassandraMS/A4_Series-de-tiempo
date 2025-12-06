@@ -4,69 +4,74 @@ author: "Edgar Esteban Grajales, Kassandra Mendoza-Sarmiento y Paula Tovar Ríos
 date: "`r format(Sys.Date(), '%Y-%m-%d')`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
-
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
-
 
 # Introducción
 
 La presente propuesta corresponde a la Actividad 1 del curso Análisis de Series de Tiempo,en este actividad se aplica el uso de herramientas TIC, específicamente Bookdown en RStudio y GitHub Pages, para elaborar un documento reproducible que describe el enfoque del proyecto y la base de datos seleccionada para el análisis.
 
-El propósito central es definir el contexto y la relevancia del estudio, identificando la información a pronosticar, su valor agregado y los alcances del análisis de series de tiempo propuesto. La propuesta utiliza el dataset público “Australia Monthly Retail Turnover” disponible en Kaggle, lo que permite explorar comportamientos económicos mensuales y sentar las bases para futuros modelos de predicción orientados a la toma de decisiones basadas en datos.
-
+El propósito central es definir el contexto y la relevancia del estudio, identificando la información a pronosticar, su valor agregado y los alcances del análisis de series de tiempo propuesto.
+La propuesta utiliza el dataset público “Australia Monthly Retail Turnover” disponible en Kaggle, lo que permite explorar comportamientos económicos mensuales y sentar las bases para futuros modelos de predicción orientados a la toma de decisiones basadas en datos.
 
 # Unidad 1. Propuesta de información a pronosticar
 
-## **Tema y base de datos**  
-Se trabajará con la serie **Retail Turnover mensual de Australia** (ventas minoristas agregadas por mes). Esta información proviene del dataset público “Australia Monthly Retail Turnover” disponible en Kaggle y recoge el gasto mensual del comercio al por menor a nivel nacional.
+## Tema y base de datos
 
-## **Importancia y valor agregado** 
+Se trabajará con la serie **Retail Turnover mensual de Australia** (ventas minoristas agregadas por mes).
+Esta información proviene del dataset público “Australia Monthly Retail Turnover” disponible en Kaggle y recoge el gasto mensual del comercio al por menor a nivel nacional.
+
+## Importancia y valor agregado
 
 Pronosticar el *retail turnover* es útil para:
 
-- **Planeación comercial e inventarios:** anticipar meses de alta y baja demanda reduce quiebres y sobrestock, y guía compras y logística.
+-   **Planeación comercial e inventarios:** anticipar meses de alta y baja demanda reduce quiebres y sobrestock, y guía compras y logística.
 
-- **Gestión financiera:** mejora la elaboración de presupuestos y flujo de caja al prever ingresos mensuales esperados.
+-   **Gestión financiera:** mejora la elaboración de presupuestos y flujo de caja al prever ingresos mensuales esperados.
 
-- **Toma de decisiones tácticas:** permite calendarizar campañas y recursos (personal, distribución) según la estacionalidad identificada.
+-   **Toma de decisiones tácticas:** permite calendarizar campañas y recursos (personal, distribución) según la estacionalidad identificada.
 
-- **Evaluación de choques:** ayuda a dimensionar el impacto de eventos excepcionales (feriados extendidos, crisis) sobre el consumo.
-
+-   **Evaluación de choques:** ayuda a dimensionar el impacto de eventos excepcionales (feriados extendidos, crisis) sobre el consumo.
 
 Por tanto, este análisis permitirá identificar patrones temporales que apoyen la toma de decisiones estratégicas en el comercio minorista australiano.
 
-## **Alcance propuesto**  
+## Alcance propuesto
 
 Se realizará una exploración de la serie mensual, identificación de tendencia y estacionalidad, y un pronóstico base a 12 meses con intervalos, suficiente para soportar decisiones de planeación y seguimiento.
 
-**Preguntas guía**  
+**Preguntas guía**
 
-1. ¿Existen tendencias y estacionalidades por Estado/Industria?  
-2. ¿Qué modelo (ETS vs ARIMA) ofrece mejor precisión por horizonte (3–6–12 meses)?  
-3. ¿Cómo cambian los pronósticos agregando por Estado vs por Industria?
+1.  ¿Existen tendencias y estacionalidades por Estado/Industria?\
+2.  ¿Qué modelo (ETS vs ARIMA) ofrece mejor precisión por horizonte (3–6–12 meses)?\
+3.  ¿Cómo cambian los pronósticos agregando por Estado vs por Industria?
 
-**Fuentes y permisos**  
+**Fuentes y permisos**
 
-- **Fuente:** Kaggle (2024). Australia Monthly Retail Turnover Dataset, autor: **kanyaweechomming101**. URL: https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data.
+-   **Fuente:** Kaggle (2024).
+    Australia Monthly Retail Turnover Dataset, autor: **kanyaweechomming101**.
+    URL: <https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data>.
 
-- **ABS (Australian Bureau of Statistics)** como fuente estadística original (referenciada en la descripción del dataset).  
+-   **ABS (Australian Bureau of Statistics)** como fuente estadística original (referenciada en la descripción del dataset).
 
-- **Uso**: datos públicos para fines académicos;según los términos publicados en la página del dataset; se citará la fuente en el documento. No contiene información personal.  
+-   **Uso**: datos públicos para fines académicos;según los términos publicados en la página del dataset; se citará la fuente en el documento.
+    No contiene información personal.
 
-## **Conclusiones Unidad 1**
+## Conclusiones Unidad 1
 
-Esta propuesta demuestra el uso efectivo de herramientas TIC avanzadas, integrando **RStudio, Bookdown y GitHub Pages** como entornos para la gestión reproducible de documentos científicos. A través del análisis de la serie de tiempo “Australia Monthly Retail Turnover”, se pretende identificar patrones y tendencias que permitan comprender la dinámica del consumo minorista australiano y su evolución en el tiempo.
+Esta propuesta demuestra el uso efectivo de herramientas TIC avanzadas, integrando **RStudio, Bookdown y GitHub Pages** como entornos para la gestión reproducible de documentos científicos.
+A través del análisis de la serie de tiempo “Australia Monthly Retail Turnover”, se pretende identificar patrones y tendencias que permitan comprender la dinámica del consumo minorista australiano y su evolución en el tiempo.
 
 Este trabajo constituye la base para la aplicación de modelos predictivos que fortalezcan la toma de decisiones en entornos comerciales y académicos, promoviendo la innovación y la analítica como pilares de la gestión de datos.
 
----
+------------------------------------------------------------------------
 
 # Unidad 2. Análisis descriptivo y estructural de una serie temporal: tendencia, estacionalidad y estacionariedad
 
 En esta unidad se analizan los componentes fundamentales de una serie temporal nivel, tendencia, estacionalidad y ruido aplicando técnicas gráficas y estadísticas de suavizamiento, descomposición y diferenciación, con el fin de identificar su estructura y preparar la base para el modelamiento predictivo.
 
-
-## **Descripción y justificación del conjunto de datos**
+## Descripción y justificación del conjunto de datos
 
 El conjunto de datos utilizado corresponde al registro histórico del Retail Trade, Australia, disponible públicamente en Kaggle bajo el nombre “Australia Monthly Retail Turnover Data”.
 Este dataset recopila información mensual sobre el volumen de ventas minoristas en diferentes estados y sectores de la economía australiana desde 1982 hasta la actualidad.
@@ -81,8 +86,6 @@ knitr::opts_chunk$set(
 )
 
 ```
-
-
 
 ```{r}
 library(readr)
@@ -115,7 +118,6 @@ EMA_r <- function(x, n){
   as.numeric(stats::filter(x0, alpha, method = "recursive"))
 }
 ```
-
 
 ```{r, message=FALSE, warning=FALSE}
 # === Descarga y vista previa organizada ===
@@ -153,17 +155,15 @@ peek %>%
 
 ```
 
-
 La tabla muestra las siguientes variables principales:
 
 | **Variable** | **Descripción** |
-|:-------------|:----------------|
+|:--------------------------------|:--------------------------------------|
 | **State** | Estado o territorio australiano del cual proviene el registro. |
 | **Industry** | Sector económico o grupo de actividades comerciales. |
 | **Series** | Identificador de la serie publicada por la oficina estadística australiana. |
 | **Month** | Fecha del registro mensual (año y mes). |
 | **Turnover** | Valor total de ventas minoristas expresado en millones de dólares australianos. |
-
 
 Aunque el dataset contiene múltiples combinaciones de estado e industria, en esta actividad se analizará una serie única y representativa, correspondiente al “Total (industry)”, que refleja el comportamiento global del comercio minorista australiano.
 Esta decisión se tomó porque el objetivo de la Unidad 2 es identificar tendencias, rezagos y estacionalidades en una serie de tiempo de manera clara, sin el ruido ni las fluctuaciones que presentan sectores individuales.
@@ -176,12 +176,10 @@ Detectar con mayor precisión la estacionalidad mensual (patrones de aumento y d
 
 Facilitar el uso de herramientas estadísticas de suavizamiento y descomposición en los bloques siguientes.
 
-
 A partir de la revisión de esta tabla y el entendimiento de su estructura, se confirma que el conjunto de datos es adecuado para el estudio de series temporales económicas, ya que presenta una variable cuantitativa (ventas) observada en intervalos regulares de tiempo (mensuales).
 La amplitud temporal del dataset (más de 40 años) permitirá analizar la evolución del comercio minorista, identificando cambios estructurales, ciclos económicos y comportamientos estacionales que servirán como base para las siguientes etapas del análisis.
 
-
-## **Preparación y filtrado de datos: serie total mensual**
+## Preparación y filtrado de datos: serie total mensual
 
 ```{r, message=FALSE, warning=FALSE}
 df0 <- readr::read_csv(ruta_csv, show_col_types = FALSE)
@@ -264,7 +262,6 @@ df %>%
 
 ```
 
-
 Una vez identificado el conjunto de datos original, el siguiente paso consistió en preparar la información y filtrar la serie temporal de interés.
 El dataset inicial incluye registros mensuales desagregados por estado e industria, lo que genera múltiples combinaciones posibles.
 Para los fines de esta Unidad —centrados en el análisis de la estructura de los datos y la identificación de patrones temporales— se seleccionó una serie agregada, correspondiente al total mensual de ventas minoristas a nivel nacional.
@@ -272,16 +269,17 @@ Para los fines de esta Unidad —centrados en el análisis de la estructura de l
 El código ejecutado agrupa los registros por la variable fecha y suma el valor del “Turnover” (ventas) de todas las industrias disponibles.
 De este modo, se obtiene una serie más estable y representativa del comportamiento general del comercio minorista australiano.
 
-La Tabla 2 presenta las primeras observaciones de la serie consolidada. En ella se observan las columnas:
+La Tabla 2 presenta las primeras observaciones de la serie consolidada.
+En ella se observan las columnas:
 
 | **Variable** | **Descripción** |
-|:-------------|:----------------|
+|:--------------------------------|:--------------------------------------|
 | **Fecha** | Corresponde al primer día del mes registrado (en formato YYYY-MM-DD). |
 | **Valor (millones de AUD)** | Monto total de ventas minoristas acumuladas para todas las industrias en el mes correspondiente. |
 
 Esta transformación permite trabajar con una sola serie continua en el tiempo, eliminando la variabilidad interna de los diferentes sectores y conservando la estructura mensual necesaria para los análisis posteriores de tendencia, promedio móvil, rezagos y estacionalidad.
 
-## **Construcción de la serie temporal**
+## Construcción de la serie temporal
 
 ```{r, message=FALSE, warning=FALSE}
 # Construcción de la serie temporal y visualización inicial
@@ -337,7 +335,6 @@ ggplot(df, aes(x = fecha, y = valor)) +
 
 ```
 
-
 Una vez consolidada la base de datos con las observaciones mensuales, se construyó el objeto ts que representa la serie temporal del total de ventas minoristas en Australia.
 La frecuencia definida fue mensual (frequency = 12), lo que permite capturar los ciclos anuales y analizar la estacionalidad.
 El rango temporal de la serie abarca desde abril de 1982 hasta el último periodo disponible en el dataset (2024).
@@ -353,7 +350,6 @@ Además, se aprecian fluctuaciones regulares que sugieren la presencia de estaci
 La línea azul muestra la evolución mensual del volumen de ventas, mientras que la línea verde (suavizada mediante el método LOESS) permite identificar con mayor claridad la tendencia general de crecimiento.
 Esta visualización inicial confirma que la serie no es estacionaria en nivel, ya que su media y su varianza varían con el tiempo.
 
-
 Con este punto obtendremos la estructura base sobre la cual se aplicarán las siguientes técnicas:
 
 Promedios móviles (SMA/EMA) para suavizar fluctuaciones,
@@ -362,8 +358,7 @@ Rezagos y diferencias para analizar dependencias temporales, y
 
 Gráficos de estacionalidad y autocorrelación para estudiar los ciclos repetitivos.
 
-
-## **Promedios móviles (SMA/EMA) y análisis de tendencia**
+## Promedios móviles (SMA/EMA) y análisis de tendencia
 
 El promedio móvil es una técnica de suavizamiento usada para resaltar la tendencia de una serie temporal, reduciendo el ruido de corto plazo.
 Existen dos tipos principales:
@@ -371,7 +366,6 @@ Existen dos tipos principales:
 SMA (Simple Moving Average): promedio aritmético de los últimos 𝑘 valores.
 
 EMA (Exponential Moving Average): promedio ponderado donde los valores más recientes tienen mayor peso.
-
 
 Fórmulas
 
@@ -394,7 +388,6 @@ Ventana corta: 6 meses (EMA) para capturar variaciones rápidas.
 Ventana larga: 12 meses (SMA) para suavizar el ciclo anual.
 
 Estas técnicas permiten observar la tendencia subyacente de crecimiento del comercio minorista australiano sin el efecto de los picos mensuales.
-
 
 ```{r, message=FALSE, warning=FALSE}
 # Promedios móviles (SMA / EMA) y análisis de tendencia ===
@@ -491,11 +484,10 @@ Ambos métodos confirman que la serie presenta una fuerte no estacionaridad en n
 Los promedios móviles son una herramienta fundamental para distinguir la tendencia general de la variabilidad estacional.
 Este resultado establece la base para los siguientes análisis, donde se abordará la estacionalidad y la autocorrelación temporal para identificar los patrones cíclicos que caracterizan la serie.
 
+## Estacionalidad y rezagos (seasonplot, subseries, ACF y descomposición)
 
-
-## **Estacionalidad y rezagos (seasonplot, subseries, ACF y descomposición)**
-
-En una serie temporal, la estacionalidad se refiere a los patrones que se repiten a intervalos regulares, como meses, trimestres o años. Estos ciclos son producto de comportamientos periódicos (por ejemplo, aumentos de ventas en diciembre o caídas en enero).
+En una serie temporal, la estacionalidad se refiere a los patrones que se repiten a intervalos regulares, como meses, trimestres o años.
+Estos ciclos son producto de comportamientos periódicos (por ejemplo, aumentos de ventas en diciembre o caídas en enero).
 
 Fórmulas
 
@@ -540,8 +532,6 @@ $$
 $$
 \hat{Y}_t = \hat{T}_t \times \hat{S}_t
 $$
-
-
 
 En el Retail Turnover Australia, se observa un patrón anual (m = 12), con picos en noviembre–diciembre y descensos en enero–febrero.
 Para analizarlo:
@@ -689,7 +679,8 @@ knitr::kable(
 Seasonplot (Figura 3)
 
 El gráfico estacional traza, para cada año, la evolución a lo largo de los 12 meses.
-Se observa un patrón altamente repetitivo: incrementos hacia el cierre de año y caídas posteriores, evidencia clara de estacionalidad mensual. La superposición de curvas similares entre años indica que el patrón es estable y persistente.
+Se observa un patrón altamente repetitivo: incrementos hacia el cierre de año y caídas posteriores, evidencia clara de estacionalidad mensual.
+La superposición de curvas similares entre años indica que el patrón es estable y persistente.
 
 Para evitar la sobrecarga visual del seasonplot con todos los años, se presentan dos vistas complementarias:
 
@@ -699,47 +690,43 @@ Figura 3B (facetas por década): el promedio mensual de cada década (línea azu
 
 La serie exhibe estacionalidad anual fuerte y persistente con máximos en los meses de cierre de año.
 
-
 Subseries mensuales (Figura 4)
 
 Las subseries muestran cada mes como una serie independiente en el tiempo, junto con su promedio.
 Los paneles permiten identificar qué meses presentan niveles sistemáticamente altos (p. ej., noviembre–diciembre) y cuáles tienden a ser bajos (p. ej., enero–febrero).
 Esto refuerza la lectura del seasonplot con una visión mes a mes.
 
-
 Autocorrelación (Figura 5)
 
-La ACF exhibe picos significativos en rezagos de 12, 24, 36… meses, lo cual confirma formalmente la estacionalidad anual. Además, la persistencia de autocorrelación en rezagos cortos indica que la serie no es ruido blanco y posee memoria (dependencia temporal).
+La ACF exhibe picos significativos en rezagos de 12, 24, 36… meses, lo cual confirma formalmente la estacionalidad anual.
+Además, la persistencia de autocorrelación en rezagos cortos indica que la serie no es ruido blanco y posee memoria (dependencia temporal).
 
 Descomposición STL (Figura 6)
 
 La descomposición STL separa la serie en tendencia, estacionalidad y residuo.
 
-* La tendencia muestra el crecimiento estructural de largo plazo.
+-   La tendencia muestra el crecimiento estructural de largo plazo.
 
-* La estacionalidad mensual es marcada y relativamente estable.
+-   La estacionalidad mensual es marcada y relativamente estable.
 
-* El residuo concentra la variación no explicada (shocks específicos, ruido).
-
+-   El residuo concentra la variación no explicada (shocks específicos, ruido).
 
 La Tabla 5 resume el promedio histórico por mes y lo ordena de mayor a menor, facilitando referenciar los picos estacionales en el texto.
 
 La combinación de seasonplot, subseries, ACF y STL confirma que la serie presenta tendencia creciente y estacionalidad anual fuerte.
 Estos hallazgos orientan las transformaciones para el modelado: diferenciación regular (Δ) para estabilizar tendencia y, de ser necesario, diferenciación estacional (Δ₁₂) para remover el componente mensual antes de ajustes ARIMA/ETS.
 
-
-
-## **Diferencias Δ y Δ₁₂ (rezagos y estabilización)**
+## Diferencias Δ y Δ₁₂ (rezagos y estabilización)
 
 El proceso de diferenciación busca eliminar la tendencia y la estacionalidad de una serie temporal, con el fin de obtener estacionariedad (una serie con media y varianza constantes a lo largo del tiempo).
 
 Existen dos tipos de diferencias:
 
-* Diferencia regular (Δ): elimina la tendencia.
+-   Diferencia regular (Δ): elimina la tendencia.
 
-* Diferencia estacional (Δ12): elimina la estacionalidad anual (para frecuencia mensual). 
+-   Diferencia estacional (Δ12): elimina la estacionalidad anual (para frecuencia mensual).
 
-Fórmula 
+Fórmula
 
 **Diferencia regular (Δ):**
 
@@ -774,7 +761,6 @@ La diferencia estacional (Δ12) elimina el patrón anual.
 La combinación ΔΔ12 produce una serie estacionaria, adecuada para modelar con ARIMA o SARIMA.
 
 Nuestro objetivo es mostrar cómo la primera diferencia (Δ) y la diferencia estacional (Δ₁₂) remueven tendencia y estacionalidad, respectivamente, y comprobarlo visualmente y con ACF.
-
 
 ```{r, message=FALSE, warning=FALSE}
 
@@ -853,7 +839,6 @@ knitr::kable(stab_tbl,
 
 ```
 
-
 Δ (Figura 7): remueve la tendencia, acercando la serie a media estable, aunque mantiene restos estacionales.
 
 Δ₁₂ (Figura 8): remueve la estacionalidad anual (patrón de 12 meses), pero aún puede persistir una deriva de largo plazo.
@@ -864,22 +849,21 @@ Tabla 6: la varianza disminuye tras diferenciar, lo que apoya la estabilización
 
 Para modelar esta serie con enfoques ARIMA estacionales, una especificación (d = 1, D = 1, m = 12) es un punto de partida razonable, sujeto a verificación con diagnósticos formales (AICc, pruebas de raíz unitaria y residuales del modelo).
 
-
-## **Conclusiones unidad 2**
+## Conclusiones unidad 2
 
 El análisis exploratorio de la serie mensual Australia Monthly Retail Turnover (1982–2024) permitió caracterizar su comportamiento histórico mediante técnicas gráficas y estadísticas que revelan su estructura temporal y estacional.
 
-1. Identificación del patrón general
+1.  Identificación del patrón general
 
 A partir de los promedios móviles (SMA(12) y EMA(6)), se observó una tendencia creciente sostenida en el volumen de ventas minoristas, con incrementos marcados desde mediados de los años noventa y aceleraciones notorias a partir de 2010.
 Esta tendencia indica un crecimiento estructural del comercio minorista australiano, vinculado al aumento del consumo y la expansión económica.
 
-2. Estructura estacional
+2.  Estructura estacional
 
 El análisis mediante seasonplot, subseries y promedios mensuales mostró un patrón estacional anual fuerte y estable, con picos de ventas en noviembre–diciembre (época de fin de año) y caídas en enero–febrero.
 Este comportamiento fue confirmado estadísticamente mediante la función de autocorrelación (ACF), con picos significativos en múltiplos de 12 rezagos.
 
-3. Descomposición y componentes
+3.  Descomposición y componentes
 
 La descomposición STL robusta separó la serie en sus tres componentes principales:
 
@@ -890,21 +874,20 @@ Estacionalidad: patrón mensual repetitivo.
 Residuo: fluctuaciones irregulares atribuibles a choques económicos o eventos específicos.
 Los componentes de tendencia y estacionalidad resultaron dominantes, lo cual evidenció la necesidad de aplicar transformaciones previas al modelado.
 
-4. Preprocesamiento para el modelado
+4.  Preprocesamiento para el modelado
 
 El proceso de diferenciación regular y estacional (Δ y Δ₁₂) permitió estabilizar la serie al eliminar la tendencia y la estacionalidad, logrando una estructura más adecuada para el ajuste de modelos ARIMA estacionales (SARIMA).
 Este paso constituye la base del preprocesamiento y visualización abordado en la Unidad 3.
 
-
 # Unidad 3: Preprocesamiento y visualización
 
-En esta unidad se continúa el análisis desarrollado en la Unidad 2, profundizando en las etapas de preprocesamiento de datos y visualización aplicadas a la serie mensual Australia Monthly Retail Turnover (1982–2024). El objetivo es garantizar que la serie cumpla con las condiciones necesarias para su posterior modelado, particularmente en la identificación de componentes estructurales y la estabilización de la varianza y la media.
+En esta unidad se continúa el análisis desarrollado en la Unidad 2, profundizando en las etapas de preprocesamiento de datos y visualización aplicadas a la serie mensual Australia Monthly Retail Turnover (1982–2024).
+El objetivo es garantizar que la serie cumpla con las condiciones necesarias para su posterior modelado, particularmente en la identificación de componentes estructurales y la estabilización de la varianza y la media.
 
-A través de técnicas estadísticas y gráficas, se analizan nuevamente los patrones de tendencia y estacionalidad, la descomposición de la serie y las transformaciones requeridas para alcanzar la estacionariedad, utilizando funciones de diferenciación regular y estacional (Δ y Δ₁₂). Estas operaciones forman parte esencial del preprocesamiento, al eliminar dependencias sistemáticas y preparar la información para la estimación de modelos ARIMA estacionales (SARIMA).
+A través de técnicas estadísticas y gráficas, se analizan nuevamente los patrones de tendencia y estacionalidad, la descomposición de la serie y las transformaciones requeridas para alcanzar la estacionariedad, utilizando funciones de diferenciación regular y estacional (Δ y Δ₁₂).
+Estas operaciones forman parte esencial del preprocesamiento, al eliminar dependencias sistemáticas y preparar la información para la estimación de modelos ARIMA estacionales (SARIMA).
 
 El proceso descrito integra la manipulación de datos, la verificación de supuestos y la interpretación visual como base para la comprensión del comportamiento temporal de las ventas minoristas australianas, asegurando una estructura adecuada y confiable para las fases siguientes de modelado y validación.
-
-
 
 ```{r, message=FALSE, warning=FALSE}
 #| message: FALSE
@@ -930,7 +913,7 @@ kbl_std <- function(df, caption = NULL, digits = 3) {
 
 ```
 
-## **Transformación Box-Cox + Descomposición STL**
+## Transformación Box-Cox + Descomposición STL
 
 La transformación Box–Cox se utiliza para estabilizar la varianza y mejorar la normalidad de una serie temporal antes del modelado.
 
@@ -942,8 +925,7 @@ Y'_t =
 \frac{Y_t^{\lambda} - 1}{\lambda}, & \text{si } \lambda \neq 0 \\
 \ln(Y_t), & \text{si } \lambda = 0
 \end{cases}
-$$
-𝑌𝑡 es el valor original de la serie,
+$$ 𝑌𝑡 es el valor original de la serie,
 
 𝑌𝑡 es la serie transformada,
 
@@ -953,10 +935,9 @@ Interpretación práctica:
 
 Si 𝜆≈1, no es necesaria la transformación.
 
-Si 𝜆<1, se recomienda aplicar la transformación (reduce la dispersión).
+Si 𝜆\<1, se recomienda aplicar la transformación (reduce la dispersión).
 
 La descomposición STL permite expresar una serie temporal 𝑌𝑡como la suma de tres componentes:
-
 
 $$Y_t = T_t + S_t + R_t$$
 
@@ -1023,7 +1004,8 @@ if (usar_bc) {
 
 ```
 
-Figura 13. Descomposición STL de la serie mensual
+Figura 13.
+Descomposición STL de la serie mensual
 
 La descomposición STL (con transformación Box–Cox, λ = 0.196) permite analizar la estructura interna de la serie mensual Australia Monthly Retail Turnover y distinguir sus componentes principales:
 
@@ -1035,7 +1017,8 @@ Seasonal (estacionalidad): presenta un patrón cíclico muy regular y estable, c
 
 Remainder (residuo): agrupa las fluctuaciones irregulares no explicadas por los componentes sistemáticos, asociadas a choques económicos o cambios coyunturales del mercado.
 
-Tabla 7. Comparación de varianzas: original vs transformada
+Tabla 7.
+Comparación de varianzas: original vs transformada
 
 La varianza de la serie se redujo drásticamente tras aplicar la transformación Box–Cox, pasando de aproximadamente 1.96×10⁸ a 18.2.
 
@@ -1045,14 +1028,12 @@ La estimación del parámetro λ = 0.196 confirma que una transformación de tip
 
 La aplicación de la transformación Box–Cox fue justificada y efectiva, ya que permitió controlar la heterocedasticidad (varianza no constante) y dejar la serie en condiciones más adecuadas para el análisis de estacionariedad y la posterior estimación del modelo SARIMA.
 
+## Fuerza estacional + recomendaciones de diferenciación
 
-## **Fuerza estacional + recomendaciones de diferenciación**
-
-
-La fuerza de estacionalidad cuantifica qué tan dominante es el componente estacional frente a la variación total de la serie. Se calcula a partir de la descomposición STL mediante la siguiente fórmula:
+La fuerza de estacionalidad cuantifica qué tan dominante es el componente estacional frente a la variación total de la serie.
+Se calcula a partir de la descomposición STL mediante la siguiente fórmula:
 
 $$F_s = 1 - \frac{Var(R_t)}{Var(S_t + R_t)}$$
-
 
 ```{r, message=FALSE, warning=FALSE}
 
@@ -1087,30 +1068,25 @@ knitr::kable(
 
 ```
 
-
 De acuerdo a los resultados de la Tabla 8 La fuerza estacional elevada (0.968) y las recomendaciones 𝑑=1y 𝐷=1 confirman que la serie Australia Monthly Retail Turnover presenta una estructura estacional dominante y una tendencia creciente, por lo que es necesario aplicar una doble diferenciación (regular y estacional).
 
 Esto garantiza que la serie cumpla con el supuesto de estacionariedad requerido para la estimación del modelo SARIMA(p,d,q)(P,D,Q)[12] en la siguiente unidad.
 
-
-## **Doble diferenciación (regular y estacional)**
+## Doble diferenciación (regular y estacional)
 
 EL objetivo es remover tendencia y patrón estacional para lograr estacionariedad.
 
 Fórmulas:
 
-Diferencia regular:
-$$\nabla Y_t = Y_t - Y_{t-1}$$
+Diferencia regular: $$\nabla Y_t = Y_t - Y_{t-1}$$
 
-Diferencia estacional (m=12):
-$$\nabla_{12} Y_t = Y_t - Y_{t-12}$$
+Diferencia estacional (m=12): $$\nabla_{12} Y_t = Y_t - Y_{t-12}$$
 
 Combinada (aplicando primero estacional y luego regular):
 
 $$\nabla \nabla_{12} Y_t = (Y_t - Y_{t-12}) - (Y_{t-1} - Y_{t-13})$$
 
 En esta unidad usamos los órdenes recomendados: d = 1 y D = 1.
-
 
 ```{r, message=FALSE, warning=FALSE}
 stopifnot(exists("serie_bc"))   # Serie (posiblemente Box–Cox) y freq=12
@@ -1134,23 +1110,19 @@ print(
 
 En la Figura 14 vemos que después de aplicar las diferencias regular (𝑑=1) y estacional (D=1,m=12), la serie Australia Monthly Retail Turnover muestra un comportamiento claramente distinto al de la versión original.
 
-* La serie se oscila alrededor de la media cero, lo que sugiere que la tendencia fue eliminada.
+-   La serie se oscila alrededor de la media cero, lo que sugiere que la tendencia fue eliminada.
 
-* La varianza se mantiene relativamente constante a lo largo del tiempo, indicando que el proceso de diferenciación logró estabilizar la escala.
+-   La varianza se mantiene relativamente constante a lo largo del tiempo, indicando que el proceso de diferenciación logró estabilizar la escala.
 
-* Los picos irregulares observados alrededor del año 2000 podrían corresponder a eventos económicos puntuales (choques transitorios), pero no reflejan una tendencia sistemática.
+-   Los picos irregulares observados alrededor del año 2000 podrían corresponder a eventos económicos puntuales (choques transitorios), pero no reflejan una tendencia sistemática.
 
-* No se aprecian patrones cíclicos definidos ni repetitivos, lo que evidencia que la estacionalidad fue removida con éxito.
+-   No se aprecian patrones cíclicos definidos ni repetitivos, lo que evidencia que la estacionalidad fue removida con éxito.
 
-## **Prueba ADF antes/después**
+## Prueba ADF antes/después
 
 El objetivo es evidenciar estacionariedad tras la doble diferenciación.
 
-Modelo (forma común de la ADF):
-$$\Delta Y_t = \alpha + \beta t + \gamma Y_{t-1} + \sum_{i=1}^{p}\phi_i \, \Delta Y_{t-i} + \varepsilon_t$$
-Hipótesis:
-$$H_0: \gamma = 0 \quad (\text{raíz unitaria, no estacionaria}) \qquad H_1: \gamma < 0 \quad (\text{estacionaria})$$
-Criterio: p-value < 0.05 → evidencia de estacionariedad.
+Modelo (forma común de la ADF): $$\Delta Y_t = \alpha + \beta t + \gamma Y_{t-1} + \sum_{i=1}^{p}\phi_i \, \Delta Y_{t-i} + \varepsilon_t$$ Hipótesis: $$H_0: \gamma = 0 \quad (\text{raíz unitaria, no estacionaria}) \qquad H_1: \gamma < 0 \quad (\text{estacionaria})$$ Criterio: p-value \< 0.05 → evidencia de estacionariedad.
 
 ```{r, message=FALSE, warning=FALSE}
 suppressPackageStartupMessages({ library(tseries); library(knitr); library(kableExtra) })
@@ -1183,25 +1155,21 @@ Sin embargo, el resultado “TRUE” en ambas etapas puede deberse a que el Box�
 
 La prueba ADF confirma que la serie procesada cumple con el supuesto de estacionariedad, lo cual valida el preprocesamiento y permite avanzar al análisis de autocorrelaciones (ACF/PACF) para determinar los órdenes del modelo SARIMA(p,d,q)(P,D,Q)[12].
 
-
-## **Validación visual: ACF y PACF**
+## Validación visual: ACF y PACF
 
 Objetivo: verificar la estacionariedad y la estructura de correlación temporal en la serie diferenciada.
 
 La función de autocorrelación (ACF) mide la relación entre valores separados por un rezago k:
 
-$$\rho_k = \frac{\text{Cov}(Y_t, Y_{t-k})}{\text{Var}(Y_t)}$$
-donde:
+$$\rho_k = \frac{\text{Cov}(Y_t, Y_{t-k})}{\text{Var}(Y_t)}$$ donde:
 
-* $\rho_k$ es el coeficiente de autocorrelación en el rezago k,
-* $Y_t$ es el valor de la serie en el tiempo t.
+-   $\rho_k$ es el coeficiente de autocorrelación en el rezago k,
+-   $Y_t$ es el valor de la serie en el tiempo t.
 
 En una serie estacionaria, la ACF decae rápidamente hacia cero y no muestra patrones sistemáticos.
 
-La autocorrelación parcial (PACF) mide la correlación directa entre $Y_t$ y $Y_{t-k}$, eliminando los efectos de los rezagos intermedios.Ambas funciones ayudan a:
-- Confirmar la estacionariedad de la serie diferenciada.
+La autocorrelación parcial (PACF) mide la correlación directa entre $Y_t$ y $Y_{t-k}$, eliminando los efectos de los rezagos intermedios.Ambas funciones ayudan a: - Confirmar la estacionariedad de la serie diferenciada.
 - Sugerir los órdenes (p, q) y (P, Q) para el modelo SARIMA.
-
 
 ```{r, message=FALSE, warning=FALSE}
 Acf(na.omit(y_diff),
@@ -1212,45 +1180,33 @@ Pacf(na.omit(y_diff),
      main = "Figura 16. Función de Autocorrelación Parcial (PACF) - Serie diferenciada Δ·Δ₁₂")
 ```
 
-
-Figura 15. Función de Autocorrelación (ACF)
+Figura 15.
+Función de Autocorrelación (ACF)
 
 La función de autocorrelación de la serie diferenciada (Δ·Δ₁₂) muestra una rápida caída de las correlaciones después de los primeros rezagos, lo que indica que no existe dependencia temporal prolongada.
 Los picos en los primeros lags son bajos y dentro del intervalo de confianza (líneas azules), lo que confirma que no hay estructura de tendencia ni estacionalidad remanente.
 Además, los rezagos en múltiplos de 12 no presentan un patrón fuerte, evidenciando que la diferenciación estacional eliminó efectivamente la periodicidad anual observada en la serie original.
 
-
-Figura 16. Función de Autocorrelación Parcial (PACF)
+Figura 16.
+Función de Autocorrelación Parcial (PACF)
 
 En la PACF, los picos significativos se concentran en los primeros rezagos (lag 1), mientras que los demás coeficientes se encuentran dentro de las bandas de confianza.
 Este patrón —un corte abrupto en la PACF y una ACF que decae gradualmente— sugiere la presencia de un término autorregresivo (AR) de primer orden.
 
-
 Los resultados combinados de las Figuras 15 y 16 confirman que la serie diferenciada ya cumple con el supuesto de estacionariedad, con media constante, varianza homogénea y ausencia de patrones estacionales o tendencias residuales.
 De acuerdo con los patrones observados, un modelo inicial adecuado para evaluar sería:
 
-
 SARIMA(1,1,1)(0,1,1)12
-	
 
 Este modelo integra un componente autorregresivo y otro de media móvil en la parte regular, junto con una diferencia y un término estacional de orden anual.
-
 
 El modelo SARIMA (Seasonal ARIMA) amplía el ARIMA tradicional incorporando componentes estacionales.
 
 Su formula general es:
 
-
 $$SARIMA(p,d,q)(P,D,Q)_{m}$$
 
-donde:
-* $p$  → orden autorregresivo (AR),
-* $d$  → número de diferencias regulares,
-* $q$  → orden de media móvil (MA),
-* $P$  → orden autorregresivo estacional,
-* $D$  → número de diferencias estacionales,
-* $Q$  → orden de media móvil estacional,
-* $m$  → periodicidad (12 para datos mensuales).
+donde: \* $p$ → orden autorregresivo (AR), \* $d$ → número de diferencias regulares, \* $q$ → orden de media móvil (MA), \* $P$ → orden autorregresivo estacional, \* $D$ → número de diferencias estacionales, \* $Q$ → orden de media móvil estacional, \* $m$ → periodicidad (12 para datos mensuales).
 
 Este checklist resume las decisiones y verificaciones realizadas en el preprocesamiento.
 
@@ -1286,48 +1242,54 @@ knitr::kable(
                             bootstrap_options = c("striped","hover","condensed"))
 ```
 
-
 La Tabla 10 resume los pasos y comprobaciones realizados durante el preprocesamiento de la serie mensual Australia Monthly Retail Turnover (1982–2024):
 
 | **Aspecto evaluado** | **Interpretación** |
-|:-------------|:----------------|
+|:--------------------------------|:--------------------------------------|
 | **Transformación Box-Cox aplicada** | Se aplicó la transformación Box-Cox con λ = 0.196, lo que redujo significativamente la varianza y estabilizó la escala de la serie. Esta corrección permitió controlar la heterocedasticidad y cumplir con los supuestos de varianza constante requeridos por los modelos ARIMA/SARIMA. |
 | **Diferencias aplicadas (d, D)** | La combinación de d = 1 y D = 1 (m = 12) eliminó tanto la tendencia como el patrón estacional anual, dejando la serie centrada en torno a una media estable. |
-| **Prueba ADF final (p-value < 0.05)** | Con un p-value = 0.010, se rechaza la hipótesis nula de raíz unitaria. La serie presenta evidencia estadística de estacionariedad después del proceso de diferenciación. |
+| **Prueba ADF final (p-value \< 0.05)** | Con un p-value = 0.010, se rechaza la hipótesis nula de raíz unitaria. La serie presenta evidencia estadística de estacionariedad después del proceso de diferenciación. |
 | **Confirmación visual (ACF / PACF)** | Los gráficos ACF y PACF muestran un rápido decaimiento de las correlaciones, sin patrones periódicos marcados, lo que confirma la estacionariedad y sugiere una estructura AR(1)/MA(1) de bajo orden. |
 | **Serie lista para modelado SARIMA** | La serie procesada cumple los supuestos de estacionariedad, por lo que está lista para la estimación del modelo SARIMA(1,1,1)(0,1,1)[12] como punto de partida para la siguiente unidad. |
 
-## **Conclusiones unidad 3**
+## Conclusiones unidad 3
 
-El preprocesamiento realizado en la Unidad 3 permitió consolidar la preparación de la serie mensual Australia Monthly Retail Turnover (1982–2024) para su futura modelación mediante técnicas SARIMA. A través de transformaciones estadísticas y validaciones gráficas, se garantizó que la serie cumpliera los supuestos de estacionariedad, condición fundamental para el análisis de series de tiempo.
+El preprocesamiento realizado en la Unidad 3 permitió consolidar la preparación de la serie mensual Australia Monthly Retail Turnover (1982–2024) para su futura modelación mediante técnicas SARIMA.
+A través de transformaciones estadísticas y validaciones gráficas, se garantizó que la serie cumpliera los supuestos de estacionariedad, condición fundamental para el análisis de series de tiempo.
 
-En primer lugar, la aplicación de la transformación Box–Cox (λ = 0.196) redujo de manera significativa la varianza y estabilizó la escala, mejorando la homogeneidad de los datos. Posteriormente, la doble diferenciación (d = 1, D = 1, m = 12) eliminó la tendencia y los patrones estacionales anuales, lo cual se reflejó en una serie con media constante y comportamiento aleatorio alrededor del cero.
+En primer lugar, la aplicación de la transformación Box–Cox (λ = 0.196) redujo de manera significativa la varianza y estabilizó la escala, mejorando la homogeneidad de los datos.
+Posteriormente, la doble diferenciación (d = 1, D = 1, m = 12) eliminó la tendencia y los patrones estacionales anuales, lo cual se reflejó en una serie con media constante y comportamiento aleatorio alrededor del cero.
 
-La prueba ADF (p-value = 0.01) confirmó estadísticamente que la serie diferenciada es estacionaria, mientras que el análisis visual de las funciones ACF y PACF evidenció la ausencia de autocorrelaciones prolongadas y la presencia de picos iniciales compatibles con componentes AR(1) y MA(1). Estos resultados validan el correcto preprocesamiento de los datos y orientan la estructura base para la estimación del modelo.
+La prueba ADF (p-value = 0.01) confirmó estadísticamente que la serie diferenciada es estacionaria, mientras que el análisis visual de las funciones ACF y PACF evidenció la ausencia de autocorrelaciones prolongadas y la presencia de picos iniciales compatibles con componentes AR(1) y MA(1).
+Estos resultados validan el correcto preprocesamiento de los datos y orientan la estructura base para la estimación del modelo.
 
-Finalmente, los resultados obtenidos en el checklist de preprocesamiento (Tabla 10) verifican que la serie está lista para su modelado. Como punto de partida, se recomienda evaluar el modelo SARIMA(1,1,1)(0,1,1)[12], el cual integrará los componentes identificados y permitirá realizar pronósticos robustos sobre el comportamiento futuro de las ventas minoristas australianas.
+Finalmente, los resultados obtenidos en el checklist de preprocesamiento (Tabla 10) verifican que la serie está lista para su modelado.
+Como punto de partida, se recomienda evaluar el modelo SARIMA(1,1,1)(0,1,1)[12], el cual integrará los componentes identificados y permitirá realizar pronósticos robustos sobre el comportamiento futuro de las ventas minoristas australianas.
 
-## **Referencias**
+## Referencias
 
-- Universidad Javeriana Cali (2025). *Material del curso Análisis de Series de Tiempo — Unidad 2: Estructura de los datos en series de tiempo*. Aula Digital PUJ Cali.
+-   Universidad Javeriana Cali (2025).
+    *Material del curso Análisis de Series de Tiempo — Unidad 2: Estructura de los datos en series de tiempo*.
+    Aula Digital PUJ Cali.
 
-- Kaggle (2023). *Australia Monthly Retail Turnover Data*. Generado de [https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data](https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data).
+-   Kaggle (2023).
+    *Australia Monthly Retail Turnover Data*.
+    Generado de <https://www.kaggle.com/datasets/kanyaweechomming101/australia-monthly-retail-turnover-data>.
 
-- Hyndman, R. J, & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice*. Generado de [https://otexts.com/fpp3/](https://otexts.com/fpp3/)
-
+-   Hyndman, R. J, & Athanasopoulos, G.
+    (2021).
+    *Forecasting: Principles and Practice*.
+    Generado de <https://otexts.com/fpp3/>
 
 # Unidad 4: Metodología Holter-Winter y suavizamiento a la variable tiempo
 
-En esta sección aplicamos el método de **Holt–Winters** a la serie, se compara aditivo vs. multiplicativo y se valida con una partición temporal (train/test), 
-reportando métricas y pronósticos a 12 meses.
+En esta sección aplicamos el método de **Holt–Winters** a la serie, se compara aditivo vs. multiplicativo y se valida con una partición temporal (train/test), reportando métricas y pronósticos a 12 meses.
 
+**Holt-Winters (suavizamiento exponencial estacional)**
 
-**Holt-Winters (suavizamiento exponencial estacional)**  
- 
-Para frecuencia \(m = 12\).
+Para frecuencia $m = 12$.
 
-**Aditivo:**
-$$
+**Aditivo:** $$
 \begin{aligned}
 \ell_t &= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1}+b_{t-1}) \\
 b_t    &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \\
@@ -1336,8 +1298,7 @@ s_t    &= \gamma(y_t - \ell_t) + (1-\gamma)s_{t-m} \\
 \end{aligned}
 $$
 
-**Multiplicativo:**
-$$
+**Multiplicativo:** $$
 \begin{aligned}
 \ell_t &= \alpha\frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1}+b_{t-1}) \\
 b_t    &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \\
@@ -1346,9 +1307,8 @@ s_t    &= \gamma\frac{y_t}{\ell_t} + (1-\gamma)s_{t-m} \\
 \end{aligned}
 $$
 
-donde \( \alpha, \beta, \gamma \in (0,1) \) son parámetros de suavizamiento;  
-\(\ell_t\) es el **nivel**, \(b_t\) la **tendencia**, y \(s_t\) la **estacionalidad**.
-
+donde $\alpha, \beta, \gamma \in (0,1)$ son parámetros de suavizamiento;\
+$\ell_t$ es el **nivel**, $b_t$ la **tendencia**, y $s_t$ la **estacionalidad**.
 
 ```{r, message=FALSE, warning=FALSE}
 # Paquetes necesarios
@@ -1383,8 +1343,8 @@ kable(hw_info, caption = "Control de la serie usada en Holt–Winters")
 
 ## Ajuste de modelos Holt–Winters
 
-En esta etapa se aplican las dos variantes del modelo **Holt–Winters** (aditiva y multiplicativa) para la serie mensual.  
-El método estima automáticamente los parámetros α, β y γ minimizando el error cuadrático medio (MSE).  
+En esta etapa se aplican las dos variantes del modelo **Holt–Winters** (aditiva y multiplicativa) para la serie mensual.\
+El método estima automáticamente los parámetros α, β y γ minimizando el error cuadrático medio (MSE).
 
 ```{r, message=FALSE, warning=FALSE}
 # 1. División train/test (últimos 12 meses como test)
@@ -1421,15 +1381,13 @@ knitr::kable(tab_acc, caption = "Tabla 7. Comparación de desempeño entre model
 
 El modelo aditivo obtiene los errores más bajos en todas las métricas:
 
-- MAPE 0.58 % indica una alta precisión promedio.
+-   MAPE 0.58 % indica una alta precisión promedio.
 
-- RMSE 375.9 y MAE 290.5 confirman menor dispersión respecto a los valores reales.
+-   RMSE 375.9 y MAE 290.5 confirman menor dispersión respecto a los valores reales.
 
 Por tanto, el modelo Holt–Winters aditivo se selecciona como el mejor ajuste.
 
-
-## Gráficas de pronóstico y bandas 
-
+## Gráficas de pronóstico y bandas
 
 ```{r, message=FALSE, warning=FALSE}
 # Pronóstico final con el modelo aditivo
@@ -1444,7 +1402,8 @@ autoplot(fc_best) +
   ggplot2::theme_bw()
 ```
 
-Con el modelo Holt–Winters aditivo en el cual se observa se observa una tendencia creciente sostenida, consistente con el crecimiento histórico del comercio minorista australiano. Un patrón de estacionalidad estable, con picos al cierre de cada año (noviembre-diciembre) y caídas posteriores (enero-febrero).
+Con el modelo Holt–Winters aditivo en el cual se observa se observa una tendencia creciente sostenida, consistente con el crecimiento histórico del comercio minorista australiano.
+Un patrón de estacionalidad estable, con picos al cierre de cada año (noviembre-diciembre) y caídas posteriores (enero-febrero).
 
 El pronóstico para los 12 meses posteriores mantiene esa estructura: tendencia al alza y fluctuaciones cíclicas similares.
 
@@ -1458,23 +1417,24 @@ checkresiduals(fit_add)  # ACF de residuales + prueba de Ljung-Box
 ```
 
 Los residuales presentan media cercana a cero y distribución aproximadamente normal.
-No obstante, la prueba de Ljung–Box (p < 0.05) indica presencia de autocorrelación remanente, lo que sugiere posibles mejoras mediante modelos ARIMA estacionales.
+No obstante, la prueba de Ljung–Box (p \< 0.05) indica presencia de autocorrelación remanente, lo que sugiere posibles mejoras mediante modelos ARIMA estacionales.
 
 ## Conclusiones
 
-En esta etapa se implementó la metodología **Holt–Winters** para el análisis y pronóstico de la serie temporal mensual **Australia Monthly Retail Turnover (1982–2018)**. Este método permite capturar **tendencia**, **nivel** y **estacionalidad**, utilizando un sistema de ecuaciones recursivas que ajusta los componentes de la serie mediante tres parámetros de suavizamiento:  
+En esta etapa se implementó la metodología **Holt–Winters** para el análisis y pronóstico de la serie temporal mensual **Australia Monthly Retail Turnover (1982–2018)**.
+Este método permite capturar **tendencia**, **nivel** y **estacionalidad**, utilizando un sistema de ecuaciones recursivas que ajusta los componentes de la serie mediante tres parámetros de suavizamiento:
 
-- α (*nivel*),  
-- β (*tendencia*),  
-- γ (*estacionalidad*).  
+-   α (*nivel*),\
+-   β (*tendencia*),\
+-   γ (*estacionalidad*).
 
 El objetivo fue determinar el modelo que mejor describe la estructura temporal y que ofrezca el menor error de pronóstico.
 
----
+------------------------------------------------------------------------
 
 **Preparación y división del conjunto de datos**
 
-Se utilizó la serie consolidada del total mensual de ventas minoristas (frecuencia = 12).  
+Se utilizó la serie consolidada del total mensual de ventas minoristas (frecuencia = 12).\
 Se reservaron los **últimos 12 meses** (2018) como conjunto de prueba para validar los resultados del modelo.
 
 ```{r, message=FALSE, warning=FALSE}
@@ -1487,9 +1447,9 @@ test  <- window(ts_y, start = c(2018, 1))
 
 Se estimaron dos versiones del modelo:
 
-- Aditivo: para estacionalidad de magnitud constante.
+-   Aditivo: para estacionalidad de magnitud constante.
 
-- Multiplicativo: para estacionalidad proporcional al nivel.
+-   Multiplicativo: para estacionalidad proporcional al nivel.
 
 **Pronóstico a 12 meses**
 
@@ -1506,25 +1466,23 @@ x = "Tiempo", y = "Turnover (millones de AUD)"
 ggplot2::theme_bw()
 ```
 
-**Comparación de desempeño** 
+**Comparación de desempeño**
 
 Se evaluó el error de pronóstico con las métricas MAPE, RMSE y MAE, comparando las versiones aditiva y multiplicativa.
 
 El modelo aditivo presenta los menores valores en todas las métricas, por lo cual se selecciona como el modelo final.
 
-**Conclusiones finales del modelo** 
+**Conclusiones finales del modelo**
 
-- El modelo Holt–Winters aditivo describe adecuadamente el comportamiento de la serie, capturando tanto la tendencia creciente como la estacionalidad anual.
+-   El modelo Holt–Winters aditivo describe adecuadamente el comportamiento de la serie, capturando tanto la tendencia creciente como la estacionalidad anual.
 
-- Las métricas de error (MAPE 0.58 %, RMSE 375.9, MAE 290.5) evidencian una alta precisión del pronóstico.
+-   Las métricas de error (MAPE 0.58 %, RMSE 375.9, MAE 290.5) evidencian una alta precisión del pronóstico.
 
-- Los residuales muestran un comportamiento estable, aunque con cierta autocorrelación, lo que sugiere complementar el análisis con modelos SARIMA en etapas posteriores.
+-   Los residuales muestran un comportamiento estable, aunque con cierta autocorrelación, lo que sugiere complementar el análisis con modelos SARIMA en etapas posteriores.
 
-- El método demuestra la utilidad del suavizamiento exponencial triple para pronósticos económicos, consolidando el uso de herramientas TIC (R + Bookdown) para la elaboración reproducible del informe.
-
+-   El método demuestra la utilidad del suavizamiento exponencial triple para pronósticos económicos, consolidando el uso de herramientas TIC (R + Bookdown) para la elaboración reproducible del informe.
 
 # Unidad 5: Modelos estacionarios en series de tiempo
-
 
 ```{r u2-arima, message=FALSE, warning=FALSE}
 # Paquetes
@@ -1626,10 +1584,10 @@ fc_tr  <- forecast(fit_tr, h = h)
 accuracy(fc_tr, ts_test)
 ```
 
-
 ## Evaluación de estacionariedad
 
-Al analizar la serie original se identificó una clara tendencia creciente y presencia de estacionalidad mensual. Para eliminar dichos componentes y lograr una serie estacionaria, se aplicó una diferenciación de primer orden.
+Al analizar la serie original se identificó una clara tendencia creciente y presencia de estacionalidad mensual.
+Para eliminar dichos componentes y lograr una serie estacionaria, se aplicó una diferenciación de primer orden.
 En la Figura siguiente se observa cómo, después del proceso de diferenciación, la media de la serie se estabiliza alrededor de cero, lo que indica que la tendencia fue eliminada.
 
 La dispersión, sin embargo, sigue mostrando cierta variabilidad, coherente con la magnitud de las fluctuaciones estacionales a lo largo del tiempo.
@@ -1658,39 +1616,40 @@ En términos prácticos, este resultado respalda la utilidad del enfoque Box-Jen
 
 # Unidad 6: Modelo Prophet y serie de tiempo como regresión en el tiempo
 
-En esta unidad se incorpora el algoritmo **Facebook Prophet** como alternativa de modelación y pronóstico para la serie mensual *Australia Monthly Retail Turnover*. El objetivo es:
+En esta unidad se incorpora el algoritmo **Facebook Prophet** como alternativa de modelación y pronóstico para la serie mensual *Australia Monthly Retail Turnover*.
+El objetivo es:
 
-1. Ajustar un modelo Prophet sobre la misma serie utilizada en las unidades anteriores.  
-2. Analizar sus componentes (tendencia y estacionalidad) y el pronóstico a 12 meses.  
-3. Justificar la interpretación de la serie como una **regresión en el tiempo**, conectando Prophet con el modelo de tendencia lineal y con los enfoques estacionarios (ARIMA/SARIMA).
+1.  Ajustar un modelo Prophet sobre la misma serie utilizada en las unidades anteriores.\
+2.  Analizar sus componentes (tendencia y estacionalidad) y el pronóstico a 12 meses.\
+3.  Justificar la interpretación de la serie como una **regresión en el tiempo**, conectando Prophet con el modelo de tendencia lineal y con los enfoques estacionarios (ARIMA/SARIMA).
 
 ## Fundamentos del modelo Prophet
 
 Prophet es un modelo de pronóstico desarrollado por Facebook que se formula como una **regresión aditiva en el tiempo**:
 
-\[
+$$
 y_t = g(t) + s(t) + h(t) + \varepsilon_t,
-\]
+$$
 
 donde:
 
-- \( g(t) \): componente de **tendencia** (lineal o logística) con posibles puntos de cambio,
-- \( s(t) \): componente **estacional**, modelado mediante funciones de Fourier,
-- \( h(t) \): efectos de **festivos o eventos especiales** (si se incluyen),
-- \( \varepsilon_t \): término de error (ruido).
+-   $g(t)$: componente de **tendencia** (lineal o logística) con posibles puntos de cambio,
+-   $s(t)$: componente **estacional**, modelado mediante funciones de Fourier,
+-   $h(t)$: efectos de **festivos o eventos especiales** (si se incluyen),
+-   $\varepsilon_t$: término de error (ruido).
 
-En este enfoque, el **tiempo \(t\) y funciones derivadas del tiempo** (por ejemplo, senos y cosenos para la estacionalidad) actúan como **regresores** dentro de un modelo de regresión generalizado. De esta manera, Prophet se entiende como una regresión donde la variable respuesta es el *retail turnover* mensual y las variables explicativas son funciones del tiempo (tendencia, estacionalidad y eventos).
-
+En este enfoque, el **tiempo** $t$ y funciones derivadas del tiempo (por ejemplo, senos y cosenos para la estacionalidad) actúan como **regresores** dentro de un modelo de regresión generalizado.
+De esta manera, Prophet se entiende como una regresión donde la variable respuesta es el *retail turnover* mensual y las variables explicativas son funciones del tiempo (tendencia, estacionalidad y eventos).
 
 ## Preparación de datos y ajuste del modelo Prophet
 
+Para aplicar el modelo Facebook Prophet dentro del flujo de trabajo del curso, es necesario convertir la serie mensual en un formato adecuado para los paquetes modernos de análisis temporal.
+En particular, Prophet —a través del paquete fable.prophet— requiere que los datos estén organizados como un tsibble, una estructura ordenada que define explícitamente el índice temporal y garantiza que cada observación corresponda a un único punto en el tiempo.
 
-Para aplicar el modelo Facebook Prophet dentro del flujo de trabajo del curso, es necesario convertir la serie mensual en un formato adecuado para los paquetes modernos de análisis temporal. En particular, Prophet —a través del paquete fable.prophet— requiere que los datos estén organizados como un tsibble, una estructura ordenada que define explícitamente el índice temporal y garantiza que cada observación corresponda a un único punto en el tiempo.
-
-Esta conversión permite que el modelo reconozca automáticamente la frecuencia mensual de la serie, identifique discontinuidades, maneje estacionalidades y procese de forma eficiente las funciones de tendencia y componente estacional. Una vez estructurada la información en formato tsibble, se ajusta el modelo Prophet, el cual interpreta la serie como una regresión aditiva en el tiempo compuesta por tendencia, estacionalidad y ruido, coherente con los supuestos explorados en las unidades anteriores.
+Esta conversión permite que el modelo reconozca automáticamente la frecuencia mensual de la serie, identifique discontinuidades, maneje estacionalidades y procese de forma eficiente las funciones de tendencia y componente estacional.
+Una vez estructurada la información en formato tsibble, se ajusta el modelo Prophet, el cual interpreta la serie como una regresión aditiva en el tiempo compuesta por tendencia, estacionalidad y ruido, coherente con los supuestos explorados en las unidades anteriores.
 
 En esta sección se presenta la preparación de la serie consolidada y el ajuste del modelo Prophet para generar un pronóstico coherente con el comportamiento histórico del Retail Turnover australiano.
-
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -1714,7 +1673,9 @@ serie_ts <- df %>%
 
 ```
 
-La Tabla 12 presenta las primeras 12 observaciones de la serie en formato tsibble. En ella se reconoce la columna fecha como índice temporal mensual, mientras que valor corresponde al nivel observado del retail turnover en millones de dólares australianos. Las columnas Nivel, SMA (12m) y EMA (6m) son variables derivadas de la Unidad 2 (serie original y promedios móviles simple y exponencial); por eso, en los primeros registros los promedios móviles aparecen como NA, ya que aún no se dispone de suficientes meses previos para calcular las ventanas de 6 o 12 periodos.
+La Tabla 12 presenta las primeras 12 observaciones de la serie en formato tsibble.
+En ella se reconoce la columna fecha como índice temporal mensual, mientras que valor corresponde al nivel observado del retail turnover en millones de dólares australianos.
+Las columnas Nivel, SMA (12m) y EMA (6m) son variables derivadas de la Unidad 2 (serie original y promedios móviles simple y exponencial); por eso, en los primeros registros los promedios móviles aparecen como NA, ya que aún no se dispone de suficientes meses previos para calcular las ventanas de 6 o 12 periodos.
 
 Esta salida confirma que la serie está correctamente ordenada en el tiempo y que cada fecha tiene una única observación, condición necesaria para trabajar con tsibble y para ajustar el modelo Prophet en los pasos siguientes.
 
@@ -1734,14 +1695,11 @@ serie_ts %>%
 
 ```
 
-
 ## Ajuste del modelo Prophet y análisis de componentes
 
 En esta sección se ajusta el modelo Prophet sobre la serie mensual de ventas minoristas australianas utilizando el paquete fable.prophet.
 
 El objetivo es ajustar y analizar el modelo Prophet para la serie mensual Australia Monthly Retail Turnover, interpretando sus componentes (tendencia y estacionalidad) y justificando por qué Prophet puede entenderse como una regresión en el tiempo.
-
-
 
 ```{r prophet-ajuste, echo=FALSE, message=FALSE, warning=FALSE, fig.cap = "Pronóstico a 12 meses con el modelo Prophet"}
 
@@ -1781,13 +1739,19 @@ autoplot(fc_prophet, serie_ts) +
 
 
 ```
-La figura muestra el pronóstico a 12 meses generado con el modelo Prophet a partir de la serie mensual de Retail Turnover en Australia. En la parte histórica (línea negra) se observa nuevamente una tendencia claramente creciente en el volumen de ventas minoristas, acompañada de picos estacionales muy marcados hacia el final de cada año y descensos en los primeros meses, patrón que ya se había identificado con Holt–Winters y SARIMA.
 
-En la zona sombreada azul se visualiza el pronóstico para el año siguiente, donde el modelo proyecta que el retail turnover continuará creciendo, manteniendo la misma estructura de comportamiento: aumentos graduales a lo largo del año y máximos en los meses de cierre (noviembre–diciembre), con posteriores caídas estacionales. Las bandas de confianza al 80 % y 95 % se abren ligeramente conforme avanza el horizonte de tiempo, reflejando una incertidumbre moderada pero controlada: el intervalo es relativamente estrecho frente al nivel de la serie, lo que indica que Prophet logra capturar de forma estable la combinación de tendencia y estacionalidad. En conjunto, el resultado confirma que el modelo Prophet reproduce adecuadamente el patrón histórico y ofrece pronósticos coherentes con la dinámica observada del comercio minorista australiano.
+La figura muestra el pronóstico a 12 meses generado con el modelo Prophet a partir de la serie mensual de Retail Turnover en Australia.
+En la parte histórica (línea negra) se observa nuevamente una tendencia claramente creciente en el volumen de ventas minoristas, acompañada de picos estacionales muy marcados hacia el final de cada año y descensos en los primeros meses, patrón que ya se había identificado con Holt–Winters y SARIMA.
 
- **Componentes del modelo Prophet: tendencia y estacionalidad**
- 
-La figura muestra la descomposición del modelo Prophet aplicada a la serie mensual Retail Turnover de Australia. Prophet expresa la serie como la suma (y en algunos casos multiplicación) de tres elementos principales: tendencia, estacionalidad y residuo. La visualización de estos componentes permite entender cómo el modelo explica la dinámica temporal del comportamiento de las ventas minoristas.
+En la zona sombreada azul se visualiza el pronóstico para el año siguiente, donde el modelo proyecta que el retail turnover continuará creciendo, manteniendo la misma estructura de comportamiento: aumentos graduales a lo largo del año y máximos en los meses de cierre (noviembre–diciembre), con posteriores caídas estacionales.
+Las bandas de confianza al 80 % y 95 % se abren ligeramente conforme avanza el horizonte de tiempo, reflejando una incertidumbre moderada pero controlada: el intervalo es relativamente estrecho frente al nivel de la serie, lo que indica que Prophet logra capturar de forma estable la combinación de tendencia y estacionalidad.
+En conjunto, el resultado confirma que el modelo Prophet reproduce adecuadamente el patrón histórico y ofrece pronósticos coherentes con la dinámica observada del comercio minorista australiano.
+
+**Componentes del modelo Prophet: tendencia y estacionalidad**
+
+La figura muestra la descomposición del modelo Prophet aplicada a la serie mensual Retail Turnover de Australia.
+Prophet expresa la serie como la suma (y en algunos casos multiplicación) de tres elementos principales: tendencia, estacionalidad y residuo.
+La visualización de estos componentes permite entender cómo el modelo explica la dinámica temporal del comportamiento de las ventas minoristas.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -1818,21 +1782,22 @@ autoplot(comp_prophet) +
 
 **1. Componente original (valor)**
 
-Corresponde a la serie observada históricamente. Se identifica nuevamente una combinación de:
+Corresponde a la serie observada históricamente.
+Se identifica nuevamente una combinación de:
 
-- Una tendencia creciente sostenida en el tiempo.
+-   Una tendencia creciente sostenida en el tiempo.
 
-- Picos estacionales marcados al cierre de cada año.
+-   Picos estacionales marcados al cierre de cada año.
 
-- Descensos recurrentes al inicio de cada periodo anual.
+-   Descensos recurrentes al inicio de cada periodo anual.
 
 **2. Tendencia (trend)**
 
 Refleja el comportamiento de largo plazo de la serie.
 
-- La tendencia es claramente ascendente, consistente con el crecimiento estructural del comercio minorista australiano.
+-   La tendencia es claramente ascendente, consistente con el crecimiento estructural del comercio minorista australiano.
 
-- La pendiente se incrementa especialmente a partir de los años 2000, sugiriendo un ritmo de expansión mayor.
+-   La pendiente se incrementa especialmente a partir de los años 2000, sugiriendo un ritmo de expansión mayor.
 
 Este término corresponde a $𝑔(𝑡)$, el componente determinístico que modela la evolución general del nivel de ventas en función del tiempo.
 
@@ -1840,26 +1805,25 @@ Este término corresponde a $𝑔(𝑡)$, el componente determinístico que mode
 
 Este componente aparece prácticamente plano.
 
-- Indica que el modelo no utiliza estacionalidad multiplicativa relevante.
+-   Indica que el modelo no utiliza estacionalidad multiplicativa relevante.
 
-- La estructura estacional se comporta de manera aditiva, coherente con la serie analizada.
+-   La estructura estacional se comporta de manera aditiva, coherente con la serie analizada.
 
 **4. Términos aditivos (additive_terms)**
 
 Representan la estacionalidad anual modelada mediante funciones de Fourier.
 
-- Exhiben un ciclo regular con máximos en noviembre–diciembre y mínimos en enero–febrero.
+-   Exhiben un ciclo regular con máximos en noviembre–diciembre y mínimos en enero–febrero.
 
-- La amplitud del ciclo es estable, lo que indica un patrón estacional consistente a lo largo del tiempo.
+-   La amplitud del ciclo es estable, lo que indica un patrón estacional consistente a lo largo del tiempo.
 
-- Este componente corresponde al término $𝑠(𝑡)$, que captura los comportamientos periódicos de la serie a través de funciones trigonométricas.
+-   Este componente corresponde al término $𝑠(𝑡)$, que captura los comportamientos periódicos de la serie a través de funciones trigonométricas.
 
-**5. Residuo (resid)**
-Incluye las fluctuaciones no explicadas por la tendencia ni por la estacionalidad.
+**5. Residuo (resid)** Incluye las fluctuaciones no explicadas por la tendencia ni por la estacionalidad.
 
-- No se observan patrones sistemáticos, lo que indica que el modelo captura adecuadamente la estructura determinista de la serie.
+-   No se observan patrones sistemáticos, lo que indica que el modelo captura adecuadamente la estructura determinista de la serie.
 
-- Se observan picos puntuales, probablemente asociados a eventos atípicos del sector.
+-   Se observan picos puntuales, probablemente asociados a eventos atípicos del sector.
 
 ## Comparación de desempeño entre Holt–Winters, ARIMA y Prophet
 
@@ -1957,64 +1921,79 @@ align = "c"
 )
 
 ```
-La Tabla anterior presenta los valores de RMSE, MAE y MAPE obtenidos para los tres modelos evaluados (Holt–Winters aditivo, ARIMA estacional y Prophet) utilizando un horizonte de predicción de 12 meses. Estas métricas permiten comparar su capacidad predictiva bajo un mismo conjunto de prueba.
 
-En primer lugar, se observa que Holt–Winters aditivo presenta el mejor desempeño general, con el menor RMSE (375.90), menor MAE (290.53) y un MAPE muy bajo (0.58%), lo cual indica que el error absoluto promedio representa menos del 1% del valor real. Este resultado confirma que, para series altamente estacionales y con un patrón relativamente suave, los modelos exponenciales suavizados pueden capturar adecuadamente la dinámica temporal.
+La Tabla anterior presenta los valores de RMSE, MAE y MAPE obtenidos para los tres modelos evaluados (Holt–Winters aditivo, ARIMA estacional y Prophet) utilizando un horizonte de predicción de 12 meses.
+Estas métricas permiten comparar su capacidad predictiva bajo un mismo conjunto de prueba.
 
-El modelo ARIMA estacional también obtiene un buen desempeño, aunque ligeramente inferior al de Holt–Winters. Sus valores de RMSE (409.19) y MAE (346.70) son mayores, y el MAPE (0.70%) evidencia un aumento leve en la proporción del error. Sin embargo, continúa siendo un modelo sólido para este tipo de series.
+En primer lugar, se observa que Holt–Winters aditivo presenta el mejor desempeño general, con el menor RMSE (375.90), menor MAE (290.53) y un MAPE muy bajo (0.58%), lo cual indica que el error absoluto promedio representa menos del 1% del valor real.
+Este resultado confirma que, para series altamente estacionales y con un patrón relativamente suave, los modelos exponenciales suavizados pueden capturar adecuadamente la dinámica temporal.
 
-Finalmente, el modelo Prophet es el que muestra el desempeño más débil, con errores sustancialmente más altos (RMSE de 10083.90 y MAE de 9764.46) y un MAPE de 19.55%, valor muy superior al de los otros dos métodos. Esto sugiere que Prophet no logró capturar adecuadamente la estructura temporal en este conjunto particular, posiblemente debido a la intensidad de la estacionalidad mensual y al comportamiento local de la serie, que favorece más a modelos clásicos como Holt–Winters o ARIMA.
+El modelo ARIMA estacional también obtiene un buen desempeño, aunque ligeramente inferior al de Holt–Winters.
+Sus valores de RMSE (409.19) y MAE (346.70) son mayores, y el MAPE (0.70%) evidencia un aumento leve en la proporción del error.
+Sin embargo, continúa siendo un modelo sólido para este tipo de series.
+
+Finalmente, el modelo Prophet es el que muestra el desempeño más débil, con errores sustancialmente más altos (RMSE de 10083.90 y MAE de 9764.46) y un MAPE de 19.55%, valor muy superior al de los otros dos métodos.
+Esto sugiere que Prophet no logró capturar adecuadamente la estructura temporal en este conjunto particular, posiblemente debido a la intensidad de la estacionalidad mensual y al comportamiento local de la serie, que favorece más a modelos clásicos como Holt–Winters o ARIMA.
 
 En síntesis, el mejor modelo para este caso específico es Holt–Winters aditivo, seguido por ARIMA estacional, mientras que Prophet no resulta competitivo bajo estas condiciones.
 
 ## Comparación de modelos y conclusiones
 
-En las secciones anteriores se ajustaron y analizaron tres enfoques de modelamiento para la serie mensual Retail Turnover de Australia: modelos suavizados (Holt–Winters), modelos ARIMA estacionales y el algoritmo Prophet. Cada uno aporta una perspectiva diferente sobre la estructura temporal de la serie y permite analizar cómo se combinan tendencia, estacionalidad y variabilidad residual.
+En las secciones anteriores se ajustaron y analizaron tres enfoques de modelamiento para la serie mensual Retail Turnover de Australia: modelos suavizados (Holt–Winters), modelos ARIMA estacionales y el algoritmo Prophet.
+Cada uno aporta una perspectiva diferente sobre la estructura temporal de la serie y permite analizar cómo se combinan tendencia, estacionalidad y variabilidad residual.
 
-Los modelos Holt–Winters y ARIMA representan enfoques clásicos. Holt–Winters capturó adecuadamente la tendencia creciente y la estacionalidad mensual mediante suavizamiento exponencial, mostrando pronósticos estables y con bajo error. ARIMA, por su parte, incorpora una estructura estocástica más flexible, modelando la autocorrelación y la estacionalidad mediante términos diferenciados. Ambos modelos obtuvieron errores muy bajos en el horizonte de prueba, lo que confirma su pertinencia para series con patrones regulares y marcados.
+Los modelos Holt–Winters y ARIMA representan enfoques clásicos.
+Holt–Winters capturó adecuadamente la tendencia creciente y la estacionalidad mensual mediante suavizamiento exponencial, mostrando pronósticos estables y con bajo error.
+ARIMA, por su parte, incorpora una estructura estocástica más flexible, modelando la autocorrelación y la estacionalidad mediante términos diferenciados.
+Ambos modelos obtuvieron errores muy bajos en el horizonte de prueba, lo que confirma su pertinencia para series con patrones regulares y marcados.
 
-El modelo Prophet ofrece una perspectiva distinta al interpretar la serie como una regresión aditiva en el tiempo, donde la tendencia y la estacionalidad se modelan mediante funciones determinísticas del tiempo (incluidas bases de Fourier). Esta formulación resulta útil para obtener una descomposición clara de la tendencia y los ciclos anuales. Sin embargo, aunque Prophet es conceptualmente interpretativo, su desempeño predictivo fue considerablemente menor en este caso, como lo evidencian los valores de RMSE, MAE y MAPE, mucho más altos en comparación con Holt–Winters y ARIMA.
+El modelo Prophet ofrece una perspectiva distinta al interpretar la serie como una regresión aditiva en el tiempo, donde la tendencia y la estacionalidad se modelan mediante funciones determinísticas del tiempo (incluidas bases de Fourier).
+Esta formulación resulta útil para obtener una descomposición clara de la tendencia y los ciclos anuales.
+Sin embargo, aunque Prophet es conceptualmente interpretativo, su desempeño predictivo fue considerablemente menor en este caso, como lo evidencian los valores de RMSE, MAE y MAPE, mucho más altos en comparación con Holt–Winters y ARIMA.
 
-Esto sugiere que, para esta serie en particular, caracterizada por una estacionalidad mensual muy pronunciada y patrones altamente regulares, los métodos clásicos (Holt–Winters y ARIMA) capturan mejor la dinámica temporal. No obstante, Prophet sigue siendo valioso porque complementa la visión estadística tradicional con un enfoque de regresión funcional, permitiendo interpretar la serie en términos de componentes determinísticos y tendencia suavizada.
+Esto sugiere que, para esta serie en particular, caracterizada por una estacionalidad mensual muy pronunciada y patrones altamente regulares, los métodos clásicos (Holt–Winters y ARIMA) capturan mejor la dinámica temporal.
+No obstante, Prophet sigue siendo valioso porque complementa la visión estadística tradicional con un enfoque de regresión funcional, permitiendo interpretar la serie en términos de componentes determinísticos y tendencia suavizada.
 
-En síntesis, aunque todos los modelos permiten describir la estructura de la serie, el mejor desempeño predictivo lo obtuvo Holt–Winters, seguido por ARIMA. Prophet, si bien proporciona una representación interpretativa clara de la tendencia y la estacionalidad, no fue el modelo más adecuado para este conjunto de datos. Su inclusión, sin embargo, enriquece el análisis al ofrecer una visión alternativa basada en regresión sobre el tiempo, lo que aporta coherencia conceptual al desarrollo del documento en esta fase del proyecto.
+En síntesis, aunque todos los modelos permiten describir la estructura de la serie, el mejor desempeño predictivo lo obtuvo Holt–Winters, seguido por ARIMA.
+Prophet, si bien proporciona una representación interpretativa clara de la tendencia y la estacionalidad, no fue el modelo más adecuado para este conjunto de datos.
+Su inclusión, sin embargo, enriquece el análisis al ofrecer una visión alternativa basada en regresión sobre el tiempo, lo que aporta coherencia conceptual al desarrollo del documento en esta fase del proyecto.
 
 # Unidad 7: Redes neuronales recurrentes Elman y Jordan
 
-En esta unidad se incorporan dos arquitecturas clásicas de redes neuronales recurrentes (RNR) para el pronóstico de series de tiempo: la **red de Elman** y la **red de Jordan**. El objetivo es:
+En esta unidad se incorporan dos arquitecturas clásicas de redes neuronales recurrentes (RNR) para el pronóstico de series de tiempo: la **red de Elman** y la **red de Jordan**.
+El objetivo es:
 
-1. Utilizar la misma serie mensual *Australia Monthly Retail Turnover* empleada en las unidades anteriores.
-2. Construir un conjunto de datos supervisado basado en rezagos (valores pasados de la serie como entradas).
-3. Entrenar redes Elman y Jordan sobre un conjunto de entrenamiento.
-4. Generar pronósticos a 12 meses y evaluar su desempeño mediante RMSE, MAE y MAPE.
+1.  Utilizar la misma serie mensual *Australia Monthly Retail Turnover* empleada en las unidades anteriores.
+2.  Construir un conjunto de datos supervisado basado en rezagos (valores pasados de la serie como entradas).
+3.  Entrenar redes Elman y Jordan sobre un conjunto de entrenamiento.
+4.  Generar pronósticos a 12 meses y evaluar su desempeño mediante RMSE, MAE y MAPE.
 
 ## Fundamentos teóricos: redes Elman y Jordan
 
-Las redes neuronales recurrentes permiten modelar dependencias temporales al incorporar conexiones de retroalimentación que conservan información del pasado. Dos variantes clásicas son:
+Las redes neuronales recurrentes permiten modelar dependencias temporales al incorporar conexiones de retroalimentación que conservan información del pasado.
+Dos variantes clásicas son:
 
-- **Red de Elman:** introduce una **capa de contexto** que recibe las salidas de la capa oculta en el tiempo \(t-1\).  
-- **Red de Jordan:** la capa de contexto recibe retroalimentación de la **salida** de la red en el tiempo anterior.
+-   **Red de Elman:** introduce una **capa de contexto** que recibe las salidas de la capa oculta en el tiempo $t-1$.\
+-   **Red de Jordan:** la capa de contexto recibe retroalimentación de la **salida** de la red en el tiempo anterior.
 
 En forma simplificada, una red recurrente tipo Elman puede escribirse como:
 
-\[
+$$
 \begin{aligned}
 \mathbf{h}_t &= f\left( W_{xh}\mathbf{x}_t + W_{hh}\mathbf{h}_{t-1} + \mathbf{b}_h \right),\\
 \hat{y}_t &= g\left( W_{hy}\mathbf{h}_t + \mathbf{b}_y \right),
 \end{aligned}
-\]
+$$
 
-donde:
-- \(\mathbf{x}_t\) es el vector de entradas (rezagos de la serie),
-- \(\mathbf{h}_t\) es el estado oculto,
-- \(\hat{y}_t\) es la salida pronosticada,
-- \(f(\cdot)\) y \(g(\cdot)\) suelen ser funciones de activación no lineales.
+donde: - $\mathbf{x}_t$ es el vector de entradas (rezagos de la serie), - $\mathbf{h}_t$ es el estado oculto, - $\hat{y}_t$ es la salida pronosticada, - $f(\cdot)$ y $g(\cdot)$ suelen ser funciones de activación no lineales.
 
-En las redes Elman y Jordan el **tiempo** entra de forma indirecta: el modelo aprende una función no lineal \( \hat{y}_t = F(y_{t-1}, y_{t-2}, \dots, y_{t-p}) \), donde los valores pasados de la serie actúan como regresores. Por tanto, estas arquitecturas pueden entenderse como modelos de **regresión no lineal en el tiempo**.
+En las redes Elman y Jordan el **tiempo** entra de forma indirecta: el modelo aprende una función no lineal $\hat{y}_t = F(y_{t-1}, y_{t-2}, \dots, y_{t-p})$, donde los valores pasados de la serie actúan como regresores.
+Por tanto, estas arquitecturas pueden entenderse como modelos de **regresión no lineal en el tiempo**.
 
 ## Preparación del conjunto supervisado y partición train/test
 
-Se construyó un conjunto de datos supervisado donde las entradas son los **12 rezagos mensuales** de la serie y la salida es el valor en el mes actual. Se mantiene la misma partición temporal que en las unidades anteriores: los **últimos 12 meses** se reservan como conjunto de prueba (test).
+Se construyó un conjunto de datos supervisado donde las entradas son los **12 rezagos mensuales** de la serie y la salida es el valor en el mes actual.
+Se mantiene la misma partición temporal que en las unidades anteriores: los **últimos 12 meses** se reservan como conjunto de prueba (test).
 
 ```{r nn-datos, message=FALSE, warning=FALSE}
 
@@ -2075,8 +2054,6 @@ y_train_sc <- as.numeric(scale(y_train, center = y_mean, scale = y_sd))
 
 Se ajusta una red Elman usando como entradas los 12 rezagos y como salida el valor actual de la serie (todo estandarizado).
 
-
-
 ```{r elman-train, message=FALSE, warning=FALSE}
 
 library(RSNNS)
@@ -2095,18 +2072,18 @@ elman_net            # para ver el resumen que ya te salió
 
 
 ```
+
 ## Pronóstico con la red Elman
 
 En esta sección vamos a:
 
-- Usar la red Elman ya entrenada (elman_net).
+-   Usar la red Elman ya entrenada (elman_net).
 
-- Obtener el pronóstico para los últimos 12 meses (conjunto de prueba).
+-   Obtener el pronóstico para los últimos 12 meses (conjunto de prueba).
 
-- Calcular RMSE, MAE y MAPE.
+-   Calcular RMSE, MAE y MAPE.
 
-- Generar un gráfico comparando valores reales vs pronosticados.
-
+-   Generar un gráfico comparando valores reales vs pronosticados.
 
 ```{r elman-forecast, message=FALSE, warning=FALSE}
 
@@ -2161,18 +2138,16 @@ ggplot(res_elman, aes(x = Fecha)) +
   theme_bw(base_size = 12)
 ```
 
-
-```
-
 **Interpretación de los resultados de la red Elman**
 
-Los resultados de la red neuronal recurrente tipo Elman muestran un desempeño moderado en el pronóstico de los últimos 12 meses del Retail Turnover australiano. La Tabla 8.1 presenta las métricas obtenidas:
+Los resultados de la red neuronal recurrente tipo Elman muestran un desempeño moderado en el pronóstico de los últimos 12 meses del Retail Turnover australiano.
+La Tabla 8.1 presenta las métricas obtenidas:
 
-- RMSE = 1646.15
+-   RMSE = 1646.15
 
-- MAE = 1601.22
+-   MAE = 1601.22
 
-- MAPE = 3.12%
+-   MAPE = 3.12%
 
 Estas métricas indican que, aunque la red es capaz de capturar parte de la dinámica general de la serie, su error es considerablemente mayor comparado con modelos clásicos como Holt–Winters o ARIMA, los cuales tenían errores alrededor de RMSE ≈ 380–410.
 
@@ -2184,6 +2159,221 @@ La red suaviza demasiado las oscilaciones, lo cual es consistente con el comport
 
 El mayor desajuste se observa en los dos últimos meses, donde la serie real experimenta un crecimiento abrupto que la red no logra anticipar.
 
-Este comportamiento puede explicarse porque las redes Elman requieren más información temporal o un número mayor de neuronas/capas para capturar variaciones pronunciadas en series altamente estacionales y crecientes. Además, a diferencia de Prophet o ARIMA, la arquitectura no incorpora explícitamente una modelación de estacionalidad ni tendencia, lo que reduce su capacidad predictiva en este tipo de datos económicos.
+Este comportamiento puede explicarse porque las redes Elman requieren más información temporal o un número mayor de neuronas/capas para capturar variaciones pronunciadas en series altamente estacionales y crecientes.
+Además, a diferencia de Prophet o ARIMA, la arquitectura no incorpora explícitamente una modelación de estacionalidad ni tendencia, lo que reduce su capacidad predictiva en este tipo de datos económicos.
 
-En resumen, la red Elman funciona, pero su precisión es inferior a la de otros modelos utilizados previamente en el documento. Esto sugiere que, para este tipo de serie temporal, los modelos clásicos con estructura estacional explícita tienden a generalizar mejor en horizontes cortos de pronóstico.
+En resumen, la red Elman funciona, pero su precisión es inferior a la de otros modelos utilizados previamente en el documento.
+Esto sugiere que, para este tipo de serie temporal, los modelos clásicos con estructura estacional explícita tienden a generalizar mejor en horizontes cortos de pronóstico.
+
+## Entrenamiento de la red neuronal Jordan
+
+La red Jordan es otra arquitectura clásica de redes neuronales recurrentes.
+A diferencia de Elman, la retroalimentación proviene de la salida retrasada de la red, por lo que el modelo aprende patrones temporales usando como referencia sus propias predicciones pasadas.
+
+Al igual que con la red Elman, se entrena un modelo usando los 12 rezagos de la serie como entradas, y se evaluará su desempeño sobre los últimos 12 meses de la serie.
+
+```{r jordan-train, message=FALSE, warning=FALSE}
+
+# Entrenamiento de la red Jordan
+set.seed(123)
+
+jordan_net <- jordan(
+  X_train_sc,
+  y_train_sc,
+  size = 8,      # número de neuronas ocultas (igual que Elman para comparar)
+  learnFunc = "Std_Backpropagation",
+  learnFuncParams = c(0.2),
+  maxit = 500
+)
+
+jordan_net
+
+```
+
+```{r jordan-forecast, message=FALSE, warning=FALSE}
+
+# Predicciones de la red Jordan en el conjunto de prueba
+pred_jordan_sc <- predict(jordan_net, X_test_sc)
+pred_jordan_sc <- as.numeric(pred_jordan_sc)
+
+# Volver a escala original
+y_pred_jordan <- pred_jordan_sc * y_sd + y_mean
+
+# Tabla de resultados
+library(zoo)
+fechas_test <- as.Date(as.yearmon(time(ts_test)))
+
+res_jordan <- data.frame(
+  Fecha = fechas_test,
+  Real  = as.numeric(ts_test),
+  Jordan = y_pred_jordan
+)
+
+knitr::kable(
+  res_jordan,
+  caption = "Valores reales vs pronóstico con la red Jordan (últimos 12 meses).",
+  align = "c"
+)
+
+
+```
+
+Los resultados obtenidos con la red neuronal recurrente tipo Jordan muestran un comportamiento menos satisfactorio en comparación con la red Elman y con los modelos clásicos aplicados previamente (Holt–Winters, ARIMA y Prophet).
+
+En la Tabla 8.2, que presenta los valores reales y los pronosticados por la red Jordan en los últimos 12 meses, se observa lo siguiente:
+
+La red Jordan subestima drásticamente los valores reales durante todo el horizonte evaluado.
+
+Los pronósticos se mantienen alrededor de 23.000–29.000 millones de AUD, muy por debajo de los valores reales, que oscilan entre 44.000 y 65.000 millones.
+
+La red no logra capturar ni la tendencia creciente ni la estacionalidad, lo que evidencia una falta de ajuste significativa.
+
+En todos los meses evaluados, la red produce predicciones que se aproximan a la media histórica estandarizada, un comportamiento típico cuando la red no encuentra una estructura temporal clara o cuando el entrenamiento resulta insuficiente.
+
+Este desempeño sugiere que la arquitectura Jordan, tal como fue configurada (8 neuronas ocultas y 12 rezagos), no logra aprender las dinámicas temporales del Retail Turnover australiano.
+Además, la fuerte estacionalidad y crecimiento de la serie requieren modelos con mecanismos explícitos de estructura temporal (como ARIMA estacional o Prophet), lo cual podría explicar la inferioridad del modelo Jordan en esta aplicación.
+
+En resumen, la red Jordan evidencia un desajuste sustancial, mostrando pronósticos incapaces de seguir el comportamiento real de la serie.
+Esto anticipa que sus métricas de error serán considerablemente más elevadas que las de Elman y que las de los modelos clásicos.
+
+## Evaluación del desempeño de la red Jordan
+
+Una vez obtenidos los pronósticos generados por la red neuronal Jordan, es necesario evaluar su precisión comparando las predicciones con los valores reales del conjunto de prueba (los últimos 12 meses).
+Para ello se calculan tres métricas estándar utilizadas en pronóstico de series de tiempo:
+
+-   RMSE (Root Mean Squared Error)
+
+-   MAE (Mean Absolute Error)
+
+-   MAPE (Mean Absolute Percentage Error)
+
+Estas métricas permitirán comparar el desempeño de la red Jordan frente al modelo Elman y los modelos tradicionales ajustados en unidades anteriores.
+
+```{r}
+
+# Métricas de error de la red Jordan
+rmse_jordan <- sqrt(mean((res_jordan$Real - res_jordan$Jordan)^2))
+mae_jordan  <- mean(abs(res_jordan$Real - res_jordan$Jordan))
+mape_jordan <- mean(abs((res_jordan$Real - res_jordan$Jordan) / res_jordan$Real)) * 100
+
+metrics_jordan <- data.frame(
+  Modelo = "Red Jordan",
+  RMSE   = rmse_jordan,
+  MAE    = mae_jordan,
+  MAPE   = mape_jordan
+)
+
+knitr::kable(
+  metrics_jordan,
+  caption = "Métricas de error de la red neuronal Jordan sobre el horizonte de 12 meses.",
+  digits = 2,
+  align = "c"
+)
+
+```
+
+Los resultados obtenidos para la red neuronal recurrente Jordan muestran un desempeño considerablemente inferior al de la red Elman y a los modelos tradicionales usados en unidades anteriores (Holt–Winters, ARIMA y Prophet).
+Las métricas de error obtenidas fueron:
+
+-   RMSE = 26 175.03
+
+-   MAE = 25 343.01
+
+-   MAPE = 48.87%
+
+Estos valores indican que la red Jordan presenta un error extremadamente alto al pronosticar los últimos 12 meses de la serie Retail Turnover.
+En particular:
+
+-   El RMSE es más de 15 veces mayor que el obtenido por la red Elman (≈1 646) y supera ampliamente los errores de modelos clásicos.
+
+-   El MAPE cercano al 50% refleja una incapacidad sistemática del modelo para aproximarse a los valores reales, mostrando una desviación típica de casi la mitad del valor observado.
+
+-   La escala del error sugiere que la red Jordan no logra capturar adecuadamente la tendencia creciente presente al final de la serie, ni tampoco las variaciones estacionales.
+
+Este comportamiento es consistente con lo esperado en redes Jordan cuando el set de entrenamiento es limitado, la serie exhibe fuerte tendencia y estacionalidad, y no existen mecanismos explícitos dentro del modelo para representar estas estructuras temporales.
+
+A diferencia de Elman, cuya retroalimentación proviene del estado oculto, en la red Jordan la retroalimentación proviene de la salida previa, lo que puede amplificar errores y llevar al modelo a generar predicciones alejadas de la escala real.
+
+En resumen, la red Jordan no resulta adecuada para esta serie temporal, al menos con la configuración actual (12 rezagos, una capa oculta y 8 neuronas).
+Su desempeño es notablemente inferior al de las otras arquitecturas evaluadas, lo que refuerza la importancia de emplear modelos capaces de representar explícitamente tendencias y estacionalidad en datos económicos de largo plazo.
+
+## Gráfico comparativo: valores reales vs pronóstico Jordan
+
+En esta sección vamos a visualizar, para los últimos 12 meses, la trayectoria de la serie real de Retail Turnover y el pronóstico generado por la red Jordan.
+El objetivo es evaluar gráficamente cómo se comporta el modelo frente a los datos observados, complementando las métricas numéricas de error.
+
+```{r}
+library(ggplot2)
+
+ggplot(res_jordan, aes(x = Fecha)) +
+geom_line(aes(y = Real),   color = "#0072B2", linewidth = 1) +
+geom_line(aes(y = Jordan), color = "#D55E00", linewidth = 1, linetype = "dashed") +
+labs(
+title = "Últimos 12 meses: valores reales vs pronóstico Jordan",
+x = "Fecha",
+y = "Turnover (millones de AUD)"
+) +
+theme_bw(base_size = 12)
+
+```
+
+La Figura muestra la comparación entre los valores reales del Retail Turnover australiano y los pronósticos generados por la red neuronal Jordan para los últimos 12 meses de la serie.
+Visualmente, se observa un desajuste muy marcado entre ambas curvas:
+
+-   La serie real (línea azul) exhibe valores entre 45 000 y 65 000 millones de AUD, con un incremento pronunciado en los últimos meses del periodo evaluado.
+
+-   La serie pronosticada por Jordan (línea naranja discontinua) se mantiene en un rango muy inferior (aprox. 22 000–32 000 millones), sin reflejar ni la escala real de la variable ni su tendencia creciente.
+
+-   La red Jordan subestima sistemáticamente todos los valores del horizonte de evaluación, reproduciendo únicamente un patrón ondulante suave que no corresponde a la estructura temporal verdadera.
+
+-   La falta de correspondencia en la escala vertical implica que la red no aprendió adecuadamente la relación entre los rezagos y el valor actual, probablemente debido a la dependencia exclusiva de su propia salida retrasada (retroalimentación tipo Jordan), la ausencia de mecanismos explícitos para capturar tendencia y estacionalidad, y la complejidad estructural de la serie en comparación con el tamaño del conjunto de entrenamiento.
+
+En conjunto, el gráfico confirma los resultados cuantitativos obtenidos: la red Jordan presenta un desempeño deficiente para el pronóstico de esta serie económica, con predicciones muy alejadas tanto en nivel como en forma respecto de los valores reales.
+
+## Comparación entre las redes Elman y Jordan
+
+Los resultados permiten establecer diferencias claras entre ambas arquitecturas recurrentes:
+
+**1. Precisión del pronóstico**
+
+La red Elman muestra un desempeño moderado, con errores entre 3 % y 4 %, lo cual indica que logra capturar parcialmente la dinámica temporal de la serie.
+
+La red Jordan, en contraste, presenta errores extremadamente altos (MAPE ≈ 49 %), lo que evidencia una incapacidad para representar la escala y la tendencia de la serie.
+
+**2. Comportamiento gráfico**
+
+La red Elman reproduce la forma general del movimiento, aunque suaviza las oscilaciones e infraestima los picos.
+
+La red Jordan no sigue ni la tendencia ni la magnitud del Retail Turnover: sus predicciones quedan en un nivel mucho menor, sin capturar la estructura temporal.
+
+**3. Interpretación técnica**
+
+En Elman, la retroalimentación procede desde la capa oculta, lo que permite almacenar representaciones internas más útiles para capturar dependencias temporales de corto plazo.
+
+En Jordan, la retroalimentación proviene de la salida pasada, lo que genera propagación de errores y un aprendizaje inestable al no estar alineado con la estructura no lineal de la serie.
+
+**4. Conclusión comparativa**
+
+La red Elman supera ampliamente a la red Jordan en todos los indicadores evaluados.
+No obstante, ambas quedan por debajo de modelos clásicos como Holt–Winters y ARIMA, que se mostraron más adecuados para esta serie con tendencia y estacionalidad bien definidas.
+
+## Conclusiones
+
+En esta unidad se exploró el uso de redes neuronales recurrentes clásicas —Elman y Jordan— para el pronóstico del Australia Monthly Retail Turnover. Aunque estas arquitecturas permiten integrar información temporal mediante retroalimentación interna, los resultados muestran que su capacidad predictiva es limitada frente a modelos estadísticos tradicionales.
+
+La red Elman logró capturar parcialmente el comportamiento de la serie, generando pronósticos con un error moderado (MAPE ≈ 3 %). No obstante, su tendencia a suavizar las fluctuaciones y su dificultad para reproducir aumentos abruptos limitan su utilidad para series económicas con fuerte estacionalidad.
+
+Por otro lado, la red Jordan presentó un desempeño considerablemente inferior. Debido a su retroalimentación basada en la salida previa, el modelo no consiguió representar ni la magnitud ni la tendencia creciente de la serie, resultando en pronósticos muy alejados de los valores reales.
+
+Al comparar estas redes con modelos como Holt–Winters, ARIMA y Prophet, se observa que las arquitecturas recurrentes simples no son competitivas para este tipo de datos. Los modelos con componentes estacionales explícitos y estructura determinística muestran una mejor capacidad de generalización y precisión en horizontes cortos.
+
+En síntesis, la Unidad 7 evidencia que:
+
+- Las redes Elman y Jordan son herramientas válidas, pero no necesariamente óptimas para series económicas con estacionalidad marcada.
+
+- Su desempeño depende fuertemente del tamaño del conjunto de entrenamiento y de la complejidad temporal de la serie.
+
+- Para pronósticos aplicados, especialmente en análisis económico, los modelos estadísticos estructurales continúan ofreciendo mayor estabilidad y precisión.
+
+
+

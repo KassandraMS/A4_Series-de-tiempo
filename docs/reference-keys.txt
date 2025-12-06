@@ -61,3 +61,9 @@ fig:prophet-ajuste
 comparación-de-modelos-y-conclusiones
 tab:unnamed-chunk-24
 comparación-de-desempeño-entre-holtwinters-arima-y-prophet
+unidad-7-redes-neuronales-recurrentes-elman-y-jordan
+fundamentos-teóricos-redes-elman-y-jordan
+preparación-del-conjunto-supervisado-y-partición-traintest
+tab:elman-forecast
+entrenamiento-de-la-red-elman
+pronóstico-con-la-red-elman
